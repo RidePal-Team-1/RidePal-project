@@ -1,0 +1,12 @@
+# Binaries
+**/*.class
+**/out/
+
+
+# User-specific stuff
+.idea/ 
+
+
+# File-based project format
+**/*.iws
+**/*.iml
