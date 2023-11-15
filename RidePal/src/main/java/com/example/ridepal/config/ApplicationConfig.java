@@ -27,7 +27,7 @@ public class ApplicationConfig {
     public LocalSessionFactoryBean localSessionFactoryBean() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("com.example.webproject.models");
+        sessionFactory.setPackagesToScan("com.example.ridepal.models");
         sessionFactory.setHibernateProperties(properties());
         return sessionFactory;
     }
@@ -42,10 +42,9 @@ public class ApplicationConfig {
         return dataSource;
     }
 
-    @Bean
-    public Properties properties() {
+    private Properties properties() {
         Properties hibernateProperties = new Properties();
-        hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+        hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MariaDBDialect");
         return hibernateProperties;
     }
 }
