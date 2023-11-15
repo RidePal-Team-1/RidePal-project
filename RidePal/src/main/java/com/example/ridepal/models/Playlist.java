@@ -31,9 +31,17 @@ public class Playlist {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "playlists_tags",
+            name = "playlists_tracks",
             joinColumns = @JoinColumn(name = "playlist_id"),
             inverseJoinColumns = @JoinColumn(name = "track_id")
     )
     private Set<Track> trackSet = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "playlists_tags",
+            joinColumns = @JoinColumn(name = "playlist_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private Set<Tag> genres = new HashSet<>();
 }
