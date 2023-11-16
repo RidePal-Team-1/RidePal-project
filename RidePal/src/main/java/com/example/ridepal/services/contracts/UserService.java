@@ -1,10 +1,12 @@
 package com.example.ridepal.services.contracts;
 
 import com.example.ridepal.models.User;
-import com.example.ridepal.models.filters.UserCriteria;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface UserService {
 
+    Page<User> findAll(String username, String firstName, String lastName, String email, Pageable pageable);
+
+    User findById(int id);
 }
