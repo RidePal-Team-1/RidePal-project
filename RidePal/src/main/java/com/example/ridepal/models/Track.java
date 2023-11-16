@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "playlists")
+@Table(name = "tracks")
 public class Track {
 
     @Id
