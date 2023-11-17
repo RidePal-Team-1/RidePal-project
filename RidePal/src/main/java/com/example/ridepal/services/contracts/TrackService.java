@@ -4,7 +4,7 @@ import com.example.ridepal.models.Track;
 
 import java.util.List;
 
-public interface TracksService {
+public interface TrackService {
 
     List<Track> getAllTracks();
 
