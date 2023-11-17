@@ -1,6 +1,7 @@
 package com.example.ridepal.repositories;
 
 import com.example.ridepal.models.Playlist;
+import com.example.ridepal.models.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -13,4 +14,10 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Integer>, Jp
     Page<Playlist> findAll(Specification<Playlist> filters, Pageable pageable);
 
     Playlist findById(int id);
+
+    void create(Playlist playlist);
+
+    void update(Playlist playlist);
+
+    void delete(int id);
 }

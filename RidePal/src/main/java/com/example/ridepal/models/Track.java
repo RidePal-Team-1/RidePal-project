@@ -14,13 +14,14 @@ public class Track {
     private int id;
 
     @Column(name = "artist_id")
-    private String artist;
+    private Artist artist;
 
     @Column(name = "track_title")
     private String title;
 
-    @Column(name = "album_id")
-    private String album;
+    @ManyToOne
+    @JoinColumn(name = "album_id")
+    private Album album;
 
     @Column(name = "playtime")
     private int playtime;

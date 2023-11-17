@@ -1,6 +1,8 @@
 package com.example.ridepal.controllers.rest;
 
+import com.example.ridepal.exceptions.EntityNotFoundException;
 import com.example.ridepal.filters.enums.PlaylistSortField;
+import com.example.ridepal.mappers.PlaylistMapper;
 import com.example.ridepal.models.Playlist;
 import com.example.ridepal.models.dtos.PlaylistDto;
 import com.example.ridepal.services.contracts.PlaylistService;
@@ -9,7 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/playlists")
@@ -17,9 +21,12 @@ public class PlaylistController {
 
     private final PlaylistService playlistService;
 
+    private final PlaylistMapper playlistMapper;
+
     @Autowired
-    public PlaylistController(PlaylistService playlistService) {
+    public PlaylistController(PlaylistService playlistService, PlaylistMapper playlistMapper) {
         this.playlistService = playlistService;
+        this.playlistMapper = playlistMapper;
     }
 
     @GetMapping
@@ -38,26 +45,30 @@ public class PlaylistController {
 
     @GetMapping("/{id}")
     public Playlist findById(@PathVariable int id) {
-
-        return playlistService.getPlaylistById(id);
+        try {
+            return playlistService.getPlaylistById(id);
+        } catch (EntityNotFoundException e) {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
 
-    @PostMapping
-    public void create(@RequestBody PlaylistDto playlistDto){
-        Playlist playlist = new Playlist();
-        playlist.setTitle(playlistDto.getTitle());
-        playlistService.createPlaylist(playlist);
-    }
 
     @PutMapping("/{id}")
     public void update(@PathVariable int id, @RequestBody PlaylistDto playlistDto) {
-        Playlist playlist = playlistService.getPlaylistById(id);
-        playlist.setTitle(playlistDto.getTitle());
-        playlistService.updatePlaylist(playlist);
+        try {
+            Playlist playlist = playlistMapper.fromDto(playlistDto, id);
+            playlistService.updatePlaylist(playlist);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id) {
-        playlistService.deletePlaylist(id);
+        try {
+            playlistService.deletePlaylist(id);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
 }

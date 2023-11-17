@@ -1,35 +1,34 @@
 package com.example.ridepal.services;
 
+import com.example.ridepal.exceptions.EntityNotFoundException;
 import com.example.ridepal.models.Track;
+import com.example.ridepal.repositories.TrackRepository;
 import com.example.ridepal.services.contracts.TrackService;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class TrackServiceImpl implements TrackService {
-    @Override
-    public List<Track> getAllTracks() {
-        return null;
+
+    private final TrackRepository trackRepository;
+
+    public TrackServiceImpl(TrackRepository trackRepository) {
+        this.trackRepository = trackRepository;
     }
 
     @Override
-    public Track getTrackById(int id) {
-        return null;
+    public List<Track> findAll(Sort sort) {
+        return trackRepository.findAll(sort);
     }
 
     @Override
-    public void createTrack(Track track) {
-
-    }
-
-    @Override
-    public void updateTrack(Track track) {
-
-    }
-
-    @Override
-    public void deleteTrack(int id) {
-
+    public Track findById(int id) {
+        if(trackRepository.findById(id)==null){
+            throw new EntityNotFoundException("Track",id);
+        }else {
+            return trackRepository.findById(id);
+        }
     }
 }

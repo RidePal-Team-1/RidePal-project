@@ -1,5 +1,6 @@
 package com.example.ridepal.services;
 
+import com.example.ridepal.exceptions.EntityNotFoundException;
 import com.example.ridepal.models.Playlist;
 import com.example.ridepal.repositories.PlaylistRepository;
 import com.example.ridepal.services.contracts.PlaylistService;
@@ -36,21 +37,27 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     @Override
     public Playlist getPlaylistById(int id) {
-        return playlistRepository.findById(id);
+        if(playlistRepository.findById(id)==null){
+            throw new EntityNotFoundException("Playlist", id);
+        }else
+            return playlistRepository.findById(id);
     }
 
     @Override
     public void updatePlaylist(Playlist playlist) {
-
+        playlistRepository.update(playlist);
     }
 
     @Override
     public void deletePlaylist(int id) {
-
+        if(playlistRepository.findById(id)==null){
+            throw new EntityNotFoundException("Playlist", id);
+        }else
+            playlistRepository.delete(id);
     }
 
     @Override
     public void createPlaylist(Playlist playlist) {
-
+        playlistRepository.create(playlist);
     }
 }
