@@ -9,6 +9,4 @@ public interface AlbumRepository extends JpaRepository<Album, Integer> {
     List<Album> findAll();
 
     Album findById(int id);
-
-    void create(Album album);
 }

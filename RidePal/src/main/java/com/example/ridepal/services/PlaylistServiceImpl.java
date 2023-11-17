@@ -45,19 +45,20 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     @Override
     public void updatePlaylist(Playlist playlist) {
-        playlistRepository.update(playlist);
+        playlistRepository.save(playlist);
     }
 
     @Override
     public void deletePlaylist(int id) {
-        if(playlistRepository.findById(id)==null){
+        Playlist playlist = playlistRepository.findById(id);
+        if(playlist==null){
             throw new EntityNotFoundException("Playlist", id);
         }else
-            playlistRepository.delete(id);
+            playlistRepository.delete(playlist);
     }
 
     @Override
     public void createPlaylist(Playlist playlist) {
-        playlistRepository.create(playlist);
+        playlistRepository.save(playlist);
     }
 }

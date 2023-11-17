@@ -9,6 +9,4 @@ public interface AlbumService {
     List<Album> findAll();
 
     Album findById(int id);
-
-    void create(Album album);
 }

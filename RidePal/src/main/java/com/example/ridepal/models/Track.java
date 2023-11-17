@@ -14,7 +14,7 @@ public class Track {
     private int id;
 
     @ManyToOne
-    @Column(name = "artist_id")
+    @JoinColumn(name = "artist_id")
     private Artist artist;
 
     @Column(name = "track_title")

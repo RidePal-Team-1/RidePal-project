@@ -31,9 +31,4 @@ public class AlbumServiceImpl implements AlbumService {
             return albumRepository.findById(id);
         }
     }
-
-    @Override
-    public void create(Album album) {
-        albumRepository.create(album);
-    }
 }

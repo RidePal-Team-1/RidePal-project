@@ -33,10 +33,4 @@ public class AlbumController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
-
-    @PostMapping
-    public void create(@RequestBody Album album){
-        albumService.create(album);
-    }
-    //TODO Did not create DTO - To determine where the songs will be pre-fetched by
 }

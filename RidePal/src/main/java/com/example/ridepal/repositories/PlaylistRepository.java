@@ -14,10 +14,4 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Integer>, Jp
     Page<Playlist> findAll(Specification<Playlist> filters, Pageable pageable);
 
     Playlist findById(int id);
-
-    void create(Playlist playlist);
-
-    void update(Playlist playlist);
-
-    void delete(int id);
 }
