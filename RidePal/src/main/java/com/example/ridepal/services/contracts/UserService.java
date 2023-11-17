@@ -9,4 +9,10 @@ public interface UserService {
     Page<User> findAll(String username, String firstName, String lastName, String email, Pageable pageable);
 
     User findById(int id);
+
+    void create(User user);
+
+    void update(User user);
+
+    void delete(int id);
 }

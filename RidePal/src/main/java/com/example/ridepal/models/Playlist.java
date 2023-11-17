@@ -29,6 +29,8 @@ public class Playlist {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User creator;
+
+
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -37,12 +39,13 @@ public class Playlist {
             inverseJoinColumns = @JoinColumn(name = "track_id")
     )
     private Set<Track> trackSet = new HashSet<>();
+
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "playlists_tags",
+            name = "playlists_genres",
             joinColumns = @JoinColumn(name = "playlist_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id")
+            inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
-    private Set<Tag> genres = new HashSet<>();
+    private Set<Genre> genres = new HashSet<>();
 }

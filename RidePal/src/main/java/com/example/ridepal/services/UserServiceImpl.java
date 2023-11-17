@@ -1,5 +1,6 @@
 package com.example.ridepal.services;
 
+import com.example.ridepal.exceptions.EntityNotFoundException;
 import com.example.ridepal.models.User;
 import com.example.ridepal.repositories.UserRepository;
 import com.example.ridepal.services.contracts.UserService;
@@ -10,7 +11,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 
-import static com.example.ridepal.filters.UserSpecifications.*;
+import static com.example.ridepal.filters.specifications.UserSpecifications.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -29,14 +30,34 @@ public class UserServiceImpl implements UserService {
                 .and(StringUtils.isEmptyOrWhitespace(firstNameFilter) ? null : firstName(firstNameFilter))
                 .and(StringUtils.isEmptyOrWhitespace(lastNameFilter) ? null : lastName(lastNameFilter))
                 .and(StringUtils.isEmptyOrWhitespace(emailFilter) ? null : email(emailFilter));
-
         return userRepository.findAll(filters, pageable);
     }
 
     @Override
     public User findById(int id) {
-        return userRepository.findById(id);
+        User user = userRepository.findById(id);
+        if (user == null) {
+            throw new EntityNotFoundException("User", id);
+        }
+        return user;
     }
 
+    @Override
+    public void create(User user) {
+        userRepository.save(user);
+    }
 
+    @Override
+    public void update(User user) {
+        userRepository.save(user);
+    }
+
+    @Override
+    public void delete(int id) {
+        User user = userRepository.findById(id);
+        if (user == null) {
+            throw new EntityNotFoundException("User", id);
+        }
+        userRepository.delete(user);
+    }
 }

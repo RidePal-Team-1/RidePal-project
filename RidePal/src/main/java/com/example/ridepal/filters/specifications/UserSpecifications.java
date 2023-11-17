@@ -1,4 +1,4 @@
-package com.example.ridepal.filters;
+package com.example.ridepal.filters.specifications;
 
 import com.example.ridepal.models.User;
 import org.springframework.data.jpa.domain.Specification;

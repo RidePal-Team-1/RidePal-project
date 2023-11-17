@@ -10,7 +10,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 
-import static com.example.ridepal.filters.PlaylistSpecifications.*;
+import static com.example.ridepal.filters.specifications.PlaylistSpecifications.*;
 
 
 @Service

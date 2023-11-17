@@ -1,4 +1,4 @@
-package com.example.ridepal.filters;
+package com.example.ridepal.filters.enums;
 
 public enum PlaylistSortField {
     ID("id"),

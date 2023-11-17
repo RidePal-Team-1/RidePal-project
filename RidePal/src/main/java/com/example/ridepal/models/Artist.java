@@ -5,14 +5,17 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "tags")
-public class Tag {
+@Table(name = "artists")
+public class Artist {
 
     @Id
-    @Column(name = "tag_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "artist_id")
     private int id;
 
-    @Column(name = "tag_name")
+    @Column(name = "artist_name")
     private String name;
+
+    @Column(name = "artist_tracklist_url")
+    private String trackListUrl;
 }

@@ -1,4 +1,4 @@
-package com.example.ridepal.filters;
+package com.example.ridepal.filters.specifications;
 
 import com.example.ridepal.models.Playlist;
 import org.springframework.data.jpa.domain.Specification;
@@ -12,8 +12,11 @@ public class PlaylistSpecifications {
         return (root, query, builder) -> builder.like(root.get("title"), "%" + title + "%");
     }
 
-    public static Specification<Playlist> genre(String genre) {
-        return (root, query, builder) -> builder.like(root.get("genre"), "%" + genre + "%");
+    public static Specification<Playlist> genre(String name) {
+        return (root, query, builder) -> {
+            query.distinct(true);
+            return builder.equal(root.join("genres").get("name"), name);
+        };
     }
 
     public static Specification<Playlist> minDuration(String minDuration) {

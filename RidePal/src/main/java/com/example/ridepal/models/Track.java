@@ -13,13 +13,13 @@ public class Track {
     @Column(name = "track_id")
     private int id;
 
-    @Column(name = "artist")
+    @Column(name = "artist_id")
     private String artist;
 
     @Column(name = "track_title")
     private String title;
 
-    @Column(name = "album")
+    @Column(name = "album_id")
     private String album;
 
     @Column(name = "playtime")

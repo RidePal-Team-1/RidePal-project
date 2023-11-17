@@ -1,9 +1,8 @@
 package com.example.ridepal.controllers.rest;
 
-import com.example.ridepal.filters.PlaylistSortField;
+import com.example.ridepal.filters.enums.PlaylistSortField;
 import com.example.ridepal.models.Playlist;
 import com.example.ridepal.models.dtos.PlaylistDto;
-import com.example.ridepal.services.PlaylistServiceImpl;
 import com.example.ridepal.services.contracts.PlaylistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,7 +23,7 @@ public class PlaylistController {
     }
 
     @GetMapping
-    public Page<Playlist> getAllPlaylists(@RequestParam(required = false) String title,
+    public Page<Playlist> findAll(@RequestParam(required = false) String title,
                                           @RequestParam(required = false) String genre,
                                           @RequestParam(required = false) String minDuration,
                                           @RequestParam(required = false) String maxDuration,
@@ -38,27 +37,27 @@ public class PlaylistController {
     }
 
     @GetMapping("/{id}")
-    public Playlist getPlaylistById(@PathVariable int id) {
+    public Playlist findById(@PathVariable int id) {
 
         return playlistService.getPlaylistById(id);
     }
 
     @PostMapping
-    public void createPlaylist(@RequestBody PlaylistDto playlistDto){
+    public void create(@RequestBody PlaylistDto playlistDto){
         Playlist playlist = new Playlist();
         playlist.setTitle(playlistDto.getTitle());
         playlistService.createPlaylist(playlist);
     }
 
     @PutMapping("/{id}")
-    public void updatePlaylist(@PathVariable int id, @RequestBody PlaylistDto playlistDto) {
+    public void update(@PathVariable int id, @RequestBody PlaylistDto playlistDto) {
         Playlist playlist = playlistService.getPlaylistById(id);
         playlist.setTitle(playlistDto.getTitle());
         playlistService.updatePlaylist(playlist);
     }
 
     @DeleteMapping("/{id}")
-    public void deletePlaylist(@PathVariable int id) {
+    public void delete(@PathVariable int id) {
         playlistService.deletePlaylist(id);
     }
 }
