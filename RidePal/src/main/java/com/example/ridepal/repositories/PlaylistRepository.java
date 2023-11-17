@@ -12,4 +12,5 @@ import org.springframework.stereotype.Repository;
 public interface PlaylistRepository extends JpaRepository<Playlist, Integer>, JpaSpecificationExecutor<Playlist> {
     Page<Playlist> findAll(Specification<Playlist> filters, Pageable pageable);
 
+    Playlist findById(int id);
 }

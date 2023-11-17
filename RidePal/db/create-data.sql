@@ -1,3 +1,19 @@
+create table albums
+(
+    album_id            int auto_increment
+        primary key,
+    album_name          varchar(50) not null,
+    album_tracklist_url longtext    not null
+);
+
+create table artists
+(
+    artist_id            int auto_increment
+        primary key,
+    artist_name          varchar(30) not null,
+    artist_tracklist_url longtext    not null
+);
+
 create table roles
 (
     role_id   int auto_increment
@@ -7,25 +23,41 @@ create table roles
         unique (role_name)
 );
 
-create table tags
+create table genres
 (
-    tag_id   int auto_increment
+    genre_id   int auto_increment
         primary key,
-    tag_name varchar(20) not null,
-    constraint tags_pk2
-        unique (tag_name)
+    genre_name varchar(20) not null,
+    constraint genres_pk2
+        unique (genre_name)
 );
 
 create table tracks
 (
-    track_id    int         not null
+    track_id    int              not null
         primary key,
-    artist      varchar(30) not null,
-    track_title varchar(60) not null,
-    album       varchar(30) not null,
-    playtime    time        not null,
-    `rank`      double      not null,
-    preview_url longtext    not null
+    track_title varchar(60)      not null,
+    preview_url longtext         not null,
+    playtime    double default 0 not null,
+    artist_id   int              not null,
+    album_id    int              not null,
+    `rank`      double default 0 not null,
+
+    constraint tracks_albums_album_id_fk
+        foreign key (album_id) references albums (album_id),
+    constraint tracks_artists_artist_id_fk
+        foreign key (artist_id) references artists (artist_id)
+
+);
+
+create table tracks_genres
+(
+    track_id int not null,
+    genre_id   int not null,
+    constraint tracks_genres_id_fk
+        foreign key (genre_id) references genres (genre_id),
+    constraint tracks_tags_tracks_track_id_fk
+        foreign key (track_id) references tracks (track_id)
 );
 
 create table users
@@ -49,22 +81,22 @@ create table playlists
 (
     playlist_id    int auto_increment
         primary key,
-    title          varchar(30) not null,
-    total_playtime time        not null,
-    `rank`         double      not null,
-    user_id        int         not null,
+    title          varchar(30)      not null,
+    total_playtime double default 0 not null,
+    `rank`         double default 0 not null,
+    user_id        int              not null,
     constraint playlists_users_user_id_fk
         foreign key (user_id) references users (user_id)
 );
 
-create table playlists_tags
+create table playlists_genres
 (
     playlist_id int not null,
-    tag_id      int not null,
-    constraint playlists_tags_playlists_playlist_id_fk
+    genre_id      int not null,
+    constraint playlists_playlists_playlist_id_fk
         foreign key (playlist_id) references playlists (playlist_id),
-    constraint playlists_tags_tags_tag_id_fk
-        foreign key (tag_id) references tags (tag_id)
+    constraint playlists_genres_id_fk
+        foreign key (genre_id) references genres (genre_id)
 );
 
 create table playlists_tracks
@@ -86,5 +118,6 @@ create table users_roles
     constraint users_roles_users_user_id_fk
         foreign key (user_id) references users (user_id)
 );
+
 
 

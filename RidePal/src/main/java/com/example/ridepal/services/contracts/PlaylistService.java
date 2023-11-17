@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PlaylistService {
 
-    Page<Playlist> getAllPlaylists(String title, String genre, double minRank, double maxRank, Pageable pageable);
+    Page<Playlist> findAll(String titleFilter, String genre, String minDuration, String maxDuration, Pageable pageable);
 
     Playlist getPlaylistById(int id);
 
@@ -17,5 +17,4 @@ public interface PlaylistService {
     void deletePlaylist(int id);
 
     void createPlaylist(Playlist playlist);
-
 }

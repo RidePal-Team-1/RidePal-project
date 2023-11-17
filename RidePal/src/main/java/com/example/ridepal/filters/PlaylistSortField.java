@@ -2,11 +2,7 @@ package com.example.ridepal.filters;
 
 public enum PlaylistSortField {
     ID("id"),
-    TITLE("title"),
-    MIN_RANK("rank"),
-    MAX_RANK("rank"),
-    GENRE("genres");
-
+    RANK("rank");
 
     PlaylistSortField(String databaseFieldName) {
         this.databaseFieldName = databaseFieldName;

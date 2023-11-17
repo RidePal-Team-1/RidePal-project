@@ -12,19 +12,16 @@ public class PlaylistSpecifications {
         return (root, query, builder) -> builder.like(root.get("title"), "%" + title + "%");
     }
 
-//    public static Specification<Playlist> genre(String genre) {
-//        return (root, query, builder) -> builder.like(root.get("genre"), "%" + genre + "%");
-//    }
-
-    public static Specification<Playlist> minRank(double minRank) {
-        return (root, query, builder) -> builder.equal(root.get("rank"), minRank);
+    public static Specification<Playlist> genre(String genre) {
+        return (root, query, builder) -> builder.like(root.get("genre"), "%" + genre + "%");
     }
 
-    public static Specification<Playlist> maxRank(double maxRank) {
-        return (root, query, builder) -> builder.equal(root.get("rank"), maxRank);
+    public static Specification<Playlist> minDuration(String minDuration) {
+        return (root, query, builder) -> builder.greaterThanOrEqualTo(root.get("playtime"), minDuration);
     }
 
-    public static Specification<Playlist> betweenRank(double minRank, double maxRank) {
-        return (root, query, builder) -> builder.between(root.get("rank"), minRank, maxRank);
+    public static Specification<Playlist> maxDuration(String maxDuration) {
+        return (root, query, builder) -> builder.lessThanOrEqualTo(root.get("playtime"), maxDuration);
     }
+
 }

@@ -1,14 +1,15 @@
 package com.example.ridepal.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
 @Entity
 @Table(name = "playlists")
+@Data
 public class Playlist {
 
     @Id
@@ -20,7 +21,7 @@ public class Playlist {
     private String title;
 
     @Column(name = "total_playtime")
-    private int playtime;
+    private double playtime;
 
     @Column(name = "rank")
     private double rank;
@@ -28,7 +29,7 @@ public class Playlist {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User creator;
-
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "playlists_tracks",
@@ -36,7 +37,7 @@ public class Playlist {
             inverseJoinColumns = @JoinColumn(name = "track_id")
     )
     private Set<Track> trackSet = new HashSet<>();
-
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "playlists_tags",
