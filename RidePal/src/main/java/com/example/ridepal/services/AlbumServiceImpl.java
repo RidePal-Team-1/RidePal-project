@@ -4,6 +4,7 @@ import com.example.ridepal.exceptions.EntityNotFoundException;
 import com.example.ridepal.models.Album;
 import com.example.ridepal.repositories.AlbumRepository;
 import com.example.ridepal.services.contracts.AlbumService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public class AlbumServiceImpl implements AlbumService {
 
     private final AlbumRepository albumRepository;
 
+    @Autowired
     public AlbumServiceImpl(AlbumRepository albumRepository) {
         this.albumRepository = albumRepository;
     }

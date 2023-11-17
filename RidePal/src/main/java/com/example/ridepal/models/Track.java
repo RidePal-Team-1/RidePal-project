@@ -13,6 +13,7 @@ public class Track {
     @Column(name = "track_id")
     private int id;
 
+    @ManyToOne
     @Column(name = "artist_id")
     private Artist artist;
 
