@@ -10,8 +10,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 
-import java.util.List;
-
 import static com.example.ridepal.filters.UserSpecifications.*;
 
 @Service
