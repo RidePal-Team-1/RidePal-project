@@ -28,8 +28,5 @@ public class DeezerController {
     }
 
     @GetMapping(value = "/playlists")
-    public void getPlaylists(@RequestParam(required = true) String q){ deezerService.getPlaylists(q);}
-
-    @GetMapping("/tracks")
-    public void getTracks(){ deezerService.getTracks();}
+    public void getPlaylists(@RequestParam(required = true) String genre){ deezerService.getPlaylists(genre);}
 }

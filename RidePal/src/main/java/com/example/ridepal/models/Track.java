@@ -32,4 +32,7 @@ public class Track {
 
     @Column(name = "preview_url")
     private String url;
+
+    @Column(name = "genre")
+    private String genre;
 }

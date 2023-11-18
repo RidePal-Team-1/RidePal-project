@@ -42,6 +42,7 @@ create table tracks
     artist_id   int              not null,
     album_id    int              not null,
     `rank`      double default 0 not null,
+    genre       varchar(20)      not null,
 
     constraint tracks_albums_album_id_fk
         foreign key (album_id) references albums (album_id),

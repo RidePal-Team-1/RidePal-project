@@ -54,12 +54,12 @@ public class DeezerServiceImpl implements DeezerService {
     }
 
     @Override
-    public void getPlaylists(String q) {
-        String playlistsEndpoint = baseUrl+"/search/playlist?q="+q+"&limit=10";
+    public void getPlaylists(String genre) {
+        String playlistsEndpoint = baseUrl+"/search/playlist?q="+genre+"&limit=10";
         DeezerPlaylistResponse response = restTemplate.getForObject(playlistsEndpoint, DeezerPlaylistResponse.class);
         if (response != null && response.getData() != null) {
             List<DeezerPlaylist> playlists = response.getData();
-            savePlaylistsToDataBase(playlists);
+            savePlaylistsToDataBase(playlists, genre);
         }
     }
 
@@ -77,18 +77,18 @@ public class DeezerServiceImpl implements DeezerService {
         }
     }
 
-    private void savePlaylistsToDataBase(List<DeezerPlaylist> playlists) {
+    private void savePlaylistsToDataBase(List<DeezerPlaylist> playlists, String genre) {
          for(DeezerPlaylist deezerPlaylist : playlists){
              String trackList = deezerPlaylist.getTracklist();
              DeezerTrackResponse response = restTemplate.getForObject(trackList, DeezerTrackResponse.class);
              if (response != null && response.getData() != null) {
                  List<DeezerTrack> tracks = response.getData();
-                 saveTracksToDataBase(tracks);
+                 saveTracksToDataBase(tracks, genre);
              }
         }
     }
 
-    private void saveTracksToDataBase(List<DeezerTrack> tracks) {
+    private void saveTracksToDataBase(List<DeezerTrack> tracks, String genre) {
         for (DeezerTrack deezerTrack : tracks) {
 
             DeezerArtist deezerArtist = deezerTrack.getArtist();
@@ -110,6 +110,7 @@ public class DeezerServiceImpl implements DeezerService {
             track.setUrl(deezerTrack.getPreview());
             track.setArtist(artist);
             track.setAlbum(album);
+            track.setGenre(genre);
             trackRepository.save(track);
         }
     }
