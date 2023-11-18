@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @RequiredArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DeezerGenresResponse {
+public class DeezerPlaylistResponse {
 
-    private List<DeezerGenre> data;
+    private List<DeezerPlaylist> data;
 }
