@@ -60,6 +60,8 @@ public class DeezerServiceImpl implements DeezerService {
         if (response != null && response.getData() != null) {
             List<DeezerPlaylist> playlists = response.getData();
             savePlaylistsToDataBase(playlists);
+
+
         }
     }
 
