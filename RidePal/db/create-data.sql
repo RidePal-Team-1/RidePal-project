@@ -2,7 +2,7 @@ create table albums
 (
     album_id            int auto_increment
         primary key,
-    album_name          varchar(50) not null,
+    album_name          varchar(150) not null,
     album_tracklist_url longtext    not null
 );
 
@@ -10,7 +10,7 @@ create table artists
 (
     artist_id            int auto_increment
         primary key,
-    artist_name          varchar(30) not null,
+    artist_name          varchar(100) not null,
     artist_tracklist_url longtext    not null
 );
 
@@ -34,9 +34,9 @@ create table genres
 
 create table tracks
 (
-    track_id    int              not null
+    track_id    int auto_increment  not null
         primary key,
-    track_title varchar(60)      not null,
+    track_title varchar(150)      not null,
     preview_url longtext         not null,
     playtime    double default 0 not null,
     artist_id   int              not null,

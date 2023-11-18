@@ -1,9 +1,11 @@
 package com.example.ridepal.services;
 
-import com.example.ridepal.deezer.DeezerGenre;
-import com.example.ridepal.deezer.DeezerGenresResponse;
-import com.example.ridepal.models.Genre;
+import com.example.ridepal.deezer.*;
+import com.example.ridepal.models.*;
+import com.example.ridepal.repositories.AlbumRepository;
+import com.example.ridepal.repositories.ArtistRepository;
 import com.example.ridepal.repositories.GenreRepository;
+import com.example.ridepal.repositories.TrackRepository;
 import com.example.ridepal.services.contracts.DeezerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,13 +23,24 @@ public class DeezerServiceImpl implements DeezerService {
 
     private final GenreRepository genreRepository;
 
+    private final TrackRepository trackRepository;
+
+    private final ArtistRepository artistRepository;
+
+    private final AlbumRepository albumRepository;
+
     @Autowired
     public DeezerServiceImpl(RestTemplate restTemplate, @Value("${deezer.api.base-url}") String baseUrl,
-                             @Value("${deezer.api.key}") String apiKey, GenreRepository genreRepository) {
+                             @Value("${deezer.api.key}") String apiKey,
+                             GenreRepository genreRepository, TrackRepository trackRepository,
+                             ArtistRepository artistRepository, AlbumRepository albumRepository) {
         this.restTemplate = restTemplate;
         this.baseUrl = baseUrl;
         this.apiKey = apiKey;
         this.genreRepository = genreRepository;
+        this.trackRepository = trackRepository;
+        this.artistRepository = artistRepository;
+        this.albumRepository = albumRepository;
     }
 
     @Override
@@ -40,11 +53,64 @@ public class DeezerServiceImpl implements DeezerService {
         }
     }
 
+    @Override
+    public void getPlaylists(String q) {
+        String playlistsEndpoint = baseUrl+"/search/playlist?q="+q+"&limit=10";
+        DeezerPlaylistResponse response = restTemplate.getForObject(playlistsEndpoint, DeezerPlaylistResponse.class);
+        if (response != null && response.getData() != null) {
+            List<DeezerPlaylist> playlists = response.getData();
+            savePlaylistsToDataBase(playlists);
+        }
+    }
+
+    @Override
+    public void getTracks() {
+
+    }
+
+
     private void saveGenresToDatabase(List<DeezerGenre> genres) {
         for (DeezerGenre deezerGenre : genres) {
             Genre genre = new Genre();
             genre.setName(deezerGenre.getName());
             genreRepository.save(genre);
+        }
+    }
+
+    private void savePlaylistsToDataBase(List<DeezerPlaylist> playlists) {
+         for(DeezerPlaylist deezerPlaylist : playlists){
+             String trackList = deezerPlaylist.getTracklist();
+             DeezerTrackResponse response = restTemplate.getForObject(trackList, DeezerTrackResponse.class);
+             if (response != null && response.getData() != null) {
+                 List<DeezerTrack> tracks = response.getData();
+                 saveTracksToDataBase(tracks);
+             }
+        }
+    }
+
+    private void saveTracksToDataBase(List<DeezerTrack> tracks) {
+        for (DeezerTrack deezerTrack : tracks) {
+
+            DeezerArtist deezerArtist = deezerTrack.getArtist();
+            Artist artist = new Artist();
+            artist.setName(deezerArtist.getName());
+            artist.setTrackListUrl(deezerArtist.getLink());
+            artistRepository.save(artist);
+
+            DeezerAlbum deezerAlbum = deezerTrack.getAlbum();
+            Album album = new Album();
+            album.setName(deezerAlbum.getTitle());
+            album.setUrl(deezerAlbum.getTracklist());
+            albumRepository.save(album);
+
+            Track track = new Track();
+            track.setTitle(deezerTrack.getTitle());
+            track.setRank(deezerTrack.getRank());
+            track.setPlaytime(deezerTrack.getDuration());
+            track.setUrl(deezerTrack.getPreview());
+            track.setArtist(artist);
+            track.setAlbum(album);
+            trackRepository.save(track);
         }
     }
 }
