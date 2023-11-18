@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Sign Up</title>
+</head>
+<body>
+<h1>Sign Up</h1>
+<form th:action="@{/auth/register}" method="post" th:object="${user}">
+    <label for="email">Email </label>:
+    <input type="text" id="email"  th:field="*{email}" />
+    <br/>
+    <label class="error" th:errors="*{email}">Email error placeholder</label>
+    <br/><br/>
+
+    <label for="email">Username </label>:
+    <input type="text" id="username"  th:field="*{username}" />
+    <br/>
+    <label class="error" th:errors="*{username}">Username error placeholder</label>
+    <br/><br/>
+
+    <label for="password">Password </label>:
+    <input type="password" id="password" th:field="*{password}"/>
+    <br />
+    <label class="error" th:errors="*{password}">Password error placeholder</label>
+    <br/><br/>
+
+    <label for="password">Password Confirm</label>:
+    <input type="password" id="passwordConfirm" th:field="*{passwordConfirm}"/>
+    <br/>
+    <label class="error" th:errors="*{passwordConfirm}">Password Confirm error placeholder</label>
+    <br/><br/>
+
+    <label for="first_name">First Name </label>:
+    <input type="text" id="first_name"  th:field="*{firstName}" />
+    <br/>
+    <label class="error" th:errors="*{firstName}">First name error placeholder</label>
+    <br/><br/>
+
+    <label for="last_name">Last Name </label>:
+    <input type="text" id="last_name"  th:field="*{lastName}" />
+    <br/>
+    <label class="error" th:errors="*{lastName}">Last name error placeholder</label>
+    <br/><br/>
+
+    <input type="submit" value="Sign Up" /> <br />
+</form>
+
+<p>Already have an account? </p> <br/>
+<a href="/login">Login</a>
+</body>
+</html>

@@ -30,19 +30,19 @@ public class UserDto {
 
     @NotEmpty(message = "First name can't be empty!")
     @Size(min = 4, max = 32, message = "First name must be between 4 and 32 characters long!")
-    private String first_name;
+    private String firstName;
 
     @NotEmpty(message = "Last name can't be empty!")
     @Size(min = 4, max = 32, message = "Last name must be between 4 and 32 characters long!")
-    private String last_name;
+    private String lastName;
 
     @NotEmpty(message = "Email can't be empty!")
     @Email
     private String email;
 
-    private String profile_picture;
+    private String profilePicture;
 
     public UserDto() {
-        this.profile_picture = null;
+        this.profilePicture = null;
     }
 }

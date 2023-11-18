@@ -22,4 +22,10 @@ public class GenreServiceImpl implements GenreService {
         return genreRepository.findAll(pageable);
     }
 
+    @Override
+    public Genre findById(int id) {
+        return genreRepository.findById(id);
+    }
+
+
 }

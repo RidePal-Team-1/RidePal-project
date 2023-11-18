@@ -1,7 +1,9 @@
 package com.example.ridepal.controllers.rest;
 
+import com.example.ridepal.exceptions.EntityNotFoundException;
 import com.example.ridepal.filters.enums.ArtistSortField;
 import com.example.ridepal.filters.enums.GenreSortField;
+import com.example.ridepal.models.Album;
 import com.example.ridepal.models.Artist;
 import com.example.ridepal.services.contracts.ArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/artists")
@@ -32,5 +33,14 @@ public class ArtistController {
                                 @RequestParam(defaultValue = "DESC") Sort.Direction sortDirection) {
         Pageable pageable = PageRequest.of(page,sizePerPage,sortDirection,sortField.getDatabaseFieldName());
         return artistService.findAll(pageable);
+    }
+
+    @GetMapping("/{id}")
+    public Artist findById(@PathVariable int id){
+        try{
+            return artistService.findById(id);
+        }catch (EntityNotFoundException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
 }

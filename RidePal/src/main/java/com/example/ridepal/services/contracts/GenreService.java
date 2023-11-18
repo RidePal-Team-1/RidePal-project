@@ -9,4 +9,6 @@ import java.util.List;
 public interface GenreService {
 
     Page<Genre> findAll(Pageable pageable);
+
+    Genre findById(int id);
 }

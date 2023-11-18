@@ -55,9 +55,9 @@ public class UserController {
     }
 
     @PostMapping
-    public void create(@Valid @RequestBody UserDto dto) {
+    public User create(@Valid @RequestBody UserDto dto) {
        User user = mapper.fromDto(dto);
-       userService.create(user);
+       return userService.create(user);
     }
 
     @PutMapping("/{id}")

@@ -19,4 +19,11 @@ public class ArtistServiceImpl implements ArtistService {
     public Page<Artist> findAll(Pageable pageable) {
         return artistRepository.findAll(pageable);
     }
+
+    @Override
+    public Artist findById(int id) {
+        return artistRepository.findById(id);
+    }
+
+
 }

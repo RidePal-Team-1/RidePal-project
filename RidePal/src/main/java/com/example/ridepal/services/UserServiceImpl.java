@@ -1,5 +1,6 @@
 package com.example.ridepal.services;
 
+import com.example.ridepal.exceptions.DuplicateEntityException;
 import com.example.ridepal.exceptions.EntityNotFoundException;
 import com.example.ridepal.models.User;
 import com.example.ridepal.repositories.UserRepository;
@@ -42,13 +43,18 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+
     @Override
-    public void create(User user) {
-        userRepository.save(user);
+    public User create(User user) {
+        checkUsernameUniqueness(user);
+        checkEmailUniqueness(user);
+        return userRepository.save(user);
     }
 
     @Override
     public void update(User user) {
+        checkUsernameUniqueness(user);
+        checkEmailUniqueness(user);
         userRepository.save(user);
     }
 
@@ -59,5 +65,19 @@ public class UserServiceImpl implements UserService {
             throw new EntityNotFoundException("User", id);
         }
         userRepository.delete(user);
+    }
+
+    private void checkUsernameUniqueness(User user) {
+        User repositoryUser = userRepository.findByUsername(user.getUsername());
+        if (repositoryUser != null) {
+            throw new DuplicateEntityException("User", "username", user.getUsername());
+        }
+    }
+
+    private void checkEmailUniqueness(User user) {
+        User repositoryUser = userRepository.findByEmail(user.getEmail());
+        if (repositoryUser != null) {
+            throw new DuplicateEntityException("User", "email", user.getEmail());
+        }
     }
 }

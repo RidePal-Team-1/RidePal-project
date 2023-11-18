@@ -7,4 +7,6 @@ import org.springframework.data.domain.Pageable;
 public interface ArtistService {
 
     Page<Artist> findAll(Pageable pageable);
+
+    Artist findById(int id);
 }
