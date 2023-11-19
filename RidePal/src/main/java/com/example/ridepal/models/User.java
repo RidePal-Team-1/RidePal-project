@@ -1,5 +1,6 @@
 package com.example.ridepal.models;
 
+import com.example.ridepal.filters.enums.Provider;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -23,6 +24,7 @@ public class User {
     @Column(name = "username")
     private String username;
 
+    @JsonIgnore
     @Column(name = "password")
     private String password;
 
@@ -37,6 +39,10 @@ public class User {
 
     @Column(name = "profile_picture")
     private String profile_picture;
+
+    @JsonIgnore
+    @Enumerated(EnumType.STRING)
+    private Provider provider;
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)

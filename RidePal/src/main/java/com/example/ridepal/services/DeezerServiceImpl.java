@@ -19,7 +19,6 @@ public class DeezerServiceImpl implements DeezerService {
 
     private final RestTemplate restTemplate;
     private final String baseUrl;
-    private final String apiKey;
 
     private final GenreRepository genreRepository;
 
@@ -31,12 +30,10 @@ public class DeezerServiceImpl implements DeezerService {
 
     @Autowired
     public DeezerServiceImpl(RestTemplate restTemplate, @Value("${deezer.api.base-url}") String baseUrl,
-                             @Value("${deezer.api.key}") String apiKey,
                              GenreRepository genreRepository, TrackRepository trackRepository,
                              ArtistRepository artistRepository, AlbumRepository albumRepository) {
         this.restTemplate = restTemplate;
         this.baseUrl = baseUrl;
-        this.apiKey = apiKey;
         this.genreRepository = genreRepository;
         this.trackRepository = trackRepository;
         this.artistRepository = artistRepository;

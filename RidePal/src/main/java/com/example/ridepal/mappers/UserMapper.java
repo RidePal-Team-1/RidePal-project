@@ -1,6 +1,7 @@
 package com.example.ridepal.mappers;
 
 import com.example.ridepal.exceptions.EntityNotFoundException;
+import com.example.ridepal.filters.enums.Provider;
 import com.example.ridepal.models.Role;
 import com.example.ridepal.models.User;
 import com.example.ridepal.models.dtos.UserDto;
@@ -48,6 +49,7 @@ public class UserMapper {
         Set<Role> roles = new HashSet<>();
         roles.add(roleRepository.findByName("USER"));
         user.setRoles(roles);
+        user.setProvider(Provider.LOCAL);
         return user;
     }
 

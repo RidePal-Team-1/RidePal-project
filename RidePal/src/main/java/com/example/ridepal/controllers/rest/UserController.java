@@ -40,7 +40,6 @@ public class UserController {
                               @RequestParam(defaultValue = "ID") UserSortField sortField,
                               @RequestParam(defaultValue = "DESC") Sort.Direction sortDirection) {
         Pageable pageable = PageRequest.of(page, sizePerPage, sortDirection, sortField.getDatabaseFieldName());
-
         return userService.findAll(username, firstName, lastName, email, pageable);
     }
 
