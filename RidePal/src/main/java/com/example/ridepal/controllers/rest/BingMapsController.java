@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/maps")
 public class BingMapsController {
@@ -19,7 +21,8 @@ public class BingMapsController {
     }
 
    @GetMapping
-    public BingLocationResponse getLocation(@RequestParam(required = true) String location){
-       return bingMapsService.getLocation(location);
+    public void getLocation(@RequestParam(required = true) String startPoint,
+                                                  @RequestParam(required = true) String endPoint){
+      bingMapsService.getLocations(startPoint, endPoint);
     }
 }

@@ -5,18 +5,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class BingResource {
-    @JsonProperty("name")
-    private String name;
-
-    @JsonProperty("point")
-    private BingPoint point;
-
-    @JsonProperty("results")
-    private List<BingResult> results;
+public class BingResult {
+    @JsonProperty("travelDistance")
+    private Double travelDistance;
+    @JsonProperty("travelDuration")
+    private Double travelDuration;
 }
