@@ -1,5 +1,7 @@
 package com.example.ridepal.deezer;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,24 +12,20 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DeezerTrack {
-    private long id;
-    private boolean readable;
+
+    @JsonProperty("title")
     private String title;
-    private String title_short;
-    private String title_version;
-    private String isrc;
-    private String link;
+    @JsonProperty("duration")
     private int duration;
+    @JsonProperty("rank")
     private int rank;
-    private boolean explicit_lyrics;
-    private int explicit_content_lyrics;
-    private int explicit_content_cover;
+    @JsonProperty("preview")
     private String preview;
-    private String md5_image;
-    private long time_add;
+    @JsonProperty("artist")
     private DeezerArtist artist;
+    @JsonProperty("album")
     private DeezerAlbum album;
-    private String type;
 }
+//    private String md5_image;

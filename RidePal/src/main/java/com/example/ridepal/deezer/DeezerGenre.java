@@ -1,5 +1,7 @@
 package com.example.ridepal.deezer;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,16 +9,16 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DeezerGenre {
-    private int id;
+
+    @JsonProperty("name")
     private String name;
-    private String picture;
-    private String pictureSmall;
-    private String pictureMedium;
-    private String pictureBig;
-    private String pictureXl;
-    private String type;
 }
+//    private String picture;
+//    private String pictureSmall;
+//    private String pictureMedium;
+//    private String pictureBig;
+//    private String pictureXl;
     
     

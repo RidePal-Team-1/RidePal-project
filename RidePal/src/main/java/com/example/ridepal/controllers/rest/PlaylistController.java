@@ -52,7 +52,6 @@ public class PlaylistController {
         }
     }
 
-
     @PutMapping("/{id}")
     public void update(@PathVariable int id, @RequestBody PlaylistDto playlistDto) {
         try {
@@ -71,4 +70,5 @@ public class PlaylistController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
+
 }

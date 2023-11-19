@@ -100,6 +100,8 @@ create table playlists_genres
         foreign key (genre_id) references genres (genre_id)
 );
 
+
+
 create table playlists_tracks
 (
     playlist_id int not null,

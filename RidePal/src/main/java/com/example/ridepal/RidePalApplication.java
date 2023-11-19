@@ -15,5 +15,4 @@ public class RidePalApplication {
     public static void main(String[] args) {
         SpringApplication.run(RidePalApplication.class, args);
     }
-
 }

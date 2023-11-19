@@ -1,19 +1,17 @@
-package com.example.ridepal.deezer;
+package com.example.ridepal.maps;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DeezerPlaylist {
+public class BingAddress {
+    @JsonProperty("countryRegion")
+    private String countryRegion;
 
-    @JsonProperty("tracklist")
-    private String trackList;
+    @JsonProperty("formattedAddress")
+    private String formattedAddress;
 }
-

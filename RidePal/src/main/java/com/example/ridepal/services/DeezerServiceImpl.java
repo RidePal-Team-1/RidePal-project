@@ -68,7 +68,6 @@ public class DeezerServiceImpl implements DeezerService {
 
     }
 
-
     private void saveGenresToDatabase(List<DeezerGenre> genres) {
         for (DeezerGenre deezerGenre : genres) {
             Genre genre = new Genre();
@@ -79,7 +78,7 @@ public class DeezerServiceImpl implements DeezerService {
 
     private void savePlaylistsToDataBase(List<DeezerPlaylist> playlists, String genre) {
          for(DeezerPlaylist deezerPlaylist : playlists){
-             String trackList = deezerPlaylist.getTracklist();
+             String trackList = deezerPlaylist.getTrackList();
              DeezerTrackResponse response = restTemplate.getForObject(trackList, DeezerTrackResponse.class);
              if (response != null && response.getData() != null) {
                  List<DeezerTrack> tracks = response.getData();
@@ -94,13 +93,13 @@ public class DeezerServiceImpl implements DeezerService {
             DeezerArtist deezerArtist = deezerTrack.getArtist();
             Artist artist = new Artist();
             artist.setName(deezerArtist.getName());
-            artist.setTrackListUrl(deezerArtist.getLink());
+            artist.setTrackListUrl(deezerArtist.getTrackList());
             artistRepository.save(artist);
 
             DeezerAlbum deezerAlbum = deezerTrack.getAlbum();
             Album album = new Album();
             album.setName(deezerAlbum.getTitle());
-            album.setUrl(deezerAlbum.getTracklist());
+            album.setUrl(deezerAlbum.getTrackList());
             albumRepository.save(album);
 
             Track track = new Track();
