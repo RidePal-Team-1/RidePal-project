@@ -122,10 +122,6 @@ public class PlaylistServiceImpl implements PlaylistService {
         playlist.setPlaytime(totalPlaytime);
         playlist.setRank(avgRank / trackSet.size());
         playlist.setTrackSet(trackSet);
-        for (String genreName : dto.getGenres().keySet()) {
-            Genre genre = genreRepository.findByName(genreName);
-            playlist.getGenres().add(genre);
-        }
         return playlistRepository.save(playlist);
     }
 
