@@ -89,24 +89,27 @@ public class DeezerServiceImpl implements DeezerService {
 
             DeezerArtist deezerArtist = deezerTrack.getArtist();
             Artist artist = new Artist();
+            artist.setId(deezerArtist.getId());
             artist.setName(deezerArtist.getName());
             artist.setTrackListUrl(deezerArtist.getTrackList());
             artistRepository.save(artist);
 
             DeezerAlbum deezerAlbum = deezerTrack.getAlbum();
             Album album = new Album();
+            album.setId(deezerAlbum.getId());
             album.setName(deezerAlbum.getTitle());
             album.setUrl(deezerAlbum.getTrackList());
             albumRepository.save(album);
 
             Track track = new Track();
+            track.setId(deezerTrack.getId());
             track.setTitle(deezerTrack.getTitle());
             track.setRank(deezerTrack.getRank());
             track.setPlaytime(deezerTrack.getDuration());
             track.setUrl(deezerTrack.getPreview());
             track.setArtist(artist);
             track.setAlbum(album);
-            track.setGenre(genre);
+            track.setGenre(genreRepository.findByName(genre));
             trackRepository.save(track);
         }
     }

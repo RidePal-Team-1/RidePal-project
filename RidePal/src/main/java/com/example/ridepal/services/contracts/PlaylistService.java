@@ -1,9 +1,11 @@
 package com.example.ridepal.services.contracts;
 
 import com.example.ridepal.models.Playlist;
+import com.example.ridepal.models.dtos.PlaylistDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.security.Principal;
 import java.util.List;
 
 public interface PlaylistService {
@@ -16,5 +18,5 @@ public interface PlaylistService {
 
     void deletePlaylist(int id);
 
-    void createPlaylist(Playlist playlist);
+    Playlist createPlaylist(PlaylistDto dto, Principal principal);
 }

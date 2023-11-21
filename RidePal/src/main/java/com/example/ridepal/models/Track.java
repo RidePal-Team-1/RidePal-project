@@ -28,11 +28,12 @@ public class Track {
     private int playtime;
 
     @Column(name = "rank")
-    private double rank;
+    private long rank;
 
     @Column(name = "preview_url")
     private String url;
 
-    @Column(name = "genre")
-    private String genre;
+    @ManyToOne
+    @JoinColumn(name = "genre_id")
+    private Genre genre;
 }

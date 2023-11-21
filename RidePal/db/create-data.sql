@@ -1,6 +1,6 @@
 create table albums
 (
-    album_id            int auto_increment
+    album_id            int          not null
         primary key,
     album_name          varchar(150) not null,
     album_tracklist_url longtext     not null
@@ -8,7 +8,7 @@ create table albums
 
 create table artists
 (
-    artist_id            int auto_increment
+    artist_id            int          not null
         primary key,
     artist_name          varchar(100) not null,
     artist_tracklist_url longtext     not null
@@ -34,29 +34,21 @@ create table roles
 
 create table tracks
 (
-    track_id    int auto_increment
+    track_id    int              not null
         primary key,
     track_title varchar(150)     not null,
     preview_url longtext         not null,
     playtime    double default 0 not null,
     artist_id   int              not null,
     album_id    int              not null,
-    `rank`      double default 0 not null,
-    genre       varchar(20)      not null,
+    `rank`      bigint default 0 not null,
+    genre_id    int              not null,
     constraint tracks_albums_album_id_fk
         foreign key (album_id) references albums (album_id),
     constraint tracks_artists_artist_id_fk
-        foreign key (artist_id) references artists (artist_id)
-);
-
-create table tracks_genres
-(
-    track_id int not null,
-    genre_id int not null,
-    constraint tracks_genres_id_fk
-        foreign key (genre_id) references genres (genre_id),
-    constraint tracks_tags_tracks_track_id_fk
-        foreign key (track_id) references tracks (track_id)
+        foreign key (artist_id) references artists (artist_id),
+    constraint tracks_genres_genre_id_fk
+        foreign key (genre_id) references genres (genre_id)
 );
 
 create table users
@@ -83,7 +75,7 @@ create table playlists
         primary key,
     title          varchar(30)      not null,
     total_playtime double default 0 not null,
-    `rank`         double default 0 not null,
+    `rank`         bigint default 0 not null,
     user_id        int              not null,
     constraint playlists_users_user_id_fk
         foreign key (user_id) references users (user_id)
@@ -118,3 +110,4 @@ create table users_roles
     constraint users_roles_users_user_id_fk
         foreign key (user_id) references users (user_id)
 );
+

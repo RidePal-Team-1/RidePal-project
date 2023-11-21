@@ -10,8 +10,12 @@ import lombok.Setter;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DeezerAlbum {
 
+    @JsonProperty("id")
+    private int id;
+
     @JsonProperty("title")
     private String title;
+
     @JsonProperty("tracklist")
     private String trackList;
 }

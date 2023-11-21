@@ -24,14 +24,13 @@ public class Playlist {
     private double playtime;
 
     @Column(name = "rank")
-    private double rank;
+    private long rank;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User creator;
 
 
-    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "playlists_tracks",
@@ -40,7 +39,6 @@ public class Playlist {
     )
     private Set<Track> trackSet = new HashSet<>();
 
-    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "playlists_genres",

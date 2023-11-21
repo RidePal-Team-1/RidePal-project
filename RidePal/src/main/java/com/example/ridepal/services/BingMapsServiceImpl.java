@@ -18,7 +18,8 @@ public class BingMapsServiceImpl implements BingMapService {
     private final BingConfig bingConfig;
 
     private final RestTemplate restTemplate;
-    public void getLocations(String startPoint, String endPoint){
+
+    public double[] getLocations(String startPoint, String endPoint){
         String location = bingConfig.getBaseUrl()+"/REST/v1/Locations/";
 
         String startLocationUrl = String.format("%s%s?key=%s",location, startPoint, bingConfig.getApiKey());
@@ -35,19 +36,22 @@ public class BingMapsServiceImpl implements BingMapService {
         String endLatitude = endCoordinates.get(0).toString()+',';
         String endLongitude = endCoordinates.get(1).toString();
 
-        getDurationAndDistance(startLatitude,startLongitude,endLatitude,endLongitude);
+        return getDurationAndDistance(startLatitude,startLongitude,endLatitude,endLongitude);
     }
 
-    public void getDurationAndDistance(String startLatitude, String startLongitude,
+    private double[] getDurationAndDistance(String startLatitude, String startLongitude,
                                        String endLatitude, String endLongitude){
         String url = String.format(
                 "%s/REST/v1/Routes/DistanceMatrix?origins=%s%s&destinations=%s%s&travelMode=Driving&key=%s",
                 bingConfig.getBaseUrl(),startLatitude,startLongitude,endLatitude,endLongitude,bingConfig.getApiKey());
 
         BingLocationResponse response = restTemplate.getForObject(url, BingLocationResponse.class);
+
         double travelDistance = response.getResourceSets().get(0).getResources().get(0).getResults().get(0).getTravelDistance();
         double travelDuration = response.getResourceSets().get(0).getResources().get(0).getResults().get(0).getTravelDuration();
-
-        String success = "Great Success";
+        double[] array = new double[2];
+        array[0] = travelDistance;
+        array[1] = travelDuration;
+        return array;
     }
 }

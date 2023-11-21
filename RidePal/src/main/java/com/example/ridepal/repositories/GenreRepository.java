@@ -12,4 +12,6 @@ public interface GenreRepository extends JpaRepository<Genre, Integer> {
     Page<Genre> findAll(Pageable pageable);
 
     Genre findById(int id);
+
+    Genre findByName(String name);
 }

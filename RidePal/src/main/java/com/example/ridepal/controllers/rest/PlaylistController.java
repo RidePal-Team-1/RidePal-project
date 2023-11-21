@@ -6,6 +6,7 @@ import com.example.ridepal.mappers.PlaylistMapper;
 import com.example.ridepal.models.Playlist;
 import com.example.ridepal.models.dtos.PlaylistDto;
 import com.example.ridepal.services.contracts.PlaylistService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +15,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/playlists")
@@ -50,6 +53,11 @@ public class PlaylistController {
         } catch (EntityNotFoundException e) {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
+    }
+
+    @PostMapping
+    public Playlist create(@Valid @RequestBody PlaylistDto dto, Principal principal) {
+           return playlistService.createPlaylist(dto, principal);
     }
 
     @PutMapping("/{id}")

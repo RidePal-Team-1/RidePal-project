@@ -5,5 +5,5 @@ import com.example.ridepal.maps.BingLocationResponse;
 import java.util.List;
 
 public interface BingMapService {
-    void getLocations(String startPoint, String endPoint);
+    double[] getLocations(String startPoint, String endPoint);
 }

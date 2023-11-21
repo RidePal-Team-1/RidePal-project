@@ -22,7 +22,7 @@ public class BingMapsController {
 
    @GetMapping
     public void getLocation(@RequestParam(required = true) String startPoint,
-                                                  @RequestParam(required = true) String endPoint){
+                            @RequestParam(required = true) String endPoint){
       bingMapsService.getLocations(startPoint, endPoint);
     }
 }
