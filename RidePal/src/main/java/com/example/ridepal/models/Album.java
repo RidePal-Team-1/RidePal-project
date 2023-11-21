@@ -7,10 +7,10 @@ import lombok.Data;
 @Data
 @Table(name = "albums")
 public class Album {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "album_id")
-    private int id;
+    private long id;
 
     @Column(name = "album_name")
     private String name;

@@ -13,8 +13,8 @@ import java.net.URL;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DeezerArtist {
 
-    @JsonProperty
-    private int id;
+    @JsonProperty("id")
+    private long id;
 
     @JsonProperty("name")
     private String name;

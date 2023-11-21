@@ -9,9 +9,8 @@ import lombok.Data;
 public class Track {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "track_id")
-    private int id;
+    private long id;
 
     @ManyToOne
     @JoinColumn(name = "artist_id")

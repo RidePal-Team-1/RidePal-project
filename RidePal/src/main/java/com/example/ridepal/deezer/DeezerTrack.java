@@ -15,8 +15,8 @@ import lombok.Setter;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DeezerTrack {
 
-    @JsonProperty
-    private int id;
+    @JsonProperty("id")
+    private long id;
 
     @JsonProperty("title")
     private String title;

@@ -26,4 +26,6 @@ public interface TrackRepository extends JpaRepository<Track, Integer>, JpaSpeci
 
     @Query(value = "SELECT DISTINCT t.artist_id, t.track_id, t.track_title, t.preview_url, t.playtime, t.album_id, t.rank, t.genre_id FROM tracks t JOIN genres g ON t.genre_id = g.genre_id WHERE g.genre_name = :genre  ORDER BY RAND() LIMIT :limit ", nativeQuery = true)
     Set<Track> findTrackByGenre(@Param("genre") String genre, @Param("limit") int limit);
+
+    //Test whether it fetches random tracks
 }

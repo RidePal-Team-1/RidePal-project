@@ -1,6 +1,6 @@
 create table albums
 (
-    album_id            int          not null
+    album_id            bigint          not null
         primary key,
     album_name          varchar(150) not null,
     album_tracklist_url longtext     not null
@@ -8,7 +8,7 @@ create table albums
 
 create table artists
 (
-    artist_id            int          not null
+    artist_id            bigint          not null
         primary key,
     artist_name          varchar(100) not null,
     artist_tracklist_url longtext     not null
@@ -34,13 +34,13 @@ create table roles
 
 create table tracks
 (
-    track_id    int              not null
+    track_id    bigint              not null
         primary key,
     track_title varchar(150)     not null,
     preview_url longtext         not null,
     playtime    double default 0 not null,
-    artist_id   int              not null,
-    album_id    int              not null,
+    artist_id   bigint              not null,
+    album_id    bigint              not null,
     `rank`      bigint default 0 not null,
     genre_id    int              not null,
     constraint tracks_albums_album_id_fk
@@ -94,7 +94,7 @@ create table playlists_genres
 create table playlists_tracks
 (
     playlist_id int not null,
-    track_id    int not null,
+    track_id    bigint not null,
     constraint playlists_tracks_playlists_playlist_id_fk
         foreign key (playlist_id) references playlists (playlist_id),
     constraint playlists_tracks_tracks_track_id_fk

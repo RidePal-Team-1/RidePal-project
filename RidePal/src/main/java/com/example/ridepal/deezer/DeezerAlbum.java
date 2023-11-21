@@ -11,7 +11,7 @@ import lombok.Setter;
 public class DeezerAlbum {
 
     @JsonProperty("id")
-    private int id;
+    private long id;
 
     @JsonProperty("title")
     private String title;

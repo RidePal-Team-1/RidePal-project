@@ -9,9 +9,8 @@ import lombok.Data;
 public class Artist {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "artist_id")
-    private int id;
+    private long id;
 
     @Column(name = "artist_name")
     private String name;
