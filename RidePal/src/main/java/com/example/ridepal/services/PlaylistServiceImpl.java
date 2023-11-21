@@ -11,6 +11,7 @@ import com.example.ridepal.repositories.PlaylistRepository;
 import com.example.ridepal.repositories.TrackRepository;
 import com.example.ridepal.services.contracts.BingMapService;
 import com.example.ridepal.services.contracts.PlaylistService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +28,7 @@ import static com.example.ridepal.filters.specifications.PlaylistSpecifications.
 @Service
 public class PlaylistServiceImpl implements PlaylistService {
 
+    public static final int BUFFER_TRACKS = 12;
     private final PlaylistRepository playlistRepository;
     private final BingMapService bingMapService;
 
@@ -69,41 +71,12 @@ public class PlaylistServiceImpl implements PlaylistService {
     @Override
     public Playlist createPlaylist(PlaylistDto dto, Principal principal) {
         Playlist playlist = playlistMapper.fromDto(dto, principal);
+
         double[] distanceAndDuration = bingMapService.getLocations(dto.getFrom(), dto.getTo());
-
-        int totalTravelTimeInSeconds = (int) distanceAndDuration[1] * 60;
-
-        Map<String, Double> genresDurations = new HashMap<>();
-
-        for (Map.Entry<String, Double> genre: dto.getGenres().entrySet()) {
-            genresDurations.put(genre.getKey(), genre.getValue() * totalTravelTimeInSeconds / 100);
-        }
-
-        Map<String, Integer> averagePlaytimeForGenre = new HashMap<>();
+        Map<String, Double> genresDurations = populatePlaytimeForEachGenre(dto, distanceAndDuration);
+        Map<String, Integer> averagePlaytimeForGenre = calculatingAverageTimePerGenre(genresDurations);
         List<Track> trackSet = new ArrayList<>();
-        for (String genre : genresDurations.keySet()) {
-            averagePlaytimeForGenre.put(genre, trackRepository.findAveragePlayTimeForGenre(genre));
-        }
-
-
-        for (String genre : genresDurations.keySet()) {
-            Set<Track> result;
-            if (dto.isTracksFromSameArtist() && dto.isUseTopTracks()) {
-                result = trackRepository.findTopTrackByGenre(genre,
-                        (int) (genresDurations.get(genre) / averagePlaytimeForGenre.get(genre)) + 12);
-            } else if (dto.isTracksFromSameArtist()) {
-                result = trackRepository.findTrackByGenre(genre,
-                        (int) (genresDurations.get(genre) / averagePlaytimeForGenre.get(genre)) + 12);
-            } else if (dto.isUseTopTracks()) {
-                result = trackRepository.findTopTrackByGenreAndDistinctArtist(genre,
-                        (int) (genresDurations.get(genre) / averagePlaytimeForGenre.get(genre)) + 12);
-            } else {
-                result = trackRepository.findTrackByGenreAndDistinctArtist(genre,
-                        (int) (genresDurations.get(genre) / averagePlaytimeForGenre.get(genre)) + 12);
-            }
-            trackSet.addAll(result);
-        }
-
+        fetchTracksFromDatabase(dto, genresDurations, averagePlaytimeForGenre, trackSet);
         long avgRank = 0;
         int totalPlaytime = 0;
 
@@ -111,18 +84,63 @@ public class PlaylistServiceImpl implements PlaylistService {
             avgRank += track.getRank();
             totalPlaytime += track.getPlaytime();
         }
-
         totalPlaytime /= 60;
 
-        while(totalPlaytime > distanceAndDuration[1]+5){
-            totalPlaytime-=(trackSet.get(trackSet.size()-1).getPlaytime()/60);
-            trackSet.remove(trackSet.size()-1);
-        }
+        totalPlaytime = removeTracksTillPlaytimeInRange(totalPlaytime, distanceAndDuration, trackSet);
 
         playlist.setPlaytime(totalPlaytime);
         playlist.setRank(avgRank / trackSet.size());
         playlist.setTrackSet(trackSet);
         return playlistRepository.save(playlist);
+    }
+
+    private static int removeTracksTillPlaytimeInRange(int totalPlaytime, double[] distanceAndDuration, List<Track> trackSet) {
+        while(totalPlaytime > distanceAndDuration[1]+5){
+            totalPlaytime -=(trackSet.get(trackSet.size()-1).getPlaytime()/60);
+            trackSet.remove(trackSet.size()-1);
+        }
+        return totalPlaytime;
+    }
+
+    @NotNull
+    private Map<String, Integer> calculatingAverageTimePerGenre(Map<String, Double> genresDurations) {
+        Map<String, Integer> averagePlaytimeForGenre = new HashMap<>();
+        for (String genre : genresDurations.keySet()) {
+            averagePlaytimeForGenre.put(genre, trackRepository.findAveragePlayTimeForGenre(genre));
+        }
+        return averagePlaytimeForGenre;
+    }
+
+    @NotNull
+    private static Map<String, Double> populatePlaytimeForEachGenre(PlaylistDto dto, double[] distanceAndDuration) {
+        int totalTravelTimeInSeconds = (int) distanceAndDuration[1] * 60;
+
+        Map<String, Double> genresDurations = new HashMap<>();
+
+        for (Map.Entry<String, Double> genre: dto.getGenres().entrySet()) {
+            genresDurations.put(genre.getKey(), genre.getValue() * totalTravelTimeInSeconds / 100);
+        }
+        return genresDurations;
+    }
+
+    private void fetchTracksFromDatabase(PlaylistDto dto, Map<String, Double> genresDurations, Map<String, Integer> averagePlaytimeForGenre, List<Track> trackSet) {
+        for (String genre : genresDurations.keySet()) {
+            Set<Track> result;
+            if (dto.isTracksFromSameArtist() && dto.isUseTopTracks()) {
+                result = trackRepository.findTopTrackByGenre(genre,
+                        (int) (genresDurations.get(genre) / averagePlaytimeForGenre.get(genre)) + BUFFER_TRACKS);
+            } else if (dto.isTracksFromSameArtist()) {
+                result = trackRepository.findTrackByGenre(genre,
+                        (int) (genresDurations.get(genre) / averagePlaytimeForGenre.get(genre)) + BUFFER_TRACKS);
+            } else if (dto.isUseTopTracks()) {
+                result = trackRepository.findTopTrackByGenreAndDistinctArtist(genre,
+                        (int) (genresDurations.get(genre) / averagePlaytimeForGenre.get(genre)) + BUFFER_TRACKS);
+            } else {
+                result = trackRepository.findTrackByGenreAndDistinctArtist(genre,
+                        (int) (genresDurations.get(genre) / averagePlaytimeForGenre.get(genre)) + BUFFER_TRACKS);
+            }
+            trackSet.addAll(result);
+        }
     }
 
 
