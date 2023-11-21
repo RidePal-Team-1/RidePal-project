@@ -3,8 +3,10 @@ package com.example.ridepal.services;
 import com.example.ridepal.exceptions.DuplicateEntityException;
 import com.example.ridepal.exceptions.EntityNotFoundException;
 import com.example.ridepal.filters.enums.Provider;
+import com.example.ridepal.models.Playlist;
 import com.example.ridepal.models.Role;
 import com.example.ridepal.models.User;
+import com.example.ridepal.repositories.PlaylistRepository;
 import com.example.ridepal.repositories.RoleRepository;
 import com.example.ridepal.repositories.UserRepository;
 import com.example.ridepal.services.contracts.UserService;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static com.example.ridepal.filters.specifications.UserSpecifications.*;
@@ -27,10 +30,13 @@ public class UserServiceImpl implements UserService {
 
     private final RoleRepository roleRepository;
 
+    private final PlaylistRepository playlistRepository;
+
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PlaylistRepository playlistRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.playlistRepository = playlistRepository;
     }
 
 
@@ -103,5 +109,9 @@ public class UserServiceImpl implements UserService {
             userRepository.save(newUser);
         }
         //TODO see whether i have to set every field in the database with the users
+    }
+
+    public List<Playlist> getUserPlaylists(int id){
+        return playlistRepository.getUserPlaylists(id);
     }
 }

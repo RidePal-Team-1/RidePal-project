@@ -1,8 +1,11 @@
 package com.example.ridepal.services.contracts;
 
+import com.example.ridepal.models.Playlist;
 import com.example.ridepal.models.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface UserService {
 
@@ -17,5 +20,7 @@ public interface UserService {
     void delete(int id);
 
     void processOAuthPostLogin(String username);
+
+    List<Playlist> getUserPlaylists(int id);
 
 }

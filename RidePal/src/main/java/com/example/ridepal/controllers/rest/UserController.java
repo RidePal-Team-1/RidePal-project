@@ -3,6 +3,7 @@ package com.example.ridepal.controllers.rest;
 import com.example.ridepal.exceptions.EntityNotFoundException;
 import com.example.ridepal.filters.enums.UserSortField;
 import com.example.ridepal.mappers.UserMapper;
+import com.example.ridepal.models.Playlist;
 import com.example.ridepal.models.User;
 import com.example.ridepal.models.dtos.UserDto;
 import com.example.ridepal.services.contracts.UserService;
@@ -15,6 +16,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -76,5 +79,10 @@ public class UserController {
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
+    }
+
+    @GetMapping("/{id}/playlists")
+    public List<Playlist> getUserPlaylists(@PathVariable int id){
+        return userService.getUserPlaylists(id);
     }
 }

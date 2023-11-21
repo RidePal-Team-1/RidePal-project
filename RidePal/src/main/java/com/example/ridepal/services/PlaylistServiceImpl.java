@@ -5,16 +5,14 @@ import com.example.ridepal.mappers.PlaylistMapper;
 import com.example.ridepal.models.Genre;
 import com.example.ridepal.models.Playlist;
 import com.example.ridepal.models.Track;
-import com.example.ridepal.models.TrackResult;
 import com.example.ridepal.models.dtos.PlaylistDto;
+import com.example.ridepal.repositories.GenreRepository;
 import com.example.ridepal.repositories.PlaylistRepository;
 import com.example.ridepal.repositories.TrackRepository;
-import com.example.ridepal.repositories.UserRepository;
 import com.example.ridepal.services.contracts.BingMapService;
 import com.example.ridepal.services.contracts.PlaylistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -36,15 +34,18 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     private final TrackRepository trackRepository;
 
+    private final GenreRepository genreRepository;
+
     @Autowired
     public PlaylistServiceImpl(PlaylistRepository playlistRepository,
                                BingMapService bingMapService,
                                PlaylistMapper playlistMapper,
-                               TrackRepository trackRepository) {
+                               TrackRepository trackRepository, GenreRepository genreRepository) {
         this.playlistRepository = playlistRepository;
         this.bingMapService = bingMapService;
         this.playlistMapper = playlistMapper;
         this.trackRepository = trackRepository;
+        this.genreRepository = genreRepository;
     }
 
 
@@ -121,7 +122,10 @@ public class PlaylistServiceImpl implements PlaylistService {
         playlist.setPlaytime(totalPlaytime);
         playlist.setRank(avgRank / trackSet.size());
         playlist.setTrackSet(trackSet);
-
+        for (String genreName : dto.getGenres().keySet()) {
+            Genre genre = genreRepository.findByName(genreName);
+            playlist.getGenres().add(genre);
+        }
         return playlistRepository.save(playlist);
     }
 
