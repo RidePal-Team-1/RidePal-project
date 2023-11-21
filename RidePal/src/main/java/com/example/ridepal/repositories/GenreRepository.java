@@ -13,5 +13,5 @@ public interface GenreRepository extends JpaRepository<Genre, Integer> {
 
     Genre findById(int id);
 
-    Genre findByName(String name);
+    Genre findByName(String genre);
 }

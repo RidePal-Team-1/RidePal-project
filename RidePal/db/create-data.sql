@@ -2,7 +2,7 @@ create table albums
 (
     album_id            bigint          not null
         primary key,
-    album_name          varchar(150) not null,
+    album_name VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci not null,
     album_tracklist_url longtext     not null
 );
 
@@ -10,7 +10,7 @@ create table artists
 (
     artist_id            bigint          not null
         primary key,
-    artist_name          varchar(100) not null,
+    artist_name VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci not null ,
     artist_tracklist_url longtext     not null
 );
 
@@ -36,7 +36,7 @@ create table tracks
 (
     track_id    bigint              not null
         primary key,
-    track_title varchar(150)     not null,
+    track_title VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci not null,
     preview_url longtext         not null,
     playtime    double default 0 not null,
     artist_id   bigint              not null,

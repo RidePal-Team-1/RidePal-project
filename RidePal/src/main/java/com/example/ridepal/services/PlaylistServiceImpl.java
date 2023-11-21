@@ -21,10 +21,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static com.example.ridepal.filters.specifications.PlaylistSpecifications.*;
 
@@ -82,16 +79,29 @@ public class PlaylistServiceImpl implements PlaylistService {
         }
 
         Map<String, Integer> averagePlaytimeForGenre = new HashMap<>();
-        Set<Track> trackSet = new HashSet<>();
+        List<Track> trackSet = new ArrayList<>();
         for (String genre : genresDurations.keySet()) {
             averagePlaytimeForGenre.put(genre, trackRepository.findAveragePlayTimeForGenre(genre));
         }
 
-        for (String genre: genresDurations.keySet()) {
-           Set<Track> result =  trackRepository.findTrackByGenre(genre, (int) (genresDurations.get(genre) / averagePlaytimeForGenre.get(genre)));
-           trackSet.addAll(result);
+
+        for (String genre : genresDurations.keySet()) {
+            Set<Track> result;
+            if (dto.isTracksFromSameArtist() && dto.isUseTopTracks()) {
+                result = trackRepository.findTopTrackByGenre(genre,
+                        (int) (genresDurations.get(genre) / averagePlaytimeForGenre.get(genre)) + 12);
+            } else if (dto.isTracksFromSameArtist()) {
+                result = trackRepository.findTrackByGenre(genre,
+                        (int) (genresDurations.get(genre) / averagePlaytimeForGenre.get(genre)) + 12);
+            } else if (dto.isUseTopTracks()) {
+                result = trackRepository.findTopTrackByGenreAndDistinctArtist(genre,
+                        (int) (genresDurations.get(genre) / averagePlaytimeForGenre.get(genre)) + 12);
+            } else {
+                result = trackRepository.findTrackByGenreAndDistinctArtist(genre,
+                        (int) (genresDurations.get(genre) / averagePlaytimeForGenre.get(genre)) + 12);
+            }
+            trackSet.addAll(result);
         }
-        //add +1 to limit and if you have to remove just remove it.
 
         long avgRank = 0;
         int totalPlaytime = 0;
@@ -103,12 +113,16 @@ public class PlaylistServiceImpl implements PlaylistService {
 
         totalPlaytime /= 60;
 
+        while(totalPlaytime > distanceAndDuration[1]+5){
+            totalPlaytime-=(trackSet.get(trackSet.size()-1).getPlaytime()/60);
+            trackSet.remove(trackSet.size()-1);
+        }
+
         playlist.setPlaytime(totalPlaytime);
         playlist.setRank(avgRank / trackSet.size());
         playlist.setTrackSet(trackSet);
 
         return playlistRepository.save(playlist);
-        //if he chooses 1 genre only do not show field for percentages
     }
 
 
