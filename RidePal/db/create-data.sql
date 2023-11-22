@@ -1,22 +1,22 @@
 create table albums
 (
-    album_id            bigint          not null
+    album_id            bigint                                  not null
         primary key,
-    album_name VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci not null,
-    album_tracklist_url longtext     not null
+    album_name          varchar(255) collate utf8mb4_unicode_ci not null,
+    album_tracklist_url longtext                                not null
 );
 
 create table artists
 (
-    artist_id            bigint          not null
+    artist_id            bigint                                  not null
         primary key,
-    artist_name VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci not null ,
-    artist_tracklist_url longtext     not null
+    artist_name          varchar(255) collate utf8mb4_unicode_ci not null,
+    artist_tracklist_url longtext                                not null
 );
 
 create table genres
 (
-    genre_id   int auto_increment
+    genre_id   bigint         not null
         primary key,
     genre_name varchar(20) not null,
     constraint genres_pk2
@@ -34,15 +34,15 @@ create table roles
 
 create table tracks
 (
-    track_id    bigint              not null
+    track_id    bigint                                  not null
         primary key,
-    track_title VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci not null,
-    preview_url longtext         not null,
-    playtime    double default 0 not null,
-    artist_id   bigint              not null,
-    album_id    bigint              not null,
-    `rank`      bigint default 0 not null,
-    genre_id    int              not null,
+    track_title varchar(255) collate utf8mb4_unicode_ci not null,
+    preview_url longtext                                not null,
+    playtime    double default 0                        not null,
+    artist_id   bigint                                  not null,
+    album_id    bigint                                  not null,
+    `rank`      bigint default 0                        not null,
+    genre_id    bigint                                  not null,
     constraint tracks_albums_album_id_fk
         foreign key (album_id) references albums (album_id),
     constraint tracks_artists_artist_id_fk
@@ -84,7 +84,7 @@ create table playlists
 create table playlists_genres
 (
     playlist_id int not null,
-    genre_id    int not null,
+    genre_id    bigint not null,
     constraint playlists_genres_id_fk
         foreign key (genre_id) references genres (genre_id),
     constraint playlists_playlists_playlist_id_fk
@@ -93,7 +93,7 @@ create table playlists_genres
 
 create table playlists_tracks
 (
-    playlist_id int not null,
+    playlist_id int    not null,
     track_id    bigint not null,
     constraint playlists_tracks_playlists_playlist_id_fk
         foreign key (playlist_id) references playlists (playlist_id),

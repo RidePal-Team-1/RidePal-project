@@ -28,24 +28,22 @@ import static com.example.ridepal.filters.specifications.PlaylistSpecifications.
 public class PlaylistServiceImpl implements PlaylistService {
 
     private final PlaylistRepository playlistRepository;
+
     private final BingMapService bingMapService;
 
     private final PlaylistMapper playlistMapper;
 
     private final TrackRepository trackRepository;
 
-    private final GenreRepository genreRepository;
-
     @Autowired
     public PlaylistServiceImpl(PlaylistRepository playlistRepository,
                                BingMapService bingMapService,
                                PlaylistMapper playlistMapper,
-                               TrackRepository trackRepository, GenreRepository genreRepository) {
+                               TrackRepository trackRepository) {
         this.playlistRepository = playlistRepository;
         this.bingMapService = bingMapService;
         this.playlistMapper = playlistMapper;
         this.trackRepository = trackRepository;
-        this.genreRepository = genreRepository;
     }
 
 

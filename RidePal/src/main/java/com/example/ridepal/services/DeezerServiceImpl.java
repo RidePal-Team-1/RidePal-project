@@ -68,6 +68,7 @@ public class DeezerServiceImpl implements DeezerService {
     private void saveGenresToDatabase(List<DeezerGenre> genres) {
         for (DeezerGenre deezerGenre : genres) {
             Genre genre = new Genre();
+            genre.setId(deezerGenre.getId());
             genre.setName(deezerGenre.getName());
             genreRepository.save(genre);
         }
