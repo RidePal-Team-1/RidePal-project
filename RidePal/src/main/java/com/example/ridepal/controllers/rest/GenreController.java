@@ -4,6 +4,8 @@ import com.example.ridepal.exceptions.EntityNotFoundException;
 import com.example.ridepal.filters.enums.GenreSortField;
 import com.example.ridepal.models.Genre;
 import com.example.ridepal.services.contracts.GenreService;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/genres")
+@Hidden
 public class GenreController {
 
     private final GenreService genreService;

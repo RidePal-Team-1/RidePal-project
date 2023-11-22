@@ -7,6 +7,8 @@ import com.example.ridepal.mappers.RoleMapper;
 import com.example.ridepal.models.Role;
 import com.example.ridepal.models.dtos.RoleDto;
 import com.example.ridepal.services.contracts.RoleService;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/roles")
+@Hidden
 public class RoleController {
 
     private final RoleService roleService;
