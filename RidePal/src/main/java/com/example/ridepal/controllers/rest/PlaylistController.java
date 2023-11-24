@@ -105,7 +105,7 @@ public class PlaylistController {
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Invalid id supplied",
                     content = @Content) })
-    public void update(@PathVariable int id, @RequestBody PlaylistDto playlistDto) {
+    public void update(@PathVariable int id,@Valid @RequestBody PlaylistDto playlistDto) {
         try {
             Playlist playlist = playlistMapper.fromDto(playlistDto, id);
             playlistService.updatePlaylist(playlist);

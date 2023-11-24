@@ -58,6 +58,23 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
+    public User findByUsername(String username) {
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new EntityNotFoundException("User", "username", username);
+        }
+        return user;
+    }
+
+    public User findByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new EntityNotFoundException("User", "email", email);
+        }
+        return user;
+    }
+
 
     @Override
     public User create(User user) {

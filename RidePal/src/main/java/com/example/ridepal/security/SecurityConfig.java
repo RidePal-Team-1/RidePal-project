@@ -37,17 +37,24 @@ public class SecurityConfig {
 
         //Public access
         http.authorizeHttpRequests(authz -> authz
-                        //Authenticated
-                        .requestMatchers("/auth/login", "/oauth/**", "/auth/register").permitAll()
-                        .requestMatchers("/").authenticated()
-                        .anyRequest().authenticated())
+                        //Public
+                        .requestMatchers(
+                                "/auth/login",
+                                "/oauth/**",
+                                "/auth/register",
+                                "swagger-ui/index.html",
+                                "/home",
+                                "/static/js/**",
+                                "/css/**",
+                                "/assets/**").permitAll()
+                        .anyRequest().permitAll())
 
                 //TODO see if you are authenticated and try to login again if it works
 
                 //Login
                 .formLogin(formLogin -> formLogin
                         .loginPage("/auth/login")
-                        .defaultSuccessUrl("/")
+                        .defaultSuccessUrl("/home")
                         .failureUrl("/auth/login?error=true")
                         .permitAll())
                 .oauth2Login(oauth -> oauth
@@ -58,10 +65,15 @@ public class SecurityConfig {
                             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
                                 CustomOAuth2User oauthUser = (CustomOAuth2User) authentication.getPrincipal();
                                 userService.processOAuthPostLogin(oauthUser.getEmail());
-                                response.sendRedirect("/");
+                                response.sendRedirect("/home");
                             }
                         }))
-                .csrf(AbstractHttpConfigurer::disable);
+                .logout(logout -> logout.logoutUrl("/auth/logout")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .logoutSuccessUrl("/auth/login")
+                        .permitAll())
+                .csrf(AbstractHttpConfigurer::disable)  ;
         http.httpBasic(Customizer.withDefaults());
 
         //Authenticated + Role
