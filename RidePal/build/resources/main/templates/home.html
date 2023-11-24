@@ -35,15 +35,15 @@
           <div class="menu">
               <ul class="menu-links">
                   <li class="nav-link">
-                      <a href="#">
+                      <a th:href="@{/home}">
                           <i class='bx bx-home-alt icon' ></i>
-                          <span class="text nav-text">Dashboard</span>
+                          <span class="text nav-text">Home</span>
                       </a>
                   </li>
                   <li class="nav-link">
-                      <a href="#">
+                      <a th:href="@{/admin-portal}">
                           <i class='bx bx-bar-chart-alt-2 icon' ></i>
-                          <span class="text nav-text">Revenue</span>
+                          <span class="text nav-text">Admin Portal</span>
                       </a>
                   </li>
                   <li class="nav-link">
@@ -54,32 +54,15 @@
                   </li>
                   <li class="nav-link">
                       <a href="#">
-                          <i class='bx bx-pie-chart-alt icon' ></i>
-                          <span class="text nav-text">Analytics</span>
-                      </a>
-                  </li>
-                  <li class="nav-link">
-                      <a href="#">
                           <i class='bx bx-heart icon' ></i>
-                          <span class="text nav-text">Likes</span>
-                      </a>
-                  </li>
-                  <li class="nav-link">
-                      <a href="#">
-                          <i class='bx bx-wallet icon' ></i>
-                          <span class="text nav-text">Wallets</span>
+                          <span class="text nav-text">Top Tracks</span>
                       </a>
                   </li>
               </ul>
           </div>
 
          <div class="bottom-content">
-             <li class="nav-link">
-                 <a href="#">
-                     <i class='bx bx-log-out icon' ></i>
-                     <span class="text nav-text">Logout</span>
-                 </a>
-             </li>
+
 
              <li class="mode">
                  <div class="moon-sun">
@@ -107,6 +90,18 @@
          <input class="search-box" type="text" placeholder="Search...">
      </div>
         <img sec:authorize="isAuthenticated()" class="user-pic" th:src="${user.profile_picture  != null ? user.profile_picture : '/assets/img/logo.png'}" onclick="toggleMenu()" alt="user">
+         <div sec:authorize="!isAuthenticated()" class="button-1">
+                         <a th:href="@{/auth/login}">
+                             <i class='bx bx-log-in icon'></i>
+                             <span class="text nav-text">Log In</span>
+                         </a>
+         </div>
+         <div sec:authorize="!isAuthenticated()" class="button-1">
+             <a th:href="@{/auth/register}">
+                 <i class='bx bx-registered icon' ></i>
+                 <span class="text nav-text">Register</span>
+             </a>
+         </div>
 
          <div class="sub-menu-wrap" id="subMenu">
              <div class="sub-menu">

@@ -276,10 +276,10 @@ body.dark .switch::before{
 
 .home {
     height: 100vh;
-    width: calc(100% - 250px);
+    width: calc(100% - 88px);
     background: var(--sidebar-color);
     position: relative;
-    left: 250px;
+    left: 88px;
     transition: var(--tran-05);
 }
 
@@ -442,6 +442,7 @@ section nav {
 
 .search-container {
     width: 70%;
+    margin-left: 100px;
 }
 
 .sub-menu-link {
@@ -479,7 +480,7 @@ section nav {
 body.dark section nav {
     background: var(--sidebar-color); /* Set the background color to match the dark mode */
     color: var(--text-color); /* Set the text color to match the dark mode text color */
-    transition: var(--tran-05);
+    transition: var(--tran-02);
     border: 1px;
 }
 
@@ -519,4 +520,75 @@ body.dark .user-pic {
 .sidebar .close .home {
     width:100%;
 }
+
+
+                                                     /* CSS */
+.button-1 {
+    background-color: white;
+    border-radius: 6px;
+    border-style: none;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    height: 40px;
+    line-height: 20px;
+    list-style: none;
+    margin: 0;
+    outline: none;
+    padding: 5px 5px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: baseline;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    transition: var(--tran-04);
+}
+
+.button-1 a {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: var(--tran-04);
+}
+
+.button-1 .text {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-color);
+    transition: var(--tran-03);
+    white-space: nowrap;
+    opacity: 1;
+}
+
+.button-1:hover,
+.button-1:focus {
+    background-color: var(--primary-color);
+}
+
+.button-1:hover .icon,
+.button-1:hover .text {
+    color: white;
+}
+
+body.dark .button-1 {
+    background-color: var(--sidebar-color);
+}
+
+body.dark .button-1:hover{
+    background-color: var(--primary-color-light);
+}
+
+body.dark .button-1 .icon,
+body.dark .button-1 .text {
+    color: var(--text-color);
+}
+
+
+
 
