@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.security.Principal;
 
 @Controller
-@RequestMapping("/home")
+@RequestMapping("")
 public class HomeController {
 
 
@@ -28,6 +28,11 @@ public class HomeController {
     }
 
     @GetMapping
+    public String landing(){
+        return "LandingPage";
+    }
+
+    @GetMapping("/home")
     public String home(Model model, Authentication authentication) {
         extractUserFromProvider(model, authentication);
         return "home";
