@@ -11,7 +11,13 @@
     <!----===== Boxicons CSS ===== -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
+    <!----===== Google Fonts Link For Icons ===== -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
     <title>Title</title>
+    <script src="/js/scripts.js" defer></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body class="home-body">
 <div></div>
@@ -62,8 +68,6 @@
           </div>
 
          <div class="bottom-content">
-
-
              <li class="mode">
                  <div class="moon-sun">
                      <i class='bx bx-moon icon moon' ></i>
@@ -76,9 +80,6 @@
                      <span class="switch"></span>
                  </div>
              </li>
-
-
-
          </div>
      </div>
  </nav>
@@ -133,6 +134,31 @@
              </div>
          </div>
      </nav>
+
+    <div class="container">
+        <h2 class="topPlaylists">Top 10 Playlists</h2>
+
+        <div class="slider-wrapper">
+            <button id="prev-slide" class="slide-button material-symbols-rounded">
+            <span class="material-symbols-outlined">chevron_left</span>
+            </button>
+            <div class="image-list">
+                <img class="image-item" th:each="playlist: ${playlists}" th:src="${playlist.creator.profile_picture != null ? playlist.creator.profile_picture : '/assets/img/logo.png'}">
+            </div>
+            <button id="next-slide" class="slide-button material-symbols-rounded">
+                <span class="material-symbols-outlined">chevron_right</span>
+            </button>
+        </div>
+        <div class="slider-scrollbar">
+            <div class="scrollbar-track">
+                <div class="scrollbar-thumb"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+
 </section>
 
 <footer>
@@ -155,9 +181,8 @@
 
 
 
-<script src="/js/scripts.js"></script>
- <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
- <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<!--<script src="/js/scripts.js"></script>-->
+
 
 </body>
 </html>

@@ -1,7 +1,9 @@
 package com.example.ridepal.controllers.mvc;
 
 import com.example.ridepal.models.User;
+import com.example.ridepal.repositories.PlaylistRepository;
 import com.example.ridepal.services.contracts.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,8 +25,12 @@ public class HomeController {
 
     private final UserService userService;
 
-    public HomeController(UserService userService) {
+    private final PlaylistRepository playlistRepository;
+
+    @Autowired
+    public HomeController(UserService userService, PlaylistRepository playlistRepository) {
         this.userService = userService;
+        this.playlistRepository = playlistRepository;
     }
 
     @GetMapping
@@ -35,6 +41,7 @@ public class HomeController {
     @GetMapping("/home")
     public String home(Model model, Authentication authentication) {
         extractUserFromProvider(model, authentication);
+        model.addAttribute("playlists", playlistRepository.getTopPlaylists());
         return "home";
     }
 

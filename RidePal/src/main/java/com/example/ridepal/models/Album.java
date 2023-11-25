@@ -17,4 +17,7 @@ public class Album {
 
     @Column(name = "album_tracklist_url")
     private String url;
+
+    @Column(name = "photoUrl")
+    private String photoUrl;
 }

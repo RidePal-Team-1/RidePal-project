@@ -17,4 +17,7 @@ public class Artist {
 
     @Column(name = "artist_tracklist_url")
     private String trackListUrl;
+
+    @Column(name = "photoUrl")
+    private String photoUrl;
 }

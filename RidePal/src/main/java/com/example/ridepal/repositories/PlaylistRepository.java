@@ -21,4 +21,7 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Integer>, Jp
 
     @Query(value = "SELECT * FROM playlists p WHERE p.user_id = :id", nativeQuery = true)
     List<Playlist> getUserPlaylists(@Param("id") int id);
+
+    @Query(value = "select * from playlists order by `rank` desc limit 10", nativeQuery = true)
+    List<Playlist> getTopPlaylists();
 }

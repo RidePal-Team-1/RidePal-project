@@ -120,16 +120,16 @@ header .image-text .header-text {
     flex-direction: column;
 }
 
- .header-text .name {
+.header-text .name {
     font-weight: 600;
 }
 
- .header-text .profession {
+.header-text .profession {
     margin-top: -2px;
 
 }
 
- .sidebar header .toggle {
+.sidebar header .toggle {
     position: absolute;
     top: 50%;
     right: -25px;
@@ -146,7 +146,7 @@ header .image-text .header-text {
     transition: var(--tran-03);
 }
 
- .sidebar.close header .toggle {
+.sidebar.close header .toggle {
     transform: translateY(-50%);
 }
 
@@ -159,7 +159,7 @@ body.dark .sidebar header .toggle {
 /*    color: var(--text-color);*/
 /*}*/
 
- .sidebar .menu {
+.sidebar .menu {
     margin-top: 35px;
 }
 
@@ -277,7 +277,7 @@ body.dark .switch::before{
     width: calc(100% - 88px);
     background: var(--sidebar-color);
     position: relative;
-    left: 88px;
+    left: 250px;
     transition: var(--tran-05);
 }
 
@@ -301,7 +301,7 @@ body.dark .switch::before{
     width: calc(100% - 88);
 }
 
-/*======= Footer ======*/
+/*======= Footer Start======*/
 footer {
     position:relative;
     width: 100%;
@@ -375,8 +375,10 @@ body.dark.sidebar-closed footer {
 /*section div {*/
 /*    display: flex;*/
 /*}*/
+/*======= Footer End======*/
 
-/*===== Top Navigation Bar =====*/
+
+/*===== Top Navigation Bar Start=====*/
 section nav {
     background: #FFF;
     width: 100%;
@@ -519,7 +521,7 @@ body.dark .user-pic {
     width:100%;
 }
 
-                                                     /* CSS */
+
 .button-1 {
     background-color: white;
     border-radius: 6px;
@@ -585,8 +587,7 @@ body.dark .button-1 .icon,
 body.dark .button-1 .text {
     color: var(--text-color);
 }
-
-
+/*===== Top Navigation Bar End=====*/
 
 
 
@@ -930,3 +931,154 @@ html, .login-page {
 }
 
 /*!*LOGIN PAGE END*!*/
+
+
+/*TOP PLAYLIST SECTION START*/
+.slider-wrapper .image-list {
+    display: grid;
+    gap: 18px;
+    font-size: 0;
+    margin-bottom: 30px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    grid-template-columns: repeat(10, 1fr);
+    list-style: none;
+}
+
+.slider-wrapper .image-list::-webkit-scrollbar {
+    display: none;
+}
+
+.slider-wrapper .image-list .image-item {
+    width: 325px;
+    height: 400px;
+    object-fit: cover;
+    border: 1px solid black;
+
+}
+
+.container {
+    max-width: 1200px;
+    width: 95%;
+    align-items: center;
+    justify-content: center;
+    margin: auto; /* Add this line to center horizontally */
+    position: absolute; /* Add this line to center vertically */
+    top: 50%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+}
+
+.slider-wrapper {
+    position: relative;
+}
+
+.slider-wrapper .slide-button {
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    top: 50%;
+    color: #fff;
+    border: none;
+    outline: none;
+    background: #000;
+    font-size: 2.2rem;
+    cursor: pointer;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slider-wrapper .slide-button:hover {
+    background: #444;
+}
+
+.slider-wrapper .slide-button#prev-slide {
+    left: -20px;
+    display: none;
+}
+
+.slider-wrapper .slide-button#next-slide {
+    right: -20px;
+}
+
+.container .slider-scrollbar {
+    height: 24px;
+    width: 100%;
+    align-items: center;
+    display: flex;
+}
+
+.slider-scrollbar .scrollbar-track {
+    height: 2px;
+    width: 100%;
+    background: #ccc;
+    position: relative;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.slider-scrollbar:hover .scrollbar-track {
+    height: 4px;
+}
+
+.slider-scrollbar .scrollbar-thumb {
+    position: absolute;
+    height: 100%;
+    width: 50%;
+    background: #000;
+    top: 0;
+    bottom: 0;
+    border-radius: inherit;
+    cursor: grab;
+}
+
+.slider-scrollbar .scrollbar-track:active {
+    cursor: grabbing;
+    height: 8px;
+    top: -2px;
+}
+
+.slider-scrollbar .scrollbar-thumb::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -10px;
+    bottom: -10px ;
+}
+
+/* Styles for mobile and tablets */
+@media (max-width: 1023px) {
+    .slider-wrapper .slide-button {
+        display: none!important;
+    }
+
+    .slider-wrapper .image-list {
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .slider-wrapper .image-list .image-item {
+        width: 280px;
+        height: 380px;
+        object-fit: cover;
+    }
+
+    .slider-scrollbar .scrollbar-thumb {
+        width: 20%;
+    }
+}
+
+.topPlaylists {
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 20px;
+}
+
+body.dark .topPlaylists {
+    color: var(--text-color);
+}
