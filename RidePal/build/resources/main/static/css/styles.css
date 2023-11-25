@@ -26,7 +26,7 @@
 
 }
 
-body {
+.home-body {
     height: 100vh;
     background: var(--body-color);
     transition: var(--tran-04);
@@ -54,13 +54,13 @@ body.dark {
     z-index: 100;
 }
 
-.sidebar.close {
+ .sidebar.close {
     width: 88px;
 
 }
 
 /*===== Reusable CSS =====*/
-.sidebar .text {
+ .sidebar .text {
     font-size: 16px;
     font-weight: 500;
     color: var(--text-color);
@@ -69,19 +69,18 @@ body.dark {
     opacity: 1;
 }
 
-.sidebar.close .text{
+ .sidebar.close .text{
     opacity: 0;
 
 }
-
-.sidebar .image {
+ .sidebar .image {
     min-width: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.sidebar li {
+ .sidebar li {
     height: 50px;
     margin-top: 10px;
     list-style: none;
@@ -89,7 +88,7 @@ body.dark {
     align-items: center;
 }
 
-.sidebar li .icon {
+ .sidebar li .icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -97,7 +96,7 @@ body.dark {
     font-size: 20px;
 }
 
-.sidebar li .icon,
+ .sidebar li .icon,
 .sidebar li .text {
     color: var(--text-color);
     transition: var(--tran-02);
@@ -107,12 +106,11 @@ body.dark {
     position: relative;
 }
 
-.sidebar .image-text img {
+ .sidebar .image-text img {
     width: 40px;
     border-radius: 6px;
 }
-
-.sidebar header .image-text {
+ .sidebar header .image-text {
     display: flex;
     align-items: center;
 }
@@ -122,16 +120,16 @@ header .image-text .header-text {
     flex-direction: column;
 }
 
-.header-text .name {
+ .header-text .name {
     font-weight: 600;
 }
 
-.header-text .profession {
+ .header-text .profession {
     margin-top: -2px;
 
 }
 
-.sidebar header .toggle {
+ .sidebar header .toggle {
     position: absolute;
     top: 50%;
     right: -25px;
@@ -148,7 +146,7 @@ header .image-text .header-text {
     transition: var(--tran-03);
 }
 
-.sidebar.close header .toggle {
+ .sidebar.close header .toggle {
     transform: translateY(-50%);
 }
 
@@ -161,7 +159,7 @@ body.dark .sidebar header .toggle {
 /*    color: var(--text-color);*/
 /*}*/
 
-.sidebar .menu {
+ .sidebar .menu {
     margin-top: 35px;
 }
 
@@ -521,7 +519,6 @@ body.dark .user-pic {
     width:100%;
 }
 
-
                                                      /* CSS */
 .button-1 {
     background-color: white;
@@ -592,3 +589,344 @@ body.dark .button-1 .text {
 
 
 
+
+/*!*LANDING PAGE START*!*/
+.landing-page {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #18191A;
+    background-size: cover;
+}
+
+
+.landing-page-picture-container {
+    margin-top: 100px;
+    margin-bottom: 150px;
+    padding-top: 50px; /* Adjust as needed */
+    padding-bottom: 50px; /* Adjust as needed */
+    position: relative;
+    width: 200px;
+    min-height: 300px;
+    transform-style: preserve-3d;
+    animation: animateLanding 40s linear infinite;
+}
+
+@keyframes animateLanding {
+    0% {
+        transform: perspective(3000px) rotateY(0deg);
+    }
+    100% {
+        transform: perspective(3000px) rotateY(360deg);
+    }
+}
+
+.landing-page-picture-container span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-origin: center;
+    transform-style: preserve-3d;
+    transform: rotateY(calc(var(--i) * 59deg)) translateZ(400px);
+    -webkit-box-reflect: below 20px linear-gradient(transparent, transparent, #0004);
+}
+
+.landing-page-picture-container span img {
+    border-radius: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.landing-page-welcome {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-bottom: 100px;
+}
+
+.landing-page-welcome h1 {
+    color: white;
+    font-size: 50px; /* Adjust as needed */
+    margin-bottom: 20px; /* Adjust as needed */
+    margin-top: 20px; /* Adjust as needed */
+}
+
+.landing-page-welcome p {
+    color: white;
+    font-size: 25px; /* Adjust as needed */
+    margin-top: 20px; /* Adjust as needed */
+    margin-bottom: 20px; /* Adjust as needed */
+}
+
+.landing-page footer {
+    margin-top: 100px;
+    position: relative;
+    width: 100%;
+    background: var(--primary-color);
+    min-height: auto;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: inherit;
+    flex-direction: column;
+    transition: width var(--tran-05);
+}
+.landing-page footer .menu,
+footer .social_icon {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.landing-page footer .menu li,
+footer .social_icon li {
+    list-style: none;
+
+}
+
+.landing-page footer .social_icon li a {
+    font-size: 2em;
+    color: #fff;
+    margin: 0 10px;
+    display: inline-block;
+    transition: 0.5s;
+}
+
+.landing-page footer .social_icon li a:hover {
+    transform: translateY(-10px);
+}
+
+.landing-page footer .menu li a {
+    font-size: 1.2em;
+    color: #fff;
+    margin: 0 10px;
+    display: inline-block;
+    text-decoration: none;
+    opacity: 0.75;
+}
+
+.landing-page footer .menu li a:hover{
+    opacity: 1;
+}
+
+.landing-page footer p {
+    color: #fff;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.landing-page-button{
+    font-size: 20px;
+    font-weight: bolder;
+    padding: 10px;
+    background: #3A3B3C;
+    color: white;
+    border-radius: 30px;
+    box-shadow: 0 0 5px purple,
+    0 0 25px purple;
+}
+.landing-page-button:hover{
+    box-shadow: 0 0 5px purple,
+    0 0 25px purple, 0 0 50px purple;
+}
+/*!*LANDING PAGE END*!*/
+
+/*!*LOGIN PAGE START*!*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Poppins, sans-serif;
+}
+
+.login-page{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 120vh;
+    background: url("../images/login_background.jpg") no-repeat center;
+    background-size: cover;
+}
+.login-wrapper{
+    margin: 100px;
+    width: 420px;
+    background: transparent;
+    border: 2px solid rgba(255,255,255, .2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    color: #fff;
+    border-radius: 10px;
+    padding: 30px 40px;
+}
+.login-wrapper h1 {
+    font-size: 36px;
+    text-align: center;
+}
+.login-wrapper .login-input-box{
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin: 30px 0
+}
+.login-input-box input{
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border: 2px solid rgba(255,255,255,.2);
+    border-radius: 40px;
+    font-size: 16px;
+    color: #fff;
+    padding: 20px 45px 20px 20px;
+}
+
+.login-input-box input::placeholder{
+   color: #fff;
+}
+.login-input-box i{
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+}
+.login-wrapper .remember-forgot{
+    display: flex;
+    justify-content: space-between;
+    font-size: 14.5px;
+    margin: -15px 0 15px;
+}
+.remember-forgot label input{
+    accent-color: #fff;
+    margin-right: 3px;
+}
+.remember-forgot a{
+    color: #fff;
+    text-decoration: none;
+}
+.remember-forgot a:hover{
+    text-decoration: underline;
+}
+.login-wrapper .login-button{
+    width: 100%;
+    height: 45px;
+    background: #fff;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+}
+.login-wrapper .login-register-link{
+  font-size: 14.5px;
+    text-align: center;
+    margin: 20px 0 15px;
+}
+.login-register-link p a{
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+.login-register-link p a{
+    text-decoration: underline;
+}
+
+.or-divider {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.or-divider .line {
+    flex-grow: 1;
+    height: 1px;
+    background-color: #fff;
+    margin: 0 10px;
+}
+
+.or-divider .or-text {
+    color: #fff;
+    font-size: 14px;
+}
+
+.google-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 45px;
+    background: #4285F4;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #fff;
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+.google-button i {
+    font-size: 24px; /
+    margin-right: 10px;
+}
+.google-a-link{
+    text-decoration: none;
+}
+html, .login-page {
+    margin: 0;
+}
+
+.login-page {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-page {
+    flex: 1;
+}
+
+.login-page footer {
+    margin-top: 100px;
+    background: var(--primary-color);
+    min-height: 120px;
+    padding: 20px 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.login-page .footer-content {
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/*!*LOGIN PAGE END*!*/
