@@ -18,6 +18,9 @@ public class DeezerAlbum {
 
     @JsonProperty("tracklist")
     private String trackList;
+
+    @JsonProperty("cover_medium")
+    private String photoUrl;
 }
 //    private String cover;
 //    private String cover_small;

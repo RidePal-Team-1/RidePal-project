@@ -21,6 +21,9 @@ public class DeezerArtist {
     @JsonProperty("tracklist")
     private String trackList;
 
+    @JsonProperty("picture_medium")
+    private String photoUrl;
+
 }
 //    private String picture;
 //    private String picture_small;

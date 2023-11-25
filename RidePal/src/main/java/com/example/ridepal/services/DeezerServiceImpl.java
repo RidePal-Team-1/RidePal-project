@@ -93,6 +93,7 @@ public class DeezerServiceImpl implements DeezerService {
             artist.setId(deezerArtist.getId());
             artist.setName(deezerArtist.getName());
             artist.setTrackListUrl(deezerArtist.getTrackList());
+            artist.setPhotoUrl(deezerArtist.getPhotoUrl());
             artistRepository.save(artist);
 
             DeezerAlbum deezerAlbum = deezerTrack.getAlbum();
@@ -100,6 +101,7 @@ public class DeezerServiceImpl implements DeezerService {
             album.setId(deezerAlbum.getId());
             album.setName(deezerAlbum.getTitle());
             album.setUrl(deezerAlbum.getTrackList());
+            album.setPhotoUrl(deezerAlbum.getPhotoUrl());
             albumRepository.save(album);
 
             Track track = new Track();

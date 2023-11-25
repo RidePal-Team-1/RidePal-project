@@ -3,7 +3,8 @@ create table albums
     album_id            bigint                                  not null
         primary key,
     album_name          varchar(255) collate utf8mb4_unicode_ci not null,
-    album_tracklist_url longtext                                not null
+    album_tracklist_url longtext                                not null,
+    photoUrl            longtext                                null
 );
 
 create table artists
@@ -11,12 +12,13 @@ create table artists
     artist_id            bigint                                  not null
         primary key,
     artist_name          varchar(255) collate utf8mb4_unicode_ci not null,
-    artist_tracklist_url longtext                                not null
+    artist_tracklist_url longtext                                not null,
+    photoUrl             longtext                                null
 );
 
 create table genres
 (
-    genre_id   bigint         not null
+    genre_id   int auto_increment
         primary key,
     genre_name varchar(20) not null,
     constraint genres_pk2
@@ -42,7 +44,7 @@ create table tracks
     artist_id   bigint                                  not null,
     album_id    bigint                                  not null,
     `rank`      bigint default 0                        not null,
-    genre_id    bigint                                  not null,
+    genre_id    int                                     not null,
     constraint tracks_albums_album_id_fk
         foreign key (album_id) references albums (album_id),
     constraint tracks_artists_artist_id_fk
@@ -84,7 +86,7 @@ create table playlists
 create table playlists_genres
 (
     playlist_id int not null,
-    genre_id    bigint not null,
+    genre_id    int not null,
     constraint playlists_genres_id_fk
         foreign key (genre_id) references genres (genre_id),
     constraint playlists_playlists_playlist_id_fk
