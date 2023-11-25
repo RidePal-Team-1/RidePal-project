@@ -1,52 +1,148 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!----===== CSS ===== -->
+<link href="../static/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+
+<!----===== Boxicons CSS ===== -->
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <head>
     <title>Sign Up</title>
 </head>
-<body>
-<h1>Sign Up</h1>
-<form th:action="@{/auth/register}" method="post" th:object="${user}">
-    <label for="email">Email </label>:
-    <input type="text" id="email"  th:field="*{email}" />
-    <br/>
-    <label class="error" th:errors="*{email}">Email error placeholder</label>
-    <br/><br/>
+<body class="login-page">
+<div></div>
+<nav class="sidebar close">
+    <header>
+        <div class="image-text">
+            <span class="image">
+                <img th:src="@{/assets/img/logo.png}" alt="logo">
+            </span>
 
-    <label for="email">Username </label>:
-    <input type="text" id="username"  th:field="*{username}" />
-    <br/>
-    <label class="error" th:errors="*{username}">Username error placeholder</label>
-    <br/><br/>
+            <div class="text header-text">
+                <span class="name">TripTunes</span>
+                <span class="profession">Playlist Generator</span>
+            </div>
+        </div>
 
-    <label for="password">Password </label>:
-    <input type="password" id="password" th:field="*{password}"/>
-    <br />
-    <label class="error" th:errors="*{password}">Password error placeholder</label>
-    <br/><br/>
+        <i class='bx bx-chevron-right toggle' ></i>
+    </header>
 
-    <label for="password">Password Confirm</label>:
-    <input type="password" id="passwordConfirm" th:field="*{passwordConfirm}"/>
-    <br/>
-    <label class="error" th:errors="*{passwordConfirm}">Password Confirm error placeholder</label>
-    <br/><br/>
+    <div class="menu-bar">
+        <div class="menu">
+            <ul class="menu-links">
+                <li class="nav-link">
+                    <a th:href="@{/home}">
+                        <i class='bx bx-home-alt icon' ></i>
+                        <span class="text nav-text">Home</span>
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a th:href="@{/admin-portal}">
+                        <i class='bx bx-bar-chart-alt-2 icon' ></i>
+                        <span class="text nav-text">Admin Portal</span>
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a href="#">
+                        <i class='bx bx-bell icon' ></i>
+                        <span class="text nav-text">Notifications</span>
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a href="#">
+                        <i class='bx bx-heart icon' ></i>
+                        <span class="text nav-text">Top Tracks</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
 
-    <label for="first_name">First Name </label>:
-    <input type="text" id="first_name"  th:field="*{firstName}" />
-    <br/>
-    <label class="error" th:errors="*{firstName}">First name error placeholder</label>
-    <br/><br/>
+        <div class="bottom-content">
 
-    <label for="last_name">Last Name </label>:
-    <input type="text" id="last_name"  th:field="*{lastName}" />
-    <br/>
-    <label class="error" th:errors="*{lastName}">Last name error placeholder</label>
-    <br/><br/>
 
-    <input type="submit" value="Sign Up" /> <br />
-</form>
+            <li class="mode">
+                <div class="moon-sun">
+                    <i class='bx bx-moon icon moon' ></i>
+                    <i class='bx bx-sun icon sun' ></i>
+                </div>
 
-<p>Already have an account? </p> <br/>
-<a href="/login">Login</a>
+                <span class="mode-text text">Dark Mode</span>
+
+                <div class="toggle-switch">
+                    <span class="switch"></span>
+                </div>
+            </li>
+
+
+
+        </div>
+    </div>
+</nav>
+<div class="login-wrapper">
+    <form action="#" th:action="@{/auth/register}" method="post" th:object="${user}">
+        <h1>Register</h1>
+        <div class="login-input-box">
+            <input type="text" id="email" name="email" autofocus="autofocus" placeholder="Email" th:field="*{email}" required>
+            <label class="error" th:errors="*{email}">Email error placeholder</label>
+        </div>
+        <div class="login-input-box">
+            <input type="text" id="username" name="username" autofocus="autofocus" placeholder="Username" th:field="*{username}" required>
+            <label class="error" th:errors="*{username}">Username error placeholder</label>
+
+        </div>
+        <div class="login-input-box">
+            <input type="password" id="password" name="password" placeholder="Password" th:field="*{password}" required>
+            <label class="error" th:errors="*{password}">Password error placeholder</label>
+
+        </div>
+        <div class="login-input-box">
+            <input type="password" id="confirmationPassword" name="confirmationPassword" placeholder="Confirm Password" th:field="*{passwordConfirm}" required>
+            <label class="error" th:errors="*{passwordConfirm}">Password Confirm error placeholder</label>
+
+        </div>
+        <div class="login-input-box">
+            <input type="text" id="first_name" name="first_name" autofocus="autofocus" placeholder="First Name" th:field="*{firstName}" required>
+            <label class="error" th:errors="*{firstName}">First name error placeholder</label>
+
+        </div>
+        <div class="login-input-box">
+            <input type="text" id="last_name" name="last_name" autofocus="autofocus" placeholder="Last Name" th:field="*{lastName}" required>
+            <label class="error" th:errors="*{lastName}">Last name error placeholder</label>
+
+        </div>
+        <button type="submit" value="Sign Up" class="login-button">Register</button>
+        <div class="login-register-link">
+            <p>Already have an account? <a href="#" th:href="@{/auth/login}">Login</a>
+            </p>
+        </div>
+    </form>
+</div>
+<footer>
+    <ul class="social_icon">
+        <li><a href="#"><ion-icon name="logo-facebook"></ion-icon></a></li>
+        <li><a href="#"><ion-icon name="logo-twitter"></ion-icon></a></li>
+        <li><a href="#"><ion-icon name="logo-linkedin"></ion-icon></a></li>
+        <li><a href="#"><ion-icon name="logo-instagram"></ion-icon></a></li>
+    </ul>
+    <!--     <img src="../static/assets/img/fullLogo.png">-->
+    <ul class="menu">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Team</a></li>
+        <li><a href="#">Contact</a></li>
+    </ul>
+    <p>©2023 Trip Tunes | All Rights Reserved</p>
+</footer>
+
+
+
+
+<script src="/js/scripts.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
