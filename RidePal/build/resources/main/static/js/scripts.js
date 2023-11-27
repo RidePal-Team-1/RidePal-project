@@ -190,3 +190,41 @@ const initSliderGenres = () => {
 }
 window.addEventListener("resize", initSliderGenres);
 window.addEventListener("load", initSliderGenres);
+window.addEventListener("load", initSlider)
+window.addEventListener('DOMContentLoaded', event => {
+    const profilePicture = document.getElementById('profilePicture');
+    const profilePictureContainer = document.getElementById('profilePictureContainer');
+
+    if (profilePictureContainer) {
+        profilePictureContainer.addEventListener('click', function () {
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = 'image/*';
+            fileInput.style.display = 'none';
+
+            fileInput.addEventListener('change', function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+
+                    reader.onload = function (event) {
+                        profilePicture.src = event.target.result;
+                        // Update hidden input value to include the file as a base64 data URL
+                        const hiddenInput = document.getElementById('hiddenPhotoInput');
+                        hiddenInput.value = event.target.result;
+
+                        // Submit the form only after the file has been read
+                        const form = document.getElementById('playlistForm');
+                        form.submit();
+                    };
+
+                    reader.readAsDataURL(file);
+                }
+            });
+            fileInput.click(); // Trigger file input when the container is clicked
+        });
+    }
+});
+// const form = document.getElementById('playlistForm');
+//
+// form.submit();

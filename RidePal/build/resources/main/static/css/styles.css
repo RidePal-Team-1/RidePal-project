@@ -915,7 +915,9 @@ html, .login-page {
 }
 
 .login-page footer {
+    margin-top: auto;
     background: var(--primary-color);
+    /*min-height: 120px;*/
     padding: 20px 100px;
     display: flex;
     justify-content: center;
@@ -1280,3 +1282,289 @@ body.dark .content .icon {
 }
 
 
+
+
+/*SINGLE PLAYLIST VIEW START*/
+:root{
+    --footer-height: 40px
+}
+.arrow-container{
+    background-color: #434343;
+    border-radius: 50%;
+    width: 48px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    margin-right: 15px;
+}
+.playlist-top{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.right{
+    justify-content: right;
+    height: max-content;
+    overflow: hidden;
+    overflow-y: scroll;
+    position: inherit;
+    width: 100%;
+}
+.playlist-top-email{
+    box-shadow: 1px 2px 48px -2px rgba(0,0,0,0.67);
+    -webkit-box-shadow: 1px 2px 48px -2px rgba(0,0,0,0.67);
+    -moz-box-shadow: 1px 2px 48px -2px rgba(0,0,0,0.67);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #434343;
+    border-radius: 20px;
+    color: white;
+}
+.playlist-top-email .arrow-container{
+    background-color: #545354;
+}
+.playlist-top-email span{
+    padding: 0 20px 0 0 ;
+}
+.playlist-header{
+    padding: 20px;
+    background: linear-gradient(180deg, rgba(220, 61, 239, 0.3) 0%,
+    rgba(95,95,96,1) 100%);
+}
+.playlist-content{
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    margin-top: 20px;
+}
+.playlist-cover img{
+    border-radius: 10px;
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    box-shadow: 1px 2px 48px -2px rgba(0,0,0,0.67);
+    -webkit-box-shadow: 1px 2px 48px -2px rgba(0,0,0,0.67);
+    -moz-box-shadow: 1px 2px 48px -2px rgba(0,0,0,0.67);
+}
+.playlist-info{
+    color: white;
+    padding-left: 20px;
+}
+
+.playlist-title{
+    font-size: 86px;
+    font-weight: 1080;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    margin-top: 10px;
+}
+.playlist-description{
+    font-size: 16px;
+    font-weight: 200;
+    margin-top: 28px;
+    color: white;
+    margin-bottom: 50px;
+    margin-left: 50px;
+}
+.playlist-stats img{
+    position: relative;
+    top: 6px;
+}
+.playlist-stats{
+    color: white;
+}
+.playlist-stats i{
+    color: white;
+    font-size: 20px;
+}
+.playlist-stats img{
+    width: 40px;
+    height: 40px;
+    padding-top: 5px;
+}
+.playlist-stats span{
+    font-weight: 1000;
+    padding-right: 30px;
+}
+
+.playlist-buttons-left, .playlist-buttons-right{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+.playlist-buttons{
+    display: flex;
+    justify-content: space-between;
+}
+.playlist-songs-container{
+    height: 100vh;
+    overflow-y: scroll;
+    background: rgb(95,95,96);
+    background: linear-gradient(rgba(95,95,96,1) 0%, rgba(10,10,10,1) 25%,
+    rgba(10,10,10,1) 100%);
+    padding: 20px;
+}
+.playlist-buttons-resume-pause{
+    background-color: purple;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.playlist-buttons-next{
+    background-color: purple;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.playlist-buttons-previous{
+    background-color: purple;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.playlist-buttons-order{
+    color: white;
+    position: relative;
+    top: -5px;
+    margin-left: 20px;
+}
+.playlist-songs{
+    margin-top: 20px;
+}
+.playlist-songs table{
+    border-collapse: collapse;
+    width: 100%;
+}
+.playlist-songs table tr td, .playlist-songs tr th {
+    padding: 10px;
+    color: #CACACA
+}
+.playlist-songs table tr th{
+    font-weight: 200;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+.playlist-songs table tr{
+    border-bottom: 1px solid #CACACA;
+}
+.playlist-songs table th{
+    text-align: left;
+}
+.song-image img{
+    width: 36px;
+    height: 36px;
+}
+.song-name, .footer-player-left-song-name{
+    font-weight: 400;
+    font-size: 14px;
+    color: white;
+}
+.song-name-artist{
+    padding-left: 15px;
+    width: 450px;
+    letter-spacing: 0.5px;
+}
+
+.song-artist, .song-album, .song-duration, .song-rank, tr td:first-of-type{
+    font-size: 14px;
+    margin-top: 6px;
+    color: #848485;
+}
+.song-duration{
+    width: 220px;
+}
+.song-rank{
+    width: 140px;
+}
+.song-artist{
+    margin-top: 3px;
+}
+.song-title{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.playlist-single-view footer{
+    margin-top: auto;
+    margin-bottom: auto;
+    background: var(--primary-color);
+    /*min-height: 120px;*/
+    padding: 20px 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.playlist-songs-fields {
+    display: flex;
+    border-collapse: collapse;
+    width: 100%;
+    align-items: center; /* Added alignment for centering */
+}
+
+.playlist-songs-fields-number,
+.playlist-songs-fields-title,
+.playlist-songs-fields-album,
+.playlist-songs-fields-duration,
+.playlist-songs-fields-rank {
+    flex: 10; /* Added flex property for equal distribution */
+    text-align: left; /* Align text to the left */
+}
+
+/* Additional styling for consistency */
+.playlist-songs-fields-number,
+.playlist-songs-fields-title,
+.playlist-songs-fields-album,
+.playlist-songs-fields-duration,
+.playlist-songs-fields-rank {
+    width: 80%;
+}
+
+.playlist-songs-fields th {
+    text-align: left;
+    font-weight: 200;
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: #CACACA;
+}
+audio::-webkit-media-controls-panel {
+    color: transparent;
+}
+.playlist-cover::before {
+    content: 'Update';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px; /* Adjust size as needed */
+    height: 200px; /* Adjust size as needed */
+    text-align: center; /* Center the text horizontally */
+    line-height: 200px; /* Center the text vertically */
+    color: rgba(255, 255, 255, 0.8); /* Transparent white text */
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    border-radius: 50%; /* Rounded shape for the icon */
+    display: none; /* Hidden by default */
+    transition: background-color 0.3s ease; /* Smooth transition for the background */
+}
+rounded-container:hover::before {
+    display: block; /* Display the update icon on hover */
+}
+
+.rounded-container:hover::before {
+    display: block; /* Display the update icon on hover */
+}
+/*SINGLE PLAYLIST END*/
