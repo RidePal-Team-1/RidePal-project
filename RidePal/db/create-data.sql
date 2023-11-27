@@ -21,6 +21,7 @@ create table genres
     genre_id   int auto_increment
         primary key,
     genre_name varchar(20) not null,
+    photoUrl   longtext    null,
     constraint genres_pk2
         unique (genre_name)
 );
@@ -79,6 +80,7 @@ create table playlists
     total_playtime double default 0 not null,
     `rank`         bigint default 0 not null,
     user_id        int              not null,
+    photoUrl       longtext         null,
     constraint playlists_users_user_id_fk
         foreign key (user_id) references users (user_id)
 );

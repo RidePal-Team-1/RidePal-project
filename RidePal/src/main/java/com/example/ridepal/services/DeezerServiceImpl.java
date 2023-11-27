@@ -70,6 +70,7 @@ public class DeezerServiceImpl implements DeezerService {
             Genre genre = new Genre();
             genre.setId(deezerGenre.getId());
             genre.setName(deezerGenre.getName());
+            genre.setPhotoUrl(deezerGenre.getPhotoUrl());
             genreRepository.save(genre);
         }
     }

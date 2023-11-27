@@ -8,5 +8,5 @@ public interface ArtistService {
 
     Page<Artist> findAll(Pageable pageable);
 
-    Artist findById(int id);
+    Artist findById(long id);
 }

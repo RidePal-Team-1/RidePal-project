@@ -2,8 +2,11 @@ package com.example.ridepal.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "genres")
 public class Genre {
@@ -14,4 +17,13 @@ public class Genre {
 
     @Column(name = "genre_name")
     private String name;
+
+    @Column(name = "photoUrl")
+    private String photoUrl;
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
+

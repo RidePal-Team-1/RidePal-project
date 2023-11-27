@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.ridepal.services.AlbumServiceTests" tests="4" skipped="0" failures="0" errors="0" timestamp="2023-11-26T23:38:35" hostname="DESKTOP-J0BNFBF" time="0.29">
+  <properties/>
+  <testcase name="findById_Should_ReturnAlbumWhenValidId()" classname="com.example.ridepal.services.AlbumServiceTests" time="0.265"/>
+  <testcase name="findAll_Should_CallRepository()" classname="com.example.ridepal.services.AlbumServiceTests" time="0.013"/>
+  <testcase name="findById_Should_CallRepository()" classname="com.example.ridepal.services.AlbumServiceTests" time="0.004"/>
+  <testcase name="findById_Should_Throw_WhenAlbumDoesNotExist()" classname="com.example.ridepal.services.AlbumServiceTests" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

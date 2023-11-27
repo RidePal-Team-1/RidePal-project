@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.ridepal.services.UserServiceTests" tests="13" skipped="0" failures="0" errors="0" timestamp="2023-11-26T23:38:35" hostname="DESKTOP-J0BNFBF" time="0.141">
+  <properties/>
+  <testcase name="findByUsername_Should_Throw_WhenUserDoesNotExist()" classname="com.example.ridepal.services.UserServiceTests" time="0.088"/>
+  <testcase name="findByUsername_Should_CallRepository()" classname="com.example.ridepal.services.UserServiceTests" time="0.003"/>
+  <testcase name="findByEmail_Should_CallRepository()" classname="com.example.ridepal.services.UserServiceTests" time="0.003"/>
+  <testcase name="findById_Should_CallRepository()" classname="com.example.ridepal.services.UserServiceTests" time="0.003"/>
+  <testcase name="create_Should_CallRepository()" classname="com.example.ridepal.services.UserServiceTests" time="0.004"/>
+  <testcase name="findByUsername_Should_ReturnUser_WhenValidUsername()" classname="com.example.ridepal.services.UserServiceTests" time="0.003"/>
+  <testcase name="delete_Should_CallRepository()" classname="com.example.ridepal.services.UserServiceTests" time="0.005"/>
+  <testcase name="delete_Should_Throw_WhenUserNotFound()" classname="com.example.ridepal.services.UserServiceTests" time="0.004"/>
+  <testcase name="findById_Should_Throw_WhenUserDoesNotExist()" classname="com.example.ridepal.services.UserServiceTests" time="0.003"/>
+  <testcase name="findById_Should_ReturnUser_WhenValidId()" classname="com.example.ridepal.services.UserServiceTests" time="0.003"/>
+  <testcase name="findByEmail_Should_Throw_WhenUserDoesNotExist()" classname="com.example.ridepal.services.UserServiceTests" time="0.003"/>
+  <testcase name="findByEmail_Should_ReturnUser_WhenValidEmail()" classname="com.example.ridepal.services.UserServiceTests" time="0.004"/>
+  <testcase name="update_Should_CallRepository()" classname="com.example.ridepal.services.UserServiceTests" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

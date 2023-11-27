@@ -29,7 +29,7 @@ public class AlbumController {
     }
 
     @GetMapping("/{id}")
-    public Album findById(@PathVariable int id){
+    public Album findById(@PathVariable long id){
         try{
             return albumService.findById(id);
         }catch (EntityNotFoundException e){

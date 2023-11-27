@@ -24,11 +24,10 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
-    public Album findById(int id) {
+    public Album findById(long id) {
         if(albumRepository.findById(id)==null){
             throw new EntityNotFoundException("Album", id);
-        }else {
-            return albumRepository.findById(id);
         }
+            return albumRepository.findById(id);
     }
 }

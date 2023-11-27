@@ -16,6 +16,9 @@ public class DeezerGenre {
 
     @JsonProperty("name")
     private String name;
+
+    @JsonProperty("picture_medium")
+    private String photoUrl;
 }
 //    private String picture;
 //    private String pictureSmall;

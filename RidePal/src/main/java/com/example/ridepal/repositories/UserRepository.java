@@ -22,4 +22,7 @@ public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecifi
 
     User findByUsername(String username);
 
+    @Query(value = "select count(*) from users", nativeQuery = true)
+    int getUsersCount();
+
 }

@@ -1,5 +1,6 @@
 package com.example.ridepal.services;
 
+import com.example.ridepal.exceptions.EntityNotFoundException;
 import com.example.ridepal.models.Artist;
 import com.example.ridepal.repositories.ArtistRepository;
 import com.example.ridepal.services.contracts.ArtistService;
@@ -21,7 +22,10 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
-    public Artist findById(int id) {
+    public Artist findById(long id) {
+        if (artistRepository.findById(id) == null) {
+            throw new EntityNotFoundException("Artist", id);
+        }
         return artistRepository.findById(id);
     }
 

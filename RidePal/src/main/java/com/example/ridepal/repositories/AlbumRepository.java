@@ -8,5 +8,5 @@ import java.util.List;
 public interface AlbumRepository extends JpaRepository<Album, Integer> {
     List<Album> findAll();
 
-    Album findById(int id);
+    Album findById(long id);
 }

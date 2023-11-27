@@ -32,6 +32,8 @@ public class Playlist {
     @JoinColumn(name = "user_id")
     private User creator;
 
+    @Column(name = "photoUrl")
+    private String photoUrl;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -48,4 +50,6 @@ public class Playlist {
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
     private Set<Genre> genres = new HashSet<>();
+
+
 }

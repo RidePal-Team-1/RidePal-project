@@ -24,4 +24,10 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Integer>, Jp
 
     @Query(value = "select * from playlists order by `rank` desc limit 10", nativeQuery = true)
     List<Playlist> getTopPlaylists();
+
+    @Query(value = "select count(*) from playlists", nativeQuery = true)
+    int getPlaylistsCount();
+
+    @Query(value = "select count(*) from playlists_genres p where p.genre_id = :genre", nativeQuery = true)
+    int getPlaylistsCountByGenre(@Param("genre") long id);
 }

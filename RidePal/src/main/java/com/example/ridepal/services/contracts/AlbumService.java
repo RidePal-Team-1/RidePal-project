@@ -8,5 +8,5 @@ public interface AlbumService {
 
     List<Album> findAll();
 
-    Album findById(int id);
+    Album findById(long id);
 }

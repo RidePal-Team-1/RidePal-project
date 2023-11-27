@@ -17,6 +17,7 @@
     --primary-color-light: #F6F5FF;
     --toggle-color: #DDDD;
     --text-color: #707070;
+    --dashboard-text-color: #18191A;
 
     /* ===== Transition ===== */
     --tran-02: all 0.2s ease;
@@ -39,6 +40,7 @@ body.dark {
     --primary-color-light: #3A3B3C;
     --toggle-color: #FFF;
     --text-color: #CCC;
+    --dashboard-text-color: #E4E9F7;
 }
 
 /*===== Sidebar =====*/
@@ -303,7 +305,7 @@ body.dark .switch::before{
 
 /*======= Footer Start======*/
 footer {
-    position:relative;
+    position: relative;
     width: 100%;
     background: var(--primary-color);
     min-height: 100px;
@@ -314,6 +316,7 @@ footer {
     flex-wrap: wrap;
     flex-direction: column;
     transition: width var(--tran-05);
+    bottom: 0;
 }
 footer .menu,
 footer .social_icon {
@@ -912,15 +915,14 @@ html, .login-page {
 }
 
 .login-page footer {
-    margin-top: 100px;
     background: var(--primary-color);
-    min-height: 120px;
     padding: 20px 100px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     flex-direction: column;
+    margin-top: auto; /* Push the footer to the bottom */
 }
 
 .login-page .footer-content {
@@ -953,21 +955,52 @@ html, .login-page {
     width: 325px;
     height: 400px;
     object-fit: cover;
-    border: 1px solid black;
-
+    /*border: 1px solid black;*/
+    box-shadow: 15px 20px 20px rgb(0 0 0 / 0.2), 10px 10px 20px rgb(0 0 0 / 0.2);
 }
 
-.container {
+/*.container-playlists {*/
+/*    max-width: 1200px;*/
+/*    width: 95%;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    margin: auto; !* Add this line to center horizontally *!*/
+/*    position: absolute; !* Add this line to center vertically *!*/
+/*    transform: translate(-50%, -50%);*/
+/*    !*top: 50%;*!*/
+/*    !*left: 45%;*!*/
+/*    margin-top: 100px;*/
+/*}*/
+
+.container-playlists,
+.container-genres {
     max-width: 1200px;
     width: 95%;
-    align-items: center;
-    justify-content: center;
-    margin: auto; /* Add this line to center horizontally */
-    position: absolute; /* Add this line to center vertically */
-    top: 50%;
-    left: 45%;
-    transform: translate(-50%, -50%);
+    margin: 20px auto; /* Adjust margin as needed */
+    margin-top: 100px;
+    margin-bottom: 100px;
 }
+
+.carousels {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Optional: Center the containers horizontally */
+    background-color: var(--sidebar-color);
+
+}
+
+/*.container-genres {*/
+/*    max-width: 1200px;*/
+/*    width: 95%;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    margin: auto; !* Add this line to center horizontally *!*/
+/*    position: absolute; !* Add this line to center vertically *!*/
+/*    transform: translate(-50%, -50%);*/
+/*    !*top: 50%;*!*/
+/*    !*left: 45%;*!*/
+/*    margin-top: 100px;*/
+/*}*/
 
 .slider-wrapper {
     position: relative;
@@ -996,16 +1029,26 @@ html, .login-page {
     background: #444;
 }
 
-.slider-wrapper .slide-button#prev-slide {
+.slider-wrapper .slide-button#prev-slide-playlists {
     left: -20px;
     display: none;
 }
 
-.slider-wrapper .slide-button#next-slide {
+.slider-wrapper .slide-button#prev-slide-genres {
+    left: -20px;
+    display: none;
+}
+
+.slider-wrapper .slide-button#next-slide-playlists {
     right: -20px;
 }
 
-.container .slider-scrollbar {
+.slider-wrapper .slide-button#next-slide-genres {
+    right: -20px;
+}
+
+.container-playlists .slider-scrollbar,
+.container-genres .slider-scrollbar{
     height: 24px;
     width: 100%;
     align-items: center;
@@ -1082,3 +1125,158 @@ html, .login-page {
 body.dark .topPlaylists {
     color: var(--text-color);
 }
+
+/* Styles for mobile and tablets */
+
+/* Hover effects on each playlist */
+.content {
+    position: absolute;
+    bottom: 0; /* Position at the bottom of the image */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    opacity: 0;
+    width: 100%;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.image-list .image-item:hover .content,
+.image-list .image-item:hover .playlist-icon {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    opacity: 1;
+}
+
+.playlist-icon {
+    position: absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+    cursor: pointer;
+    color: white;
+    display: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--primary-color); /* Set the background color to white */
+    padding-left: 10px;
+}
+
+.content .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 60px;
+    font-size: 20px;
+    color: var(--primary-color-light);
+}
+
+body.dark .content .icon {
+    color: var(--text-color);
+}
+
+.image-list .image-item:hover .content .icon {
+    transform: translateY(0); /* Move the icons up from the bottom */
+}
+
+.image-list .image-item {
+    position: relative;
+    overflow: hidden; /* Ensure the overflow is hidden to clip the scaled image */
+}
+
+.image-list .image-item img {
+    transition: transform 0.3s ease-in-out;
+}
+
+.image-list .image-item:hover img {
+    transform: scale(1.1); /* Adjust the scale factor as needed */
+}
+
+.image-list .playlist-icon i {
+    color: white; /* Set the color of your icon */
+    text-decoration: none;
+}
+
+.image-list .icon:hover::before {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--primary-color);
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+/*TOP PLAYLIST SECTION END*/
+
+/*Overview Dashboard Boxes START */
+
+.home .overview-boxes .box {
+    padding: 15px 14px;
+    background: linear-gradient(144deg, #AF40FF, #5B42F3 50%, #00DDEB);
+    /*background: var(--primary-color);*/
+    display: flex;
+    align-items: center;
+    width: calc(100% / 4 - 15px);
+    border-radius: 12px;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(175, 64, 255, 0.4), 0 0 40px rgba(91, 66, 243, 0.3), 0 0 80px rgba(0, 221, 235, 0.2); /* Adjust as needed */
+}
+
+.home .overview-boxes .number {
+    font-size: 35px;
+    font-weight: 500;
+    margin-top: 5px;
+    display: inline-block;
+    color: var(--dashboard-text-color);
+}
+
+.home .overview-boxes {
+    display: flex;
+    width: 90%;
+    justify-content: space-between;
+    padding: 0 20px;
+    margin-top: 50px;
+}
+
+.home .overview-boxes .box-topic {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--dashboard-text-color);
+}
+
+.overview-boxes .box .icon {
+    font-size: 32px;
+    font-weight: 500;
+    height: 50px;
+    width: 50px;
+    background: var(--sidebar-color);
+    color: var(--text-color);
+    line-height: 50px;
+    text-align: center;
+    border-radius: 12px;
+    margin-left: 50px;
+}
+
+.genre-name {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff; /* Set the text color */
+    font-size: 16px; /* Set the font size */
+    font-weight: bold; /* Set the font weight */
+    text-align: center;
+    width: 100%;
+}
+
+
