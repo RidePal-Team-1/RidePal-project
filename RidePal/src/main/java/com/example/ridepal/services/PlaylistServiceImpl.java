@@ -48,7 +48,6 @@ public class PlaylistServiceImpl implements PlaylistService {
         this.trackRepository = trackRepository;
     }
 
-
     @Override
     public Page<Playlist> findAll(String title, String genre, String minDuration, String maxDuration, Pageable pageable){
             Specification<Playlist> filters = Specification.where

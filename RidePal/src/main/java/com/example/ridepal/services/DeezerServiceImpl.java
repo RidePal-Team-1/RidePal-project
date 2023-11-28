@@ -1,6 +1,7 @@
 package com.example.ridepal.services;
 
 import com.example.ridepal.deezer.*;
+import com.example.ridepal.exceptions.GenreSynchronizationFailureException;
 import com.example.ridepal.models.*;
 import com.example.ridepal.repositories.AlbumRepository;
 import com.example.ridepal.repositories.ArtistRepository;
@@ -47,6 +48,8 @@ public class DeezerServiceImpl implements DeezerService {
         if (response != null && response.getData() != null) {
             List<DeezerGenre> genres = response.getData();
             saveGenresToDatabase(genres);
+        } else {
+            throw new GenreSynchronizationFailureException("Genre synchronization failed.");
         }
     }
 
@@ -68,6 +71,9 @@ public class DeezerServiceImpl implements DeezerService {
     private void saveGenresToDatabase(List<DeezerGenre> genres) {
         for (DeezerGenre deezerGenre : genres) {
             Genre genre = new Genre();
+            if (deezerGenre.getName().equals("All")) {
+               continue;
+            }
             genre.setId(deezerGenre.getId());
             genre.setName(deezerGenre.getName());
             genre.setPhotoUrl(deezerGenre.getPhotoUrl());

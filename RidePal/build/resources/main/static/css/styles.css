@@ -11,13 +11,16 @@
 
 
     /* ===== Colors ===== */
-    --body-color: #E4E9F7;
+    --body-color: #FFFFFF;
     --sidebar-color: #FFF;
-    --primary-color: #ce0cd0;
+    --primary-color: rgba(196, 37, 190, 0.99);
+    --lighter-primary: rgba(245, 101,238, 0.99);
     --primary-color-light: #F6F5FF;
     --toggle-color: #DDDD;
-    --text-color: #707070;
+    --text-color: #18191A;
     --dashboard-text-color: #18191A;
+    --search-hover-color: rgba(196, 37, 190, 0.99);
+    --search-field-color: rgba(211, 188,224, 0.99);
 
     /* ===== Transition ===== */
     --tran-02: all 0.2s ease;
@@ -34,13 +37,16 @@
 }
 
 body.dark {
-    --body-color: #18191A;
+    --body-color: #242526;
     --sidebar-color: #242526;
     --primary-color: #3A3B3C;
+    --lighter-primary: #3A3B3C;
     --primary-color-light: #3A3B3C;
     --toggle-color: #FFF;
     --text-color: #CCC;
     --dashboard-text-color: #E4E9F7;
+    --search-hover-color: var(--text-color);
+    --search-field-color: rgba(204, 204, 204,0.99);
 }
 
 /*===== Sidebar =====*/
@@ -408,6 +414,7 @@ section nav {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.5s;
+    z-index: 1;
 }
 .sub-menu-wrap.open-menu {
     max-height: 400px;
@@ -1488,6 +1495,14 @@ body.dark .content .icon {
     margin-top: 6px;
     color: #848485;
 }
+#duration-icon{
+    margin-bottom: 20px;
+    margin-left: 0;
+}
+#rank-icon{
+    margin-bottom: 20px;
+    margin-left: 0;
+}
 .song-duration{
     width: 220px;
 }
@@ -1640,6 +1655,139 @@ rounded-container:hover::before {
 
 .playlist-cover:hover .hover-icon {
     opacity: 1;
+}
+/*SINGLE PLAYLIST END*/
+
+/*Playlists Browse Page*/
+
+.search-header {
+    text-align: center;
+    padding: 10px 50px 50px 50px;
+    height: 50vh;
+    font-family: Poppins, sans-serif;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.search-field {
+    height: 50px;
+    padding: 10px;
+    border: none;
+    border-radius: 25px;
+    outline: none;
+    background-color: var(--search-field-color);
+}
+
+/*body.dark .search-field {*/
+/*    background-color: #FFFFFF;*/
+/*}*/
+
+.title {
+    width: 400px;
+}
+
+.genre {
+    width: 200px;
+}
+
+.duration {
+    width: 160px;
+}
+.search-header .search-btn {
+    height: 50px;
+    width: 150px;
+    background: var(--lighter-primary);
+    border: none;
+    color: #000;
+    border-radius: 25px;
+}
+
+.search-header .search-btn:hover {
+    background: var(--search-hover-color);
+    cursor: pointer;
+}
+
+.form-box {
+    background: transparent;
+    padding: 30px;
+    border-radius: 10px;
+    /*border: 2px solid rgba(255,255,255, .2);*/
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px 0 rgba(40, 40, 40, 0.2);
+}
+
+body.dark .form-box {
+    background: transparent;
+    padding: 30px;
+    border-radius: 10px;
+    /*border: 2px solid rgba(255,255,255, .2);*/
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px 0 rgb(234, 234, 234);
+}
+
+.song-name-artist-playlist{
+    padding-left: 15px;
+    width: 450px;
+    letter-spacing: 0.5px;
+    color: #FFFFFF
+
+}
+
+.song-artist-user {
+    font-size: 14px;
+    margin-top: 6px;
+    color: #848485;
+    padding-left: 15px;
+}
+
+.song-name-artist-playlist:hover {
+    text-decoration: underline;
+}
+
+.song-artist-user:hover {
+    text-decoration: underline;
+}
+
+/*Pagination START*/
+/* pagination position styling */
+.pagination_section {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+/* pagination styling */
+.pagination_section a {
+    color: var(--text-color);
+    padding: 10px 18px;
+    text-decoration: none;
+}
+
+/*body.dark .pagination_section a {*/
+/*    */
+/*}*/
+
+/* pagination hover effect on non-active */
+.pagination_section a:hover:not(.active) {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* pagination hover effect on active*/
+.pagination_section a.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+/*Pagination END*/
+
+.playlist-songs-container-playlists {
+    height: 80vh;
+    /*overflow-y: scroll;*/
+    background: rgb(95,95,96);
+    background: linear-gradient(rgba(95,95,96,1) 0%, rgba(10,10,10,1) 25%,
+    rgba(10,10,10,1) 100%);
+    padding: 20px;
 }
 
 /*SINGLE PLAYLIST VIEW END*/

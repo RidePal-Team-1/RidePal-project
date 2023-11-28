@@ -16,13 +16,12 @@
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
 
-    <title>Title</title>
+    <title>Trip Tunes | Home</title>
     <script src="/js/scripts.js" defer></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body class="home-body">
-<div></div>
 <!--Side bar with buttons START -->
 <nav class="sidebar close">
     <header>
@@ -232,7 +231,12 @@
             <div class="image-list">
                 <div th:each="genre: ${genres}">
                     <div class="image-item">
-                        <a th:href="@{/api/playlists?genre=genre}">
+                        <a th:href="@{'/playlists?page=0' +
+                         '&size=10' +
+                         '&title=' +
+                         '&genre=' + ${genre} +
+                         '&minDuration>=' +
+                         '&maxDuration<='}">
                             <img class="image-item" th:src="${genre.photoUrl != null ? genre.photoUrl : '/assets/img/logo.png'}"></a>
                         <div class="content">
                             <div class="icon">
@@ -241,7 +245,12 @@
                             </div>
                         </div>
                         <div class="playlist-icon">
-                            <a th:href="@{/api/playlists?genre=genre}">
+                            <a th:href="@{'/playlists?page=0' +
+                         '&size=10' +
+                         '&title=' +
+                         '&genre=' + ${genre} +
+                         '&minDuration>=' +
+                         '&maxDuration<='}">
                                 <i class='bx bxs-playlist'></i>
                             </a>
                         </div>

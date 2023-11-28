@@ -10,6 +10,8 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
 import javax.sql.DataSource;
 import java.util.Properties;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 @Configuration
 @PropertySource("classpath:application.properties")
@@ -46,5 +48,11 @@ public class ApplicationConfig {
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MariaDBDialect");
         return hibernateProperties;
+    }
+
+    @Bean
+    public ScheduledExecutorService scheduledExecutorService() {
+        // Create and return a ScheduledExecutorService bean
+        return Executors.newScheduledThreadPool(1);
     }
 }

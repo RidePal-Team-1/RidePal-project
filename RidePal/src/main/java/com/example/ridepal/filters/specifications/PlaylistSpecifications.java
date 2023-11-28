@@ -9,13 +9,13 @@ public class PlaylistSpecifications {
     }
 
     public static Specification<Playlist> title(String title) {
-        return (root, query, builder) -> builder.like(root.get("title"), "%" + title + "%");
+        return (root, query, builder) -> builder.like(root.get("title"),  "%" + title + "%");
     }
 
     public static Specification<Playlist> genre(String name) {
         return (root, query, builder) -> {
             query.distinct(true);
-            return builder.equal(root.join("genres").get("name"), name);
+            return builder.like(root.join("genres").get("name"), name + "%");
         };
     }
 
