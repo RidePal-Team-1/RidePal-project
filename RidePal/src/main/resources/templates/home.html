@@ -189,7 +189,7 @@
                 <div class="image-list">
                     <div th:each="playlist: ${getTopPlaylists}">
                         <div class="image-item">
-                            <a th:href="@{/playlists + /${playlist.id}}"><img class="image-item"
+                            <a th:href="@{'/playlists/' + ${playlist.id}}"><img class="image-item"
                                                                               th:src="${playlist.photoUrl != null ? playlist.photoUrl : '/assets/img/logo.png'}"></a>
                             <div class="content">
                                 <div class="icon">
@@ -202,7 +202,7 @@
                                 </div>
                             </div>
                             <div class="playlist-icon">
-                                <a th:href="@{/playlists + /${playlist.id}}">
+                                <a th:href="@{'/playlists/' + ${playlist.id}}">
                                     <i class='bx bxs-playlist'></i>
                                 </a>
                             </div>

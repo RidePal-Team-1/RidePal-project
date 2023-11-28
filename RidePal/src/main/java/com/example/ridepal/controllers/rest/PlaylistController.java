@@ -6,6 +6,7 @@ import com.example.ridepal.mappers.PlaylistMapper;
 import com.example.ridepal.models.Playlist;
 import com.example.ridepal.models.User;
 import com.example.ridepal.models.dtos.PlaylistDto;
+import com.example.ridepal.models.dtos.PlaylistUpdateDto;
 import com.example.ridepal.services.contracts.PlaylistService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -105,7 +106,7 @@ public class PlaylistController {
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Invalid id supplied",
                     content = @Content) })
-    public void update(@PathVariable int id,@Valid @RequestBody PlaylistDto playlistDto) {
+    public void update(@PathVariable int id,@Valid @RequestBody PlaylistUpdateDto playlistDto) {
         try {
             Playlist playlist = playlistMapper.fromDto(playlistDto, id);
             playlistService.updatePlaylist(playlist);

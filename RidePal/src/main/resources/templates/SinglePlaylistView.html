@@ -140,26 +140,43 @@
     <div class="right" th:object="${playlist}">
         <div class="playlist-header">
             <div class="playlist-top">
+                <a href="#" th:href="@{'users/'+${playlist.creator.id}}">
                 <div class="playlist-top-email">
                     <div class="arrow-container">
                         <img src="../static/assets/img/logo.png" th:src="@{/assets/img/logo.png}">
                     </div>
-                    <span th:text="${playlist.creator.email}">email of the owner</span>
+                    <span th:text="${playlist.getCreator().email}">email of the owner</span>
                 </div>
+                </a>
             </div>
             <div class="playlist-content">
                 <div class="playlist-cover" id="profilePictureContainer">
-                    <img
-                            th:src="${playlist.getPhotoUrl() != null ? playlist.getPhotoUrl() : '/assets/img/logo.png'}"
-                            alt="Profile Picture" id="profilePicture"/>
-                    <form id="playlistForm" th:object="${playlist}" action="#" th:action="@{'/playlists/'+ ${playlist.getId()}+'/picture'}" method="post">
-                        <input type="hidden" id="hiddenPhotoInput" name="photoUrl" th:value="${playlist.photoUrl}">
-                    </form>
+                <img th:src="${playlist.getPhotoUrl() != null ? playlist.getPhotoUrl() : '/assets/img/logo.png'}"
+                     alt="Profile Picture" id="profilePicture">
+                <form id="playlistForm" th:object="${playlist}" action="#" th:action="@{'/playlists/'+ ${playlist.getId()}+'/picture'}" method="post">
+                    <input type="hidden" id="hiddenPhotoInput" name="photoUrl" th:value="${playlist.photoUrl}">
+                </form>
+                <div class="hover-icon">
+                    <!-- Your icon content goes here -->
+                    <i class="bx bx-image"></i>
                 </div>
+            </div>
                 <div class="playlist-info">
 <!--                    <div class="playlist-public">Public playlist</div>-->
-                    <div class="playlist-title" th:text="${playlist.title}">Classic road trip</div>
+                    <div class="playlist-title" id="editableTitle" onclick="openModal()" th:text="${playlist.title}">
+                       Classic road trip</div>
+
 <!--                    <div class="playlist-description">description</div>-->
+                <div id="editTitleModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModal()">&times;</span>
+                        <form id="editTitleForm" th:object="${playlist}" th:action="@{'/playlists/' + ${id} + '/update'}">
+                            <label for="newTitle">Enter New Title: </label>
+                            <input type="text" id="newTitle" name="title" th:value="${playlist.title}" required>
+                            <button type="submit">SAVE</button>
+                        </form>
+                    </div>
+                </div>
                     <div class="playlist-stats">
                         <i class='bx bx-bar-chart-alt icon'></i>
                         <span th:text="${playlist.rank}">rating</span>
@@ -216,7 +233,7 @@
                            </div>
                        </td>
                        <td class="song-album" th:text="${track.album.name}">Album</td>
-                       <td class="song-duration" th:text="${track.playtime}">Duration</td>
+                       <td class="song-duration" th:text="${track.playtime}"></i>Duration</td>
                        <td class="song-rank" th:text="${track.rank}">Rank</td>
                    </tr>
                    </table>
@@ -277,6 +294,24 @@
             return hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":" + (remainingSeconds < 10 ? "0" : "") + remainingSeconds;
         }
     });
+</script>
+
+<script>
+    function openModal() {
+        document.getElementById('editTitleModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('editTitleModal').style.display = 'none';
+    }
+
+    // Close the modal if the user clicks outside of it
+    window.onclick = function(event) {
+        var modal = document.getElementById('editTitleModal');
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
 </script>
 <script src="/js/scripts.js"></script>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

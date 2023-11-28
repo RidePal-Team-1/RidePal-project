@@ -3,6 +3,7 @@ package com.example.ridepal.mappers;
 import com.example.ridepal.models.Genre;
 import com.example.ridepal.models.Playlist;
 import com.example.ridepal.models.dtos.PlaylistDto;
+import com.example.ridepal.models.dtos.PlaylistUpdateDto;
 import com.example.ridepal.repositories.GenreRepository;
 import com.example.ridepal.repositories.PlaylistRepository;
 import com.example.ridepal.repositories.UserRepository;
@@ -32,11 +33,12 @@ public class PlaylistMapper {
         this.genreRepository = genreRepository;
     }
 
-    public Playlist fromDto(PlaylistDto dto, int id) {
+    public Playlist fromDto(PlaylistUpdateDto dto, int id) {
         Playlist playlist = playlistRepository.findById(id);
         playlist.setTitle(dto.getTitle());
         return playlist;
     }
+
 
     public Playlist fromDto(PlaylistDto dto, Principal principal) {
         Playlist playlist = new Playlist();
