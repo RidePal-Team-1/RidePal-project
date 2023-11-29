@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.example.ridepal.services.ArtistServiceTests" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-11-26T23:38:35" hostname="DESKTOP-J0BNFBF" time="0.088">
-  <properties/>
-  <testcase name="findById_Should_Throw_WhenInvalidId()" classname="com.example.ridepal.services.ArtistServiceTests" time="0.077"/>
-  <testcase name="findAll_Should_CallRepository()" classname="com.example.ridepal.services.ArtistServiceTests" time="0.005"/>
-  <testcase name="findById_Should_CallRepositoryWhenIdIsValid()" classname="com.example.ridepal.services.ArtistServiceTests" time="0.005"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
