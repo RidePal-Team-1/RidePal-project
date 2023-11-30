@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecificationExecutor<User> {
 
@@ -25,4 +27,7 @@ public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecifi
     @Query(value = "select count(*) from users", nativeQuery = true)
     int getUsersCount();
 
+    List<User> findListByUsername(String username);
+
+    List<User> findListByEmail(String email);
 }

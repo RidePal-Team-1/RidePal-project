@@ -34,6 +34,8 @@ public class UserMapper {
             throw new EntityNotFoundException("User", id);
         }
         User user = fromDto(dto);
+        user.setRoles(repositoryUser.getRoles());
+        user.setPlaylists(repositoryUser.getPlaylists());
         user.setId(id);
         return user;
     }
@@ -53,5 +55,14 @@ public class UserMapper {
         return user;
     }
 
-
+    public UserDto toDto(User user) {
+        UserDto userDto = new UserDto();
+        userDto.setUsername(user.getUsername());
+        userDto.setPassword(user.getPassword());
+        userDto.setPasswordConfirm("");
+        userDto.setEmail(user.getEmail());
+        userDto.setFirstName(user.getFirst_name());
+        userDto.setLastName(user.getLast_name());
+        return userDto;
+    }
 }

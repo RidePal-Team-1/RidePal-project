@@ -2,6 +2,7 @@ package com.example.ridepal.services;
 
 import com.example.ridepal.exceptions.DuplicateEntityException;
 import com.example.ridepal.exceptions.EntityNotFoundException;
+import com.example.ridepal.exceptions.UnauthorizedOperationException;
 import com.example.ridepal.filters.enums.Provider;
 import com.example.ridepal.models.Playlist;
 import com.example.ridepal.models.Role;
@@ -26,6 +27,7 @@ import static com.example.ridepal.filters.specifications.UserSpecifications.*;
 @Service
 public class UserServiceImpl implements UserService {
 
+    public static final String UNAUTHORIZED_MSG = "You are not authorized to perform this operation!";
     private final UserRepository userRepository;
 
     private final RoleRepository roleRepository;
@@ -84,32 +86,39 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void update(User user) {
-        checkUsernameUniqueness(user);
-        checkEmailUniqueness(user);
-        userRepository.save(user);
+    public void update(User userToUpdate, User authenticatedUser) {
+        if (userToUpdate.getId() != authenticatedUser.getId()) {
+            throw new UnauthorizedOperationException(UNAUTHORIZED_MSG);
+        }
+        checkUsernameUniqueness(userToUpdate);
+        checkEmailUniqueness(userToUpdate);
+        userRepository.save(userToUpdate);
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id, User authenticatedUser) {
         User user = userRepository.findById(id);
         if (user == null) {
             throw new EntityNotFoundException("User", id);
         }
-        userRepository.delete(user);
+        if (user.getId() != authenticatedUser.getId() ||
+                !authenticatedUser.getRoles().contains(roleRepository.findByName("ADMIN"))) {
+            throw new UnauthorizedOperationException(UNAUTHORIZED_MSG);
+        }
+            userRepository.delete(user);
     }
 
     private void checkUsernameUniqueness(User user) {
-        User repositoryUser = userRepository.findByUsername(user.getUsername());
-        if (repositoryUser != null) {
+        List<User> repositoryUsers = userRepository.findListByUsername(user.getUsername());
+        if (repositoryUsers.size() > 1) {
             throw new DuplicateEntityException("User", "username", user.getUsername());
         }
     }
 
     private void checkEmailUniqueness(User user) {
-        User repositoryUser = userRepository.findByEmail(user.getEmail());
-        if (repositoryUser != null) {
-            throw new DuplicateEntityException("User", "email", user.getEmail());
+        List<User> repositoryUsers = userRepository.findListByEmail(user.getEmail());
+        if (repositoryUsers.size() > 1) {
+            throw new DuplicateEntityException("User", "username", user.getUsername());
         }
     }
 
@@ -125,7 +134,6 @@ public class UserServiceImpl implements UserService {
             newUser.setRoles(roles);
             userRepository.save(newUser);
         }
-        //TODO see whether i have to set every field in the database with the users
     }
 
     public List<Playlist> getUserPlaylists(int id){

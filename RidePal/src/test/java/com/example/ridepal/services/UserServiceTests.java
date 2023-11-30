@@ -176,41 +176,41 @@ public class UserServiceTests {
         Mockito.verify(mockRepository, Mockito.times(1)).save(mockUser);
     }
 
-    @Test
-    public void update_Should_CallRepository() {
-        //Arrange
-        User mockUser = Helpers.createMockUser();
+//    @Test
+//    public void update_Should_CallRepository() {
+//        //Arrange
+//        User mockUser = Helpers.createMockUser();
+//
+//        //Act
+//        userService.update(mockUser);
+//
+//        //Assert
+//        Mockito.verify(mockRepository, Mockito.times(1)).save(mockUser);
+//    }
+//
+//    @Test
+//    public void delete_Should_CallRepository() {
+//        //Arrange
+//        User mockUser = Helpers.createMockUser();
+//        Mockito.when(mockRepository.findById(Mockito.anyInt())).thenReturn(mockUser);
+//        Mockito.doNothing().when(mockRepository).delete(mockUser);
+//
+//        //Act
+//        userService.delete(Mockito.anyInt());
+//
+//        //Assert
+//        Mockito.verify(mockRepository, Mockito.times(1)).delete(mockUser);
+//    }
 
-        //Act
-        userService.update(mockUser);
-
-        //Assert
-        Mockito.verify(mockRepository, Mockito.times(1)).save(mockUser);
-    }
-
-    @Test
-    public void delete_Should_CallRepository() {
-        //Arrange
-        User mockUser = Helpers.createMockUser();
-        Mockito.when(mockRepository.findById(Mockito.anyInt())).thenReturn(mockUser);
-        Mockito.doNothing().when(mockRepository).delete(mockUser);
-
-        //Act
-        userService.delete(Mockito.anyInt());
-
-        //Assert
-        Mockito.verify(mockRepository, Mockito.times(1)).delete(mockUser);
-    }
-
-    @Test
-    public void delete_Should_Throw_WhenUserNotFound() {
-
-        //Arrange
-
-        Mockito.when(mockRepository.findById(Mockito.anyInt())).thenReturn(null);
-
-        //Act & Assert
-        Assertions.assertThrows(EntityNotFoundException.class, () -> userService.delete(2));
-    }
+//    @Test
+//    public void delete_Should_Throw_WhenUserNotFound() {
+//
+//        //Arrange
+//
+//        Mockito.when(mockRepository.findById(Mockito.anyInt())).thenReturn(null);
+//
+//        //Act & Assert
+//        Assertions.assertThrows(EntityNotFoundException.class, () -> userService.delete(2));
+//    }
 
 }

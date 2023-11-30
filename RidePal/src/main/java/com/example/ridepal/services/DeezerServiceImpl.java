@@ -2,11 +2,9 @@ package com.example.ridepal.services;
 
 import com.example.ridepal.deezer.*;
 import com.example.ridepal.exceptions.GenreSynchronizationFailureException;
+import com.example.ridepal.exceptions.UnauthorizedOperationException;
 import com.example.ridepal.models.*;
-import com.example.ridepal.repositories.AlbumRepository;
-import com.example.ridepal.repositories.ArtistRepository;
-import com.example.ridepal.repositories.GenreRepository;
-import com.example.ridepal.repositories.TrackRepository;
+import com.example.ridepal.repositories.*;
 import com.example.ridepal.services.contracts.DeezerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,16 +27,20 @@ public class DeezerServiceImpl implements DeezerService {
 
     private final AlbumRepository albumRepository;
 
+    private final RoleRepository roleRepository;
+
     @Autowired
     public DeezerServiceImpl(RestTemplate restTemplate, @Value("${deezer.api.base-url}") String baseUrl,
                              GenreRepository genreRepository, TrackRepository trackRepository,
-                             ArtistRepository artistRepository, AlbumRepository albumRepository) {
+                             ArtistRepository artistRepository, AlbumRepository albumRepository,
+                             RoleRepository roleRepository) {
         this.restTemplate = restTemplate;
         this.baseUrl = baseUrl;
         this.genreRepository = genreRepository;
         this.trackRepository = trackRepository;
         this.artistRepository = artistRepository;
         this.albumRepository = albumRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override

@@ -1,10 +1,13 @@
 package com.example.ridepal.controllers.mvc;
 
+import com.example.ridepal.helpers.AuthenticationHelper;
 import com.example.ridepal.models.Genre;
 import com.example.ridepal.models.Playlist;
 import com.example.ridepal.models.User;
+import com.example.ridepal.models.dtos.SynchronizationConfigDto;
 import com.example.ridepal.repositories.GenreRepository;
 import com.example.ridepal.repositories.PlaylistRepository;
+import com.example.ridepal.repositories.SynchronizationConfigRepository;
 import com.example.ridepal.repositories.UserRepository;
 import com.example.ridepal.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,21 +33,21 @@ import java.util.Map;
 @RequestMapping("")
 public class HomeController {
 
-
-    private final UserService userService;
-
     private final PlaylistRepository playlistRepository;
 
     private final GenreRepository genreRepository;
 
     private final UserRepository userRepository;
 
+    private final SynchronizationConfigRepository synchronizationConfigRepository;
+
     @Autowired
-    public HomeController(UserService userService, PlaylistRepository playlistRepository, GenreRepository genreRepository, UserRepository userRepository) {
-        this.userService = userService;
+    public HomeController(PlaylistRepository playlistRepository, GenreRepository genreRepository,
+                          UserRepository userRepository, SynchronizationConfigRepository synchronizationConfigRepository) {
         this.playlistRepository = playlistRepository;
         this.genreRepository = genreRepository;
         this.userRepository = userRepository;
+        this.synchronizationConfigRepository = synchronizationConfigRepository;
     }
 
     @GetMapping
@@ -54,37 +57,21 @@ public class HomeController {
 
     @GetMapping("/home")
     public String home(Model model, Authentication authentication) {
-        extractUserFromProvider(model, authentication);
+        User user = AuthenticationHelper.extractUserFromProvider(authentication);
+        model.addAttribute("user", user);
+        model.addAttribute("genreSync", new SynchronizationConfigDto());
         return "home";
     }
-
 
     @GetMapping("/about")
     public String about() {
     return "about";
     }
 
-
-    private void extractUserFromProvider(Model model, Authentication authentication) {
-        if (authentication != null && authentication.isAuthenticated()) {
-            if (authentication instanceof OAuth2AuthenticationToken) {
-                // OAuth2 authentication
-                OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
-                OAuth2User oauthUser = oauthToken.getPrincipal();
-                String email = oauthUser.getAttribute("email"); // Replace with the actual attribute name
-
-                User user = userService.findByEmail(email);
-                model.addAttribute("user", user);
-            } else if (authentication instanceof UsernamePasswordAuthenticationToken) {
-                // Standard login authentication
-                String email = authentication.getName();
-
-                User user = userService.findByEmail(email);
-                model.addAttribute("user", user);
-            }
-        }
+    @ModelAttribute("currentInterval")
+    private long getCurrentInterval() {
+        return synchronizationConfigRepository.findById(1).getSynchronizationInterval();
     }
-
 
     @ModelAttribute("getTopPlaylists")
     private List<Playlist> getTopPlaylists() {

@@ -1,7 +1,9 @@
 package com.example.ridepal.controllers.rest;
 
 import com.example.ridepal.exceptions.EntityNotFoundException;
+import com.example.ridepal.exceptions.UnauthorizedOperationException;
 import com.example.ridepal.filters.enums.PlaylistSortField;
+import com.example.ridepal.helpers.AuthenticationHelper;
 import com.example.ridepal.mappers.PlaylistMapper;
 import com.example.ridepal.models.Playlist;
 import com.example.ridepal.models.User;
@@ -23,6 +25,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -106,12 +109,15 @@ public class PlaylistController {
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Invalid id supplied",
                     content = @Content) })
-    public void update(@PathVariable int id,@Valid @RequestBody PlaylistUpdateDto playlistDto) {
+    public void update(@PathVariable int id, @Valid @RequestBody PlaylistUpdateDto playlistDto, Authentication authentication) {
+        User user = AuthenticationHelper.extractUserFromProvider(authentication);
         try {
             Playlist playlist = playlistMapper.fromDto(playlistDto, id);
-            playlistService.updatePlaylist(playlist);
+            playlistService.updatePlaylist(playlist, user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (UnauthorizedOperationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
 
@@ -124,11 +130,14 @@ public class PlaylistController {
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Invalid id supplied",
                     content = @Content) })
-    public void delete(@PathVariable int id) {
+    public void delete(@PathVariable int id, Authentication authentication) {
+        User user = AuthenticationHelper.extractUserFromProvider(authentication);
         try {
-            playlistService.deletePlaylist(id);
+            playlistService.deletePlaylist(id, user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (UnauthorizedOperationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
 

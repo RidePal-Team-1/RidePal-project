@@ -1,7 +1,10 @@
 package com.example.ridepal.controllers.rest;
 
+import com.example.ridepal.exceptions.DuplicateEntityException;
 import com.example.ridepal.exceptions.EntityNotFoundException;
+import com.example.ridepal.exceptions.UnauthorizedOperationException;
 import com.example.ridepal.filters.enums.UserSortField;
+import com.example.ridepal.helpers.AuthenticationHelper;
 import com.example.ridepal.mappers.UserMapper;
 import com.example.ridepal.models.Playlist;
 import com.example.ridepal.models.User;
@@ -22,6 +25,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -73,7 +77,6 @@ public class UserController {
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
-
     }
 
     @PostMapping
@@ -83,8 +86,12 @@ public class UserController {
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = User.class))})})
     public User create(@Valid @RequestBody UserDto dto) {
-       User user = mapper.fromDto(dto);
-       return userService.create(user);
+        try {
+            User user = mapper.fromDto(dto);
+            return userService.create(user);
+        } catch (DuplicateEntityException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
@@ -96,12 +103,17 @@ public class UserController {
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Invalid id supplied",
                     content = @Content) })
-    public void update(@Valid @RequestBody UserDto dto, @PathVariable int id) {
+    public void update(@Valid @RequestBody UserDto dto, @PathVariable int id, Authentication authentication) {
+        User authenticatedUser = AuthenticationHelper.extractUserFromProvider(authentication);
         try{
             User user = mapper.fromDto(dto, id);
-            userService.update(user);
+            userService.update(user, authenticatedUser);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (UnauthorizedOperationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        } catch (DuplicateEntityException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
 
@@ -114,11 +126,14 @@ public class UserController {
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Invalid id supplied",
                     content = @Content) })
-    public void delete(@PathVariable int id) {
+    public void delete(@PathVariable int id, Authentication authentication) {
+        User user = AuthenticationHelper.extractUserFromProvider(authentication);
         try{
-            userService.delete(id);
+            userService.delete(id, user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (UnauthorizedOperationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
 

@@ -60,6 +60,12 @@ public class AuthenticationController {
            return "register";
        }
 
+
+       if (!dto.getPassword().equals(dto.getPasswordConfirm())) {
+           bindingResult.rejectValue("passwordConfirm", "password_error", "Passwords must match!");
+           return "register";
+       }
+
        try {
            User user = mapper.fromDto(dto);
            userService.create(user);

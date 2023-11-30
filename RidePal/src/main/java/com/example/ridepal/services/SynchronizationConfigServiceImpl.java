@@ -4,6 +4,7 @@ import com.example.ridepal.exceptions.GenreSynchronizationFailureException;
 import com.example.ridepal.exceptions.InvalidGenreSynchronizationInputException;
 import com.example.ridepal.models.SynchronizationConfig;
 import com.example.ridepal.models.SynchronizationLog;
+import com.example.ridepal.models.User;
 import com.example.ridepal.repositories.SynchronizationConfigRepository;
 import com.example.ridepal.repositories.SynchronizationLogRepository;
 import com.example.ridepal.services.contracts.DeezerService;
@@ -44,7 +45,7 @@ public class SynchronizationConfigServiceImpl implements SynchronizationConfigSe
     }
 
     @Override
-    public void updateInterval(long interval) {
+    public void updateInterval(long interval, User user) {
         if (interval > 720) {
             throw new InvalidGenreSynchronizationInputException(INVALID_TIME);
         }

@@ -31,4 +31,6 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Integer>, Jp
 
     @Query(value = "select count(*) from playlists_genres p where p.genre_id = :genre", nativeQuery = true)
     int getPlaylistsCountByGenre(@Param("genre") long id);
+
+
 }

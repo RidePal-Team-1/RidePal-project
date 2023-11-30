@@ -17,9 +17,9 @@ public interface UserService {
     User findByEmail(String email);
     User create(User user);
 
-    void update(User user);
+    void update(User user, User authenticatedUser);
 
-    void delete(int id);
+    void delete(int id, User authenticatedUser);
 
     void processOAuthPostLogin(String username);
 

@@ -46,7 +46,16 @@ public class SecurityConfig {
                                 "/home",
                                 "/static/js/**",
                                 "/css/**",
-                                "/assets/**").permitAll()
+                                "/assets/**",
+                                "/playlists/{id}",
+                                "/playlists").permitAll()
+                        .requestMatchers("/playlists/{id}/update",
+                                "/playlists/{id}/picture",
+                                "/playlists/{id}/delete",
+                                "/users/{id}",
+                                "/users/{id}/update").authenticated()
+                        .requestMatchers("/users",
+                                "/users/{id}/delete").hasRole("ADMIN")
                         .anyRequest().permitAll())
 
                 //TODO see if you are authenticated and try to login again if it works

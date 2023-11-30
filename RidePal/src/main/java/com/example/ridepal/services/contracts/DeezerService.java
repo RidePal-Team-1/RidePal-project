@@ -1,6 +1,7 @@
 package com.example.ridepal.services.contracts;
 
 import com.example.ridepal.deezer.DeezerGenre;
+import com.example.ridepal.models.User;
 
 import java.util.List;
 

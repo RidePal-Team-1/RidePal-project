@@ -1,10 +1,12 @@
 package com.example.ridepal.services;
 
 import com.example.ridepal.exceptions.EntityNotFoundException;
+import com.example.ridepal.exceptions.UnauthorizedOperationException;
 import com.example.ridepal.mappers.PlaylistMapper;
 import com.example.ridepal.models.Genre;
 import com.example.ridepal.models.Playlist;
 import com.example.ridepal.models.Track;
+import com.example.ridepal.models.User;
 import com.example.ridepal.models.dtos.PlaylistDto;
 import com.example.ridepal.repositories.GenreRepository;
 import com.example.ridepal.repositories.PlaylistRepository;
@@ -29,6 +31,7 @@ import static com.example.ridepal.filters.specifications.PlaylistSpecifications.
 public class PlaylistServiceImpl implements PlaylistService {
 
     public static final int BUFFER_TRACKS = 12;
+    public static final String UNAUTHORIZED_MSG = "You are not authorized to perform this operation!";
     private final PlaylistRepository playlistRepository;
 
     private final BingMapService bingMapService;
@@ -91,6 +94,7 @@ public class PlaylistServiceImpl implements PlaylistService {
         return playlistRepository.save(playlist);
     }
 
+
     private static int removeTracksTillPlaytimeInRange(int totalPlaytime, double[] distanceAndDuration, List<Track> trackSet) {
         while(totalPlaytime > distanceAndDuration[1]+5){
             totalPlaytime -=(trackSet.get(trackSet.size()-1).getPlaytime()/60);
@@ -142,18 +146,22 @@ public class PlaylistServiceImpl implements PlaylistService {
 
 
     @Override
-    public void updatePlaylist(Playlist playlist) {
+    public void updatePlaylist(Playlist playlist, User user) {
+        if (user.getId() != playlist.getCreator().getId()) {
+            throw new UnauthorizedOperationException(UNAUTHORIZED_MSG);
+        }
         playlistRepository.save(playlist);
     }
 
     @Override
-    public void deletePlaylist(int id) {
+    public void deletePlaylist(int id, User user) {
         Playlist playlist = playlistRepository.findById(id);
         if(playlist==null){
             throw new EntityNotFoundException("Playlist", id);
-        }else
-            playlistRepository.delete(playlist);
+        }
+        if (user.getId() != playlist.getCreator().getId()) {
+            throw new UnauthorizedOperationException(UNAUTHORIZED_MSG);
+        }
+        playlistRepository.delete(playlist);
     }
-
-
 }
