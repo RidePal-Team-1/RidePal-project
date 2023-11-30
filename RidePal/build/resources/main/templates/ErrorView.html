@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!----===== CSS ===== -->
+    <link href="../static/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+
+    <!----===== Boxicons CSS ===== -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!----===== Google Fonts Link For Icons ===== -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <title>Title</title>
+    <script src="/js/scripts.js" defer></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+
+<body>
+<div></div>
+<nav class="sidebar close">
+    <header>
+        <div class="image-text">
+            <span class="image">
+                <img th:src="@{/assets/img/logo.png}" alt="logo">
+            </span>
+
+            <div class="text header-text">
+                <span class="name">TripTunes</span>
+                <span class="profession">Playlist Generator</span>
+            </div>
+        </div>
+
+        <i class='bx bx-chevron-right toggle' ></i>
+    </header>
+
+    <div class="menu-bar">
+        <div class="menu">
+            <ul class="menu-links">
+                <li class="nav-link">
+                    <a th:href="@{/home}">
+                        <i class='bx bx-home-alt icon' ></i>
+                        <span class="text nav-text">Home</span>
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a th:href="@{/admin-portal}">
+                        <i class='bx bx-bar-chart-alt-2 icon' ></i>
+                        <span class="text nav-text">Admin Portal</span>
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a href="#">
+                        <i class='bx bx-bell icon' ></i>
+                        <span class="text nav-text">Notifications</span>
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a href="#">
+                        <i class='bx bx-heart icon' ></i>
+                        <span class="text nav-text">Top Tracks</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="bottom-content">
+            <li class="mode">
+                <div class="moon-sun">
+                    <i class='bx bx-moon icon moon' ></i>
+                    <i class='bx bx-sun icon sun' ></i>
+                </div>
+
+                <span class="mode-text text">Dark Mode</span>
+
+                <div class="toggle-switch">
+                    <span class="switch"></span>
+                </div>
+            </li>
+        </div>
+    </div>
+</nav>
+
+<section class="home">
+    <nav>
+        <div class="search-container">
+            <i class='bx bx-search icon' style="margin-top: 13px" ></i>
+            <input class="search-box" type="text" placeholder="Search...">
+        </div>
+        <img sec:authorize="isAuthenticated()" class="user-pic" th:src="${user.profile_picture  != null ? user.profile_picture : '/assets/img/logo.png'}" onclick="toggleMenu()" alt="user">
+        <div sec:authorize="!isAuthenticated()" class="button-1">
+            <a th:href="@{/auth/login}">
+                <i class='bx bx-log-in icon'></i>
+                <span class="text nav-text">Log In</span>
+            </a>
+        </div>
+        <div sec:authorize="!isAuthenticated()" class="button-1">
+            <a th:href="@{/auth/register}">
+                <i class='bx bx-registered icon' ></i>
+                <span class="text nav-text">Register</span>
+            </a>
+        </div>
+
+        <div class="sub-menu-wrap" id="subMenu">
+            <div class="sub-menu">
+                <div class="user-info">
+                    <img sec:authorize="isAuthenticated()" th:src="${user.profile_picture  != null ? user.profile_picture : '/assets/img/logo.png'}" alt="user">
+                    <h3 sec:authorize="isAuthenticated()" th:text="${user.email.substring(0, user.email.indexOf('@'))}">First Last</h3>
+                </div>
+                <hr>
+                <a href="#" class="sub-menu-link">
+                    <img th:src="@{/assets/img/profile.png}">
+                    <p>Edit Profile</p>
+                    <span>></span>
+                </a>
+                <a href="#" class="sub-menu-link">
+                    <img th:src="@{/assets/img/setting.png}">
+                    <p>Settings & Privacy</p>
+                    <span>></span>
+                </a>
+                <a href="#" class="sub-menu-link">
+                    <img th:src="@{/assets/img/help.png}">
+                    <p>Help & Support</p>
+                    <span>></span>
+                </a>
+                <a href="#" class="sub-menu-link">
+                    <img th:src="@{/assets/img/logout.png}">
+                    <p>Logout</p>
+                    <span>></span>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div class="error-view">
+        <div id="wrap">
+            <div id="album">
+                <div id="cover">
+                    <div class="print">
+                    </div>
+                </div>
+                <div id="vinyl">
+                    <div id="print">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 400 400">
+                            <defs>
+                                <!-- The text path: see links above regarding coordinate system -->
+                                <path d="M0, 200a200, 200 0 1, 1 500, 1a109, 200 0 1, 0 -400, 0" id="txt-path"></path>
+                            </defs>
+
+                            <text fill="white" font-size="150" font-family="Helvetica Neue" font-weight="600">
+                                <!-- This is the magic -->
+                                <textPath startOffset="0" xlink:href="#txt-path">ERROR 404</textPath>
+                            </text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <footer>
+        <ul class="social_icon">
+            <li><a href="#"><ion-icon name="logo-facebook"></ion-icon></a></li>
+            <li><a href="#"><ion-icon name="logo-twitter"></ion-icon></a></li>
+            <li><a href="#"><ion-icon name="logo-linkedin"></ion-icon></a></li>
+            <li><a href="#"><ion-icon name="logo-instagram"></ion-icon></a></li>
+        </ul>
+        <!--     <img src="../static/assets/img/fullLogo.png">-->
+        <ul class="menu">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Team</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <p>©2023 Trip Tunes | All Rights Reserved</p>
+    </footer>
+</section>
+
+
+
+
+
+
+<script src="/js/scripts.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!----===== CSS ===== -->
+    <link href="../static/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+
+    <!----===== Boxicons CSS ===== -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!----===== Google Fonts Link For Icons ===== -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <title>Title</title>
+    <script src="/js/scripts.js" defer></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+
+<body class="users-view">
+<div></div>
+<nav class="sidebar close">
+    <header>
+        <div class="image-text">
+            <span class="image">
+                <img th:src="@{/assets/img/logo.png}" alt="logo">
+            </span>
+
+            <div class="text header-text">
+                <span class="name">TripTunes</span>
+                <span class="profession">Playlist Generator</span>
+            </div>
+        </div>
+
+        <i class='bx bx-chevron-right toggle' ></i>
+    </header>
+
+    <div class="menu-bar">
+        <div class="menu">
+            <ul class="menu-links">
+                <li class="nav-link">
+                    <a th:href="@{/home}">
+                        <i class='bx bx-home-alt icon' ></i>
+                        <span class="text nav-text">Home</span>
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a th:href="@{/admin-portal}">
+                        <i class='bx bx-bar-chart-alt-2 icon' ></i>
+                        <span class="text nav-text">Admin Portal</span>
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a href="#">
+                        <i class='bx bx-bell icon' ></i>
+                        <span class="text nav-text">Notifications</span>
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a href="#">
+                        <i class='bx bx-heart icon' ></i>
+                        <span class="text nav-text">Top Tracks</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="bottom-content">
+            <li class="mode">
+                <div class="moon-sun">
+                    <i class='bx bx-moon icon moon' ></i>
+                    <i class='bx bx-sun icon sun' ></i>
+                </div>
+
+                <span class="mode-text text">Dark Mode</span>
+
+                <div class="toggle-switch">
+                    <span class="switch"></span>
+                </div>
+            </li>
+        </div>
+    </div>
+</nav>
+
+<section class="home">
+    <nav>
+        <div class="search-container">
+            <i class='bx bx-search icon' style="margin-top: 13px" ></i>
+            <input class="search-box" type="text" placeholder="Search...">
+        </div>
+        <img sec:authorize="isAuthenticated()" class="user-pic" th:src="${user.profile_picture  != null ? user.profile_picture : '/assets/img/logo.png'}" onclick="toggleMenu()" alt="user">
+        <div sec:authorize="!isAuthenticated()" class="button-1">
+            <a th:href="@{/auth/login}">
+                <i class='bx bx-log-in icon'></i>
+                <span class="text nav-text">Log In</span>
+            </a>
+        </div>
+        <div sec:authorize="!isAuthenticated()" class="button-1">
+            <a th:href="@{/auth/register}">
+                <i class='bx bx-registered icon' ></i>
+                <span class="text nav-text">Register</span>
+            </a>
+        </div>
+
+        <div class="sub-menu-wrap" id="subMenu">
+            <div class="sub-menu">
+                <div class="user-info">
+                    <img sec:authorize="isAuthenticated()" th:src="${user.profile_picture  != null ? user.profile_picture : '/assets/img/logo.png'}" alt="user">
+                    <h3 sec:authorize="isAuthenticated()" th:text="${user.email.substring(0, user.email.indexOf('@'))}">First Last</h3>
+                </div>
+                <hr>
+                <a href="#" class="sub-menu-link">
+                    <img th:src="@{/assets/img/profile.png}">
+                    <p>Edit Profile</p>
+                    <span>></span>
+                </a>
+                <a href="#" class="sub-menu-link">
+                    <img th:src="@{/assets/img/setting.png}">
+                    <p>Settings & Privacy</p>
+                    <span>></span>
+                </a>
+                <a href="#" class="sub-menu-link">
+                    <img th:src="@{/assets/img/help.png}">
+                    <p>Help & Support</p>
+                    <span>></span>
+                </a>
+                <a href="#" class="sub-menu-link">
+                    <img th:src="@{/assets/img/logout.png}">
+                    <p>Logout</p>
+                    <span>></span>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div class="search-header">
+        <form action="#" th:action="@{/users}" method="get" th:object="${filterOptions}">
+            <label style="margin-top: 50px; margin-bottom: 50px;  font-weight: 700;  line-height: 1.2; color: var(--dashboard-text-color)"
+                   th:text="#{users.filter.label}">Search</label>
+            <br/><br/>
+            <div class="form-box">
+                <input type="text" placeholder="Username" class="search-field genre" th:field="*{username}"/>
+                <input type="text" placeholder="First Name" class="search-field genre" th:field="*{firstName}"/>
+                <input type="text" placeholder="Last Name" class="search-field genre" th:field="*{lastName}"/>
+                <input type="text" placeholder="Email" class="search-field genre" th:field="*{email}"/>
+                <br/><br/>
+                <input class="btn btn-primary btn-xl text-uppercase search-btn" type="submit" value="Search"/>
+            </div>
+            <br/>
+            <br/>
+        </form>
+    </div>
+    <div class="user-container">
+        <h1 th:if="${users.isEmpty()}">NO RESULTS FOUND</h1>
+        <div class="user-card" th:each="user : ${users}">
+            <a href="#" th:href="${'/users/' + user.id}">
+            <img class="user-avatar" src="../static/assets/img/user.png" th:src="@{/assets/img/user.png}" alt="User 1">
+            <i class="bx bx-headphone"></i><h2 class="all-users-username" th:text="${user.username}">User 1</h2>
+            </a>
+        </div>
+    </div>
+    <div class='record'></div>
+    <div class="pagination_section" style="text-align: center">
+        <a th:if="${users.hasPrevious()}" th:href="@{'/users?page=' + ${users.previousPageable().pageNumber} +
+        '&size=' + ${users.getSize()} +
+        ${filterOptions.username != null ? '&username=' + filterOptions.username : ''} +
+        ${filterOptions.firstName != null ? '&firstName=' + filterOptions.firstName : ''} +
+        ${filterOptions.lastName != null ? '&lastName=' + filterOptions.lastName : ''} +
+        ${filterOptions.email != null ? '&email=' + filterOptions.email : ''}}" ><i class='bx bx-chevron-left'></i></a>
+        <span th:if="${users.totalPages > 0}"
+              th:each="pageNumber : ${#numbers.sequence(0, users.totalPages - 1)}">
+<!--                <a  th:if="${(filterOptions.getTitle()==null && filterOptions.getGenre()==null && filterOptions.getMinDuration()==null && filterOptions.getMaxDuration()==null)-->
+            <!-- || filterOptions.getTitle().isBlank() && filterOptions.getGenre().isBlank() && filterOptions.getMinDuration().isBlank() && filterOptions.getMaxDuration().isBlank()}"-->
+            <!--                    th:href="@{'/playlists?page=' + ${pageNumber}}" th:text="${pageNumber}"></a>-->
+    <a th:href="@{'/users' +
+        '?page=' + ${users} +
+        '&size=' + ${users.getSize()} +
+        ${filterOptions.username != null ? '&username=' + filterOptions.username : ''} +
+        ${filterOptions.firstName != null ? '&firstName=' + filterOptions.firstName : ''} +
+        ${filterOptions.lastName != null ? '&lastName=' + filterOptions.lastName : ''} +
+        ${filterOptions.email != null ? '&email=' + filterOptions.email : ''}}"
+       th:text="${pageNumber + 1}" th:class="${pageNumber == users.number? 'active' : ''}"></a>
+</span>
+        <a th:if="${users.hasNext()}" th:href="@{'/users?page=' + ${users.nextPageable().pageNumber} +
+        '&size=' + ${users.getSize()} +
+        ${filterOptions.username != null ? '&username=' + filterOptions.username : ''} +
+        ${filterOptions.firstName != null ? '&firstName=' + filterOptions.firstName : ''} +
+        ${filterOptions.lastName != null ? '&lastName=' + filterOptions.lastName : ''} +
+        ${filterOptions.email != null ? '&email=' + filterOptions.email : ''}}"><i class='bx bx-chevron-right'></i></a>
+    </div>
+    <footer>
+        <ul class="social_icon">
+            <li><a href="#"><ion-icon name="logo-facebook"></ion-icon></a></li>
+            <li><a href="#"><ion-icon name="logo-twitter"></ion-icon></a></li>
+            <li><a href="#"><ion-icon name="logo-linkedin"></ion-icon></a></li>
+            <li><a href="#"><ion-icon name="logo-instagram"></ion-icon></a></li>
+        </ul>
+        <!--     <img src="../static/assets/img/fullLogo.png">-->
+        <ul class="menu">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Team</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <p>©2023 Trip Tunes | All Rights Reserved</p>
+    </footer>
+</section>
+
+
+
+
+
+
+<script src="/js/scripts.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
