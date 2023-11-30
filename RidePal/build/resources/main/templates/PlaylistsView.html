@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:th="http://www.thymeleaf.org">>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!----===== CSS ===== -->
+    <link href="../static/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+
+    <!----===== Boxicons CSS ===== -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!----===== Google Fonts Link For Icons ===== -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+
+    <title>Trip Tunes | Playlists</title>
+    <script src="/js/scripts.js" defer></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body class="home-body">
+
+<!--Side bar with buttons START -->
+<nav class="sidebar close">
+    <header>
+        <div class="image-text">
+            <span class="image">
+                <img th:src="@{/assets/img/logo.png}" alt="logo">
+            </span>
+
+            <div class="text header-text">
+                <span class="name">TripTunes</span>
+                <span class="profession">Playlist Generator</span>
+            </div>
+        </div>
+
+        <i class='bx bx-chevron-right toggle'></i>
+    </header>
+
+    <div class="menu-bar">
+        <div class="menu">
+            <ul class="menu-links">
+                <li class="nav-link">
+                    <a th:href="@{/home}">
+                        <i class='bx bx-home-alt icon'></i>
+                        <span class="text nav-text">Home</span>
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a th:href="@{/admin-portal}">
+                        <i class='bx bx-bar-chart-alt-2 icon'></i>
+                        <span class="text nav-text">Admin Portal</span>
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a href="#">
+                        <i class='bx bx-bell icon'></i>
+                        <span class="text nav-text">Notifications</span>
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a href="#">
+                        <i class='bx bx-heart icon'></i>
+                        <span class="text nav-text">Top Tracks</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="bottom-content">
+            <li class="mode">
+                <div class="moon-sun">
+                    <i class='bx bx-moon icon moon'></i>
+                    <i class='bx bx-sun icon sun'></i>
+                </div>
+
+                <span class="mode-text text">Dark Mode</span>
+
+                <div class="toggle-switch">
+                    <span class="switch"></span>
+                </div>
+            </li>
+        </div>
+    </div>
+</nav>
+<!--Side bar with buttons END -->
+
+<section class="home">
+
+    <!--     Navigation bar with search button START-->
+    <nav>
+        <div class="search-container">
+            <i class='bx bx-search icon' style="margin-top: 13px"></i>
+            <input class="search-box" type="text" placeholder="Search...">
+        </div>
+        <img sec:authorize="isAuthenticated()" class="user-pic"
+             th:src="${user.profile_picture  != null ? user.profile_picture : '/assets/img/logo.png'}"
+             onclick="toggleMenu()" alt="user">
+        <div sec:authorize="!isAuthenticated()" class="button-1">
+            <a th:href="@{/auth/login}">
+                <i class='bx bx-log-in icon'></i>
+                <span class="text nav-text">Log In</span>
+            </a>
+        </div>
+        <div sec:authorize="!isAuthenticated()" class="button-1">
+            <a th:href="@{/auth/register}">
+                <i class='bx bx-registered icon'></i>
+                <span class="text nav-text">Register</span>
+            </a>
+        </div>
+
+        <div class="sub-menu-wrap" id="subMenu">
+            <div class="sub-menu">
+                <div class="user-info">
+                    <img sec:authorize="isAuthenticated()"
+                         th:src="${user.profile_picture  != null ? user.profile_picture : '/assets/img/logo.png'}"
+                         alt="user">
+                    <h3 sec:authorize="isAuthenticated()" th:text="${user.email.substring(0, user.email.indexOf('@'))}">
+                        First Last</h3>
+                </div>
+                <hr>
+                <a href="#" class="sub-menu-link">
+                    <img th:src="@{/assets/img/profile.png}">
+                    <p>Edit Profile</p>
+                    <span>></span>
+                </a>
+                <a href="#" class="sub-menu-link">
+                    <img th:src="@{/assets/img/setting.png}">
+                    <p>Settings & Privacy</p>
+                    <span>></span>
+                </a>
+                <a href="#" class="sub-menu-link">
+                    <img th:src="@{/assets/img/help.png}">
+                    <p>Help & Support</p>
+                    <span>></span>
+                </a>
+                <a href="#" class="sub-menu-link">
+                    <img th:src="@{/assets/img/logout.png}">
+                    <p>Logout</p>
+                    <span>></span>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <!--     Navigation bar with search button END-->
+
+
+    <div class="search-header">
+        <form action="#" th:action="@{/playlists}" method="get" th:object="${filterOptions}">
+            <label style="margin-top: 50px; margin-bottom: 50px;  font-weight: 700;  line-height: 1.2; color: var(--dashboard-text-color)"
+                   th:text="#{playlists.filter.label}">Browse Posts</label>
+            <br/><br/>
+            <div class="form-box">
+                <input type="text" placeholder="Name" class="search-field title" th:field="*{title}"/>
+                <input type="text" placeholder="Genre" class="search-field genre" th:field="*{genre}"/>
+                <input type="number" min="0" step="1.0" placeholder="Min Duration (min)" class="search-field duration"
+                       th:field="*{minDuration}">
+                <input type="number" min="0" step="1.0" placeholder="Max Duration (min)" class="search-field duration"
+                       th:field="*{maxDuration}">
+
+                <br/><br/>
+                <input class="btn btn-primary btn-xl text-uppercase search-btn" type="submit" value="Search"/>
+            </div>
+            <br/>
+            <br/>
+        </form>
+    </div>
+
+
+    <div class="right-playlists" th:object="${playlists}">
+        <div class="playlist-songs-container-playlists" >
+            <!--           <div class="playlist-buttons">-->
+            <!--               <div class="playlist-buttons-left">-->
+            <!--                   <div class="playlist-buttons-resume-pause">-->
+            <!--                       sds-->
+            <!--&lt;!&ndash;                       play-pause button or icon&ndash;&gt;-->
+            <!--                   </div>-->
+            <!--                   <div class="playlist-buttons-next">-->
+            <!--                       sds&lt;!&ndash;                       play-pause button or icon&ndash;&gt;-->
+            <!--                   </div>-->
+            <!--                   <div class="playlist-buttons-previous">-->
+            <!--                       sds&lt;!&ndash;                       play-pause button or icon&ndash;&gt;-->
+            <!--                   </div>-->
+            <!--               </div>-->
+            <!--               <div class="playlist-buttons-right">-->
+            <!--                   <div class="playlist-buttons-order">-->
+            <!--                       dsds-->
+            <!--&lt;!&ndash;                       //icon arrow here&ndash;&gt;-->
+            <!--                   </div>-->
+            <!--               </div>-->
+            <!--           </div>-->
+            <div class="playlist-songs">
+                <table>
+                    <tr th:each="playlist, stat : ${playlists}">
+                        <td th:text="${stat.index + 1}">1</td>
+                        <td class="song-title">
+                            <div class="song-image">
+                                <a style="text-decoration: none;" th:href="@{'/playlists/' + ${playlist.id}}">
+                                    <img th:src="${playlist.getPhotoUrl() != null ? playlist.getPhotoUrl() : '/assets/img/logo.png'}"
+                                         alt="">
+                                </a>
+                            </div>
+                            <div class="song-name">
+                                <a style="text-decoration: none;" th:href="@{'/playlists/' + ${playlist.id}}">
+                                    <div class="song-name-artist-playlist" th:text="${playlist.title}">
+                                        Song name ex
+                                    </div>
+                                </a>
+                                <a style="text-decoration: none;" th:href="@{'/users/' + ${playlist.creator.id}}">
+                                    <div class="song-artist-user" th:text="${playlist.creator.username}">
+                                        Artist example
+                                    </div>
+                                </a>
+                            </div>
+                        </td>
+                        </a>
+                        <td class="song-duration" th:text="${playlist.playtime}">Duration</td>
+                        <td class="song-rank" th:text="${playlist.rank}">Rank</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="pagination_section" style="text-align: center">
+                <a th:if="${playlists.hasPrevious()}" th:href="@{'/playlists?page=' + ${playlists.previousPageable().pageNumber} +
+        '&size=' + ${playlists.getSize()} +
+        ${filterOptions.title != null ? '&title=' + filterOptions.title : ''} +
+        ${filterOptions.genre != null ? '&genre=' + filterOptions.genre : ''} +
+        ${filterOptions.minDuration != null ? '&minDuration>=' + filterOptions.minDuration : ''} +
+        ${filterOptions.maxDuration != null ? '&maxDuration<=' + filterOptions.maxDuration : ''}}" ><i class='bx bx-chevron-left'></i></a>
+            <span th:if="${playlists.totalPages > 0}"
+                  th:each="pageNumber : ${#numbers.sequence(0, playlists.totalPages - 1)}">
+<!--                <a  th:if="${(filterOptions.getTitle()==null && filterOptions.getGenre()==null && filterOptions.getMinDuration()==null && filterOptions.getMaxDuration()==null)-->
+<!-- || filterOptions.getTitle().isBlank() && filterOptions.getGenre().isBlank() && filterOptions.getMinDuration().isBlank() && filterOptions.getMaxDuration().isBlank()}"-->
+<!--                    th:href="@{'/playlists?page=' + ${pageNumber}}" th:text="${pageNumber}"></a>-->
+    <a th:href="@{'/playlists' +
+        '?page=' + ${pageNumber} +
+        '&size=' + ${playlists.getSize()} +
+        ${filterOptions.title != null ? '&title=' + filterOptions.title : ''} +
+        ${filterOptions.genre != null ? '&genre=' + filterOptions.genre : ''} +
+        ${filterOptions.minDuration != null ? '&minDuration>=' + filterOptions.minDuration : ''} +
+        ${filterOptions.maxDuration != null ? '&maxDuration<=' + filterOptions.maxDuration : ''}}"
+       th:text="${pageNumber + 1}" th:class="${pageNumber == playlists.number? 'active' : ''}"></a>
+</span>
+                <a th:if="${playlists.hasNext()}" th:href="@{'/playlists?page=' + ${playlists.nextPageable().pageNumber} +
+        '&size=' + ${playlists.getSize()} +
+        ${filterOptions.title != null ? '&title=' + filterOptions.title : ''} +
+        ${filterOptions.genre != null ? '&genre=' + filterOptions.genre : ''} +
+        ${filterOptions.minDuration != null ? '&minDuration>=' + filterOptions.minDuration : ''} +
+        ${filterOptions.maxDuration != null ? '&maxDuration<=' + filterOptions.maxDuration : ''}}"><i class='bx bx-chevron-right'></i></a>
+        </div>
+
+    </div>
+
+
+    <!--Footer START-->
+    <footer>
+        <ul class="social_icon">
+            <li><a href="#">
+                <ion-icon name="logo-facebook"></ion-icon>
+            </a></li>
+            <li><a href="#">
+                <ion-icon name="logo-twitter"></ion-icon>
+            </a></li>
+            <li><a href="#">
+                <ion-icon name="logo-linkedin"></ion-icon>
+            </a></li>
+            <li><a href="#">
+                <ion-icon name="logo-instagram"></ion-icon>
+            </a></li>
+        </ul>
+        <!--     <img src="../static/assets/img/fullLogo.png">-->
+        <ul class="menu">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Team</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <p>©2023 Trip Tunes | All Rights Reserved</p>
+    </footer>
+    <!--Footer END-->
+</section>
+
+<script th:inline="none">
+    document.addEventListener("DOMContentLoaded", function () {
+        var durationElements = document.querySelectorAll(".song-duration");
+
+        durationElements.forEach(function (element) {
+            var minutes = parseInt(element.textContent);
+            element.textContent = formatDuration(minutes * 60); // convert minutes to seconds
+        });
+
+        function formatDuration(seconds) {
+            var hours = Math.floor(seconds / 3600);
+            var minutes = Math.floor((seconds % 3600) / 60);
+            var remainingSeconds = seconds % 60;
+            return hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":" + (remainingSeconds < 10 ? "0" : "") + remainingSeconds;
+        }
+    });
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!----===== CSS ===== -->
+    <link href="../static/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+
+    <!----===== Boxicons CSS ===== -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!----===== Google Fonts Link For Icons ===== -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+
+    <title>Trip Tunes | Home</title>
+    <script src="/js/scripts.js" defer></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body class="home-body">
+<!--Side bar with buttons START -->
+<nav class="sidebar close">
+    <header>
+        <div class="image-text">
+            <span class="image">
+                <img th:src="@{/assets/img/logo.png}" alt="logo">
+            </span>
+
+            <div class="text header-text">
+                <span class="name">TripTunes</span>
+                <span class="profession">Playlist Generator</span>
+            </div>
+        </div>
+
+        <i class='bx bx-chevron-right toggle'></i>
+    </header>
+
+    <div class="menu-bar">
+        <div class="menu">
+            <ul class="menu-links">
+                <li class="nav-link">
+                    <a th:href="@{/home}">
+                        <i class='bx bx-home-alt icon'></i>
+                        <span class="text nav-text">Home</span>
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a th:href="@{/admin-portal}">
+                        <i class='bx bx-bar-chart-alt-2 icon'></i>
+                        <span class="text nav-text">Admin Portal</span>
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a href="#">
+                        <i class='bx bx-bell icon'></i>
+                        <span class="text nav-text">Notifications</span>
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a href="#">
+                        <i class='bx bx-heart icon'></i>
+                        <span class="text nav-text">Top Tracks</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="bottom-content">
+            <li class="mode">
+                <div class="moon-sun">
+                    <i class='bx bx-moon icon moon'></i>
+                    <i class='bx bx-sun icon sun'></i>
+                </div>
+
+                <span class="mode-text text">Dark Mode</span>
+
+                <div class="toggle-switch">
+                    <span class="switch"></span>
+                </div>
+            </li>
+        </div>
+    </div>
+</nav>
+<!--Side bar with buttons END -->
+
+<section class="home">
+
+    <!--     Navigation bar with search button START-->
+    <nav>
+        <div class="search-container">
+            <i class='bx bx-search icon' style="margin-top: 13px"></i>
+            <input class="search-box" type="text" placeholder="Search...">
+        </div>
+        <img sec:authorize="isAuthenticated()" class="user-pic"
+             th:src="${user.profile_picture  != null ? user.profile_picture : '/assets/img/logo.png'}"
+             onclick="toggleMenu()" alt="user">
+        <div sec:authorize="!isAuthenticated()" class="button-1">
+            <a th:href="@{/auth/login}">
+                <i class='bx bx-log-in icon'></i>
+                <span class="text nav-text">Log In</span>
+            </a>
+        </div>
+        <div sec:authorize="!isAuthenticated()" class="button-1">
+            <a th:href="@{/auth/register}">
+                <i class='bx bx-registered icon'></i>
+                <span class="text nav-text">Register</span>
+            </a>
+        </div>
+
+        <div class="sub-menu-wrap" id="subMenu">
+            <div class="sub-menu">
+                <div class="user-info">
+                    <img sec:authorize="isAuthenticated()"
+                         th:src="${user.profile_picture  != null ? user.profile_picture : '/assets/img/logo.png'}"
+                         alt="user">
+                    <h3 sec:authorize="isAuthenticated()" th:text="${user.email.substring(0, user.email.indexOf('@'))}">
+                        First Last</h3>
+                </div>
+                <hr>
+                <a href="#" class="sub-menu-link">
+                    <img th:src="@{/assets/img/profile.png}">
+                    <p>Edit Profile</p>
+                    <span>></span>
+                </a>
+                <a href="#" class="sub-menu-link">
+                    <img th:src="@{/assets/img/setting.png}">
+                    <p>Settings & Privacy</p>
+                    <span>></span>
+                </a>
+                <a href="#" class="sub-menu-link">
+                    <img th:src="@{/assets/img/help.png}">
+                    <p>Help & Support</p>
+                    <span>></span>
+                </a>
+                <a href="#" class="sub-menu-link">
+                    <img th:src="@{/assets/img/logout.png}">
+                    <p>Logout</p>
+                    <span>></span>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <!--     Navigation bar with search button END-->
+
+
+<!--    Dashboard with information START-->
+    <div class="overview-boxes">
+        <div class="box">
+            <div class="left-side">
+                <div class="box-topic">Total Users</div>
+                <div class="number" th:text="${getUsersCount.toString()}"></div>
+            </div>
+            <i class='bx bxs-user icon'></i>
+        </div>
+
+        <div class="box">
+            <div class="left-side">
+                <div class="box-topic">Total Playlists</div>
+                <div class="number" th:text="${getPlaylistsCount.toString()}"></div>
+            </div>
+            <i class='bx bxs-playlist icon' ></i>
+        </div>
+
+        <div class="box">
+            <div class="left-side">
+                <div class="box-topic">Total Genres</div>
+                <div class="number" th:text="${getGenresCount.toString()}"></div>
+            </div>
+            <i class='bx bxs-music icon' ></i>
+        </div>
+    </div>
+    <!--    Dashboard with information END-->
+
+
+<div class="carousels">
+    <!--     Carousel for Top 10 Playlists START-->
+        <div class="container-playlists">
+            <h2 class="topPlaylists">Top 10 Playlists</h2>
+
+            <div class="slider-wrapper">
+                <button id="prev-slide-playlists" class="slide-button material-symbols-rounded">
+                    <span class="material-symbols-outlined">chevron_left</span>
+                </button>
+                <div class="image-list">
+                    <div th:each="playlist: ${getTopPlaylists}">
+                        <div class="image-item">
+                            <a th:href="@{'/playlists/' + ${playlist.id}}"><img class="image-item"
+                                                                              th:src="${playlist.photoUrl != null ? playlist.photoUrl : '/assets/img/logo.png'}"></a>
+                            <div class="content">
+                                <div class="icon">
+                                    <span th:text="${playlist.rank}" title="Current Rank"></span>
+                                    <i class='bx bx-bar-chart' title="Current Rank"></i>
+                                </div>
+                                <div class="icon">
+                                    <span th:text="${playlist.playtime}" title="Total Playtime In Minutes"></span>
+                                    <i class='bx bxs-time' title="Total Playtime In Minutes"></i>
+                                </div>
+                            </div>
+                            <div class="playlist-icon">
+                                <a th:href="@{'/playlists/' + ${playlist.id}}">
+                                    <i class='bx bxs-playlist'></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button id="next-slide-playlists" class="slide-button material-symbols-rounded">
+                    <span class="material-symbols-outlined">chevron_right</span>
+                </button>
+            </div>
+            <div class="slider-scrollbar">
+                <div class="scrollbar-track">
+                    <div class="scrollbar-thumb"></div>
+                </div>
+            </div>
+        </div>
+<!--             Carousel for Top 10 Playlists END-->
+
+<!--        Carousel for genres START-->
+    <div class="container-genres">
+        <h2 class="topPlaylists">Genres</h2>
+
+        <div class="slider-wrapper">
+            <button id="prev-slide-genres" class="slide-button material-symbols-rounded">
+                <span class="material-symbols-outlined">chevron_left</span>
+            </button>
+            <div class="image-list">
+                <div th:each="genre: ${genres}">
+                    <div class="image-item">
+                        <a th:href="@{'/playlists?page=0' +
+                         '&size=10' +
+                         '&title=' +
+                         '&genre=' + ${genre} +
+                         '&minDuration>=' +
+                         '&maxDuration<='}">
+                            <img class="image-item" th:src="${genre.photoUrl != null ? genre.photoUrl : '/assets/img/logo.png'}"></a>
+                        <div class="content">
+                            <div class="icon">
+                                <span th:text="${getPlaylistsPerGenre.get(genre.getId())}" title="Total playlists with this genre"></span>
+                                <i class='bx bxs-playlist' title="Total playlists with this genre">   </i>
+                            </div>
+                        </div>
+                        <div class="playlist-icon">
+                            <a th:href="@{'/playlists?page=0' +
+                         '&size=10' +
+                         '&title=' +
+                         '&genre=' + ${genre} +
+                         '&minDuration>=' +
+                         '&maxDuration<='}">
+                                <i class='bx bxs-playlist'></i>
+                            </a>
+                        </div>
+                        <div class="genre-name" th:text="${genre.name}"></div>
+                    </div>
+                </div>
+            </div>
+            <button id="next-slide-genres" class="slide-button material-symbols-rounded">
+                <span class="material-symbols-outlined">chevron_right</span>
+            </button>
+        </div>
+        <div class="slider-scrollbar">
+            <div class="scrollbar-track">
+                <div class="scrollbar-thumb"></div>
+            </div>
+        </div>
+    </div>
+<!--    Carousel for genres END-->
+</div>
+
+    <!--Footer START-->
+    <footer>
+        <ul class="social_icon">
+            <li><a href="#">
+                <ion-icon name="logo-facebook"></ion-icon>
+            </a></li>
+            <li><a href="#">
+                <ion-icon name="logo-twitter"></ion-icon>
+            </a></li>
+            <li><a href="#">
+                <ion-icon name="logo-linkedin"></ion-icon>
+            </a></li>
+            <li><a href="#">
+                <ion-icon name="logo-instagram"></ion-icon>
+            </a></li>
+        </ul>
+        <!--     <img src="../static/assets/img/fullLogo.png">-->
+        <ul class="menu">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Team</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <p>©2023 Trip Tunes | All Rights Reserved</p>
+    </footer>
+    <!--Footer END-->
+</section>
+
+<!--<script src="/js/scripts.js"></script>-->
+
+
+</body>
+</html>

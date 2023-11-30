@@ -21,9 +21,7 @@ create table genres
     genre_id   int auto_increment
         primary key,
     genre_name varchar(20) not null,
-    photoUrl   longtext    null,
-    constraint genres_pk2
-        unique (genre_name)
+    photoUrl   longtext    null
 );
 
 create table roles
@@ -33,6 +31,22 @@ create table roles
     role_name varchar(30) not null,
     constraint roles_pk2
         unique (role_name)
+);
+
+create table synchronization_configs
+(
+    config_id                int auto_increment
+        primary key,
+    synchronization_interval mediumtext not null
+);
+
+create table synchronization_logs
+(
+    log_id            int auto_increment
+        primary key,
+    timestamp         timestamp   not null,
+    status            varchar(10) not null,
+    exception_details text        null
 );
 
 create table tracks
@@ -114,4 +128,3 @@ create table users_roles
     constraint users_roles_users_user_id_fk
         foreign key (user_id) references users (user_id)
 );
-
