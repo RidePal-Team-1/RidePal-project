@@ -1916,7 +1916,7 @@ body.dark .form-box {
     box-sizing: border-box;
 }
 
-html,
+
 .error-view {
     height: 100%;
     background-image: url('http://s3.amazonaws.com/eyeworksgroupcdn/wp-content/uploads/2015/06/12043432/Silver-Blur-Background-Wallpaper.jpg');
@@ -2050,7 +2050,6 @@ html,
     }
 }
 
-html,body{height: 100%;}body{display: flex;flex-direction:column;align-items: center;justify-content:center;width:100%;background: var(--body-color);}
 
 svg:not(:root) {
     overflow: visible;
