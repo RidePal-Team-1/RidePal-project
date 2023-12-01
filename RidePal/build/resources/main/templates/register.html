@@ -86,33 +86,29 @@
         <h1>Register</h1>
         <div class="login-input-box">
             <input type="text" id="email" name="email" autofocus="autofocus" placeholder="Email" th:field="*{email}" required>
-            <label class="error" th:errors="*{email}">Email error placeholder</label>
+
         </div>
+        <div><label class="error"  th:errors="*{email}">Email error placeholder</label> </div>
         <div class="login-input-box">
             <input type="text" id="username" name="username" autofocus="autofocus" placeholder="Username" th:field="*{username}" required>
-            <label class="error" th:errors="*{username}">Username error placeholder</label>
-
         </div>
+        <div><label class="error"  th:errors="*{username}">Username error placeholder</label></div>
         <div class="login-input-box">
             <input type="password" id="password" name="password" placeholder="Password" th:field="*{password}" required>
-            <label class="error" th:errors="*{password}">Password error placeholder</label>
-
         </div>
+        <div><label class="error"  th:errors="*{password}">Password error placeholder</label></div>
         <div class="login-input-box">
             <input type="password" id="confirmationPassword" name="confirmationPassword" placeholder="Confirm Password" th:field="*{passwordConfirm}" required>
-            <label class="error" th:errors="*{passwordConfirm}">Password Confirm error placeholder</label>
-
         </div>
+        <div><label class="error" th:errors="*{passwordConfirm}">Password Confirm error placeholder</label></div>
         <div class="login-input-box">
             <input type="text" id="first_name" name="first_name" autofocus="autofocus" placeholder="First Name" th:field="*{firstName}" required>
-            <label class="error" th:errors="*{firstName}">First name error placeholder</label>
-
         </div>
+        <div><label class="error"  th:errors="*{firstName}">First name error placeholder</label></div>
         <div class="login-input-box">
             <input type="text" id="last_name" name="last_name" autofocus="autofocus" placeholder="Last Name" th:field="*{lastName}" required>
-            <label class="error" th:errors="*{lastName}">Last name error placeholder</label>
-
         </div>
+        <div><label class="error" th:errors="*{lastName}">Last name error placeholder</label></div>
         <button type="submit" value="Sign Up" class="login-button">Register</button>
         <div class="login-register-link">
             <p>Already have an account? <a href="#" th:href="@{/auth/login}">Login</a>

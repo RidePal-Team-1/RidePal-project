@@ -125,7 +125,7 @@
                 <hr>
                 <a href="#" class="sub-menu-link">
                     <img th:src="@{/assets/img/profile.png}">
-                    <p>Edit Profile</p>
+                    <p>My Profile</p>
                     <span>></span>
                 </a>
                 <a href="#" class="sub-menu-link">
@@ -197,7 +197,7 @@
                 <table>
                     <tr th:each="playlist, stat : ${playlists}">
                         <td th:text="${stat.index + 1}">1</td>
-                        <td class="song-title">
+                        <td class="song-title-playlists">
                             <div class="song-image">
                                 <a style="text-decoration: none;" th:href="@{'/playlists/' + ${playlist.id}}">
                                     <img th:src="${playlist.getPhotoUrl() != null ? playlist.getPhotoUrl() : '/assets/img/logo.png'}"
@@ -217,8 +217,9 @@
                                 </a>
                             </div>
                         </td>
-                        </a>
+                        <td  class="bx bx-timer" id="duration-icon-playlists"></td>
                         <td class="song-duration" th:text="${playlist.playtime}">Duration</td>
+                        <td class='bx bx-bar-chart-alt icon' id="rank-icon-playlists"></td>
                         <td class="song-rank" th:text="${playlist.rank}">Rank</td>
                     </tr>
                 </table>

@@ -6,25 +6,20 @@ import com.example.ridepal.exceptions.UnauthorizedOperationException;
 import com.example.ridepal.filters.enums.UserSortField;
 import com.example.ridepal.helpers.AuthenticationHelper;
 import com.example.ridepal.mappers.UserMapper;
-import com.example.ridepal.models.Playlist;
 import com.example.ridepal.models.User;
 import com.example.ridepal.models.dtos.UserDto;
 import com.example.ridepal.models.dtos.UsersFiltersDto;
-import com.example.ridepal.services.contracts.PlaylistService;
 import com.example.ridepal.services.contracts.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -59,14 +54,14 @@ public class UserMvcController {
         } catch (EntityNotFoundException e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
-            return "Error";
+            return "ErrorView";
         }
     }
 
 
 
     @PostMapping("/{id}/update")
-    public String updateUser(@PathVariable int id, @Valid @ModelAttribute("user") UserDto dto, BindingResult bindingResult, Model model,
+    public String updateUser(@PathVariable int id, @Valid @ModelAttribute("userDto") UserDto dto, BindingResult bindingResult, Model model,
                              Authentication authentication) {
         User user = AuthenticationHelper.extractUserFromProvider(authentication);
         if (bindingResult.hasErrors()) {
@@ -88,15 +83,15 @@ public class UserMvcController {
         } catch (EntityNotFoundException e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
-            return "Error";
+            return "ErrorView";
         } catch (UnauthorizedOperationException e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("statusCode", HttpStatus.UNAUTHORIZED.getReasonPhrase());
-            return "Error";
+            return "ErrorView";
         } catch (DuplicateEntityException e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("statusCode", HttpStatus.CONFLICT.getReasonPhrase());
-            return "Error";
+            return "ErrorView";
         }
     }
 
@@ -109,11 +104,11 @@ public class UserMvcController {
         } catch (EntityNotFoundException e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
-            return "Error";
+            return "ErrorView";
         } catch (UnauthorizedOperationException e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("statusCode", HttpStatus.UNAUTHORIZED.getReasonPhrase());
-            return "Error";
+            return "ErrorView";
         }
     }
 

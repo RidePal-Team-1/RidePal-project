@@ -3,15 +3,14 @@ package com.example.ridepal.services;
 import com.example.ridepal.exceptions.EntityNotFoundException;
 import com.example.ridepal.exceptions.UnauthorizedOperationException;
 import com.example.ridepal.mappers.PlaylistMapper;
-import com.example.ridepal.models.Genre;
 import com.example.ridepal.models.Playlist;
 import com.example.ridepal.models.Track;
 import com.example.ridepal.models.User;
 import com.example.ridepal.models.dtos.PlaylistDto;
-import com.example.ridepal.repositories.GenreRepository;
 import com.example.ridepal.repositories.PlaylistRepository;
 import com.example.ridepal.repositories.TrackRepository;
 import com.example.ridepal.services.contracts.BingMapService;
+import com.example.ridepal.services.contracts.PixabayService;
 import com.example.ridepal.services.contracts.PlaylistService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,15 +39,18 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     private final TrackRepository trackRepository;
 
+    private final PixabayService pixabayService;
+
     @Autowired
     public PlaylistServiceImpl(PlaylistRepository playlistRepository,
                                BingMapService bingMapService,
                                PlaylistMapper playlistMapper,
-                               TrackRepository trackRepository) {
+                               TrackRepository trackRepository, PixabayService pixabayService) {
         this.playlistRepository = playlistRepository;
         this.bingMapService = bingMapService;
         this.playlistMapper = playlistMapper;
         this.trackRepository = trackRepository;
+        this.pixabayService = pixabayService;
     }
 
     @Override
@@ -91,6 +93,7 @@ public class PlaylistServiceImpl implements PlaylistService {
         playlist.setPlaytime(totalPlaytime);
         playlist.setRank(avgRank / trackSet.size());
         playlist.setTrackSet(trackSet);
+        playlist.setPhotoUrl(pixabayService.getPlaylistCoverUrl());
         return playlistRepository.save(playlist);
     }
 

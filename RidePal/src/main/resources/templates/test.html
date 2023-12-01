@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>directionscreatedrivingrouteHTML</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
+    <style type='text/css'>body{margin:0;padding:0;overflow:hidden;font-family:'Segoe UI',Helvetica,Arial,Sans-Serif}</style>
+</head>
+<p id="sdsds">sex</p>
+<body>
+<div id='myMap' style='width: 100vw; height: 100vh;'></div>
+<script type='text/javascript'>
+    function loadMapScenario() {
+        var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+            /* No need to set credentials if already passed in URL */
+            center: new Microsoft.Maps.Location(47.606209, -122.332071),
+            zoom: 12
+        });
+        Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
+            var directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
+            // Set Route Mode to driving
+            directionsManager.setRequestOptions({ routeMode: Microsoft.Maps.Directions.RouteMode.driving });
+            var waypoint1 = new Microsoft.Maps.Directions.Waypoint({ address: 'Redmond', location: new Microsoft.Maps.Location(47.67683029174805, -122.1099624633789) });
+            var waypoint2 = new Microsoft.Maps.Directions.Waypoint({ address: 'Seattle', location: new Microsoft.Maps.Location(47.59977722167969, -122.33458709716797) });
+            directionsManager.addWaypoint(waypoint1);
+            directionsManager.addWaypoint(waypoint2);
+            // Set the element in which the itinerary will be rendered
+            directionsManager.setRenderOptions({ itineraryContainer: document.getElementById('printoutPanel') });
+            directionsManager.calculateDirections();
+        });
+    }
+</script>
+<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key=Akc6vAGnz7kLWGmxNkNjtVsCmbvi5NaJqavdmX4Ku1T7JT3-BUPFVDgf5vOYdc8S&callback=loadMapScenario' async defer></script>
+</body>
+</html>

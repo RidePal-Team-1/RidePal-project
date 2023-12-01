@@ -10,3 +10,5 @@
 # File-based project format
 **/*.iws
 **/*.iml
+/build/
+/.gradle/

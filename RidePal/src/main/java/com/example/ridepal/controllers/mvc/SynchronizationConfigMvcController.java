@@ -2,11 +2,8 @@ package com.example.ridepal.controllers.mvc;
 
 import com.example.ridepal.exceptions.UnauthorizedOperationException;
 import com.example.ridepal.helpers.AuthenticationHelper;
-import com.example.ridepal.models.SynchronizationConfig;
 import com.example.ridepal.models.User;
 import com.example.ridepal.models.dtos.SynchronizationConfigDto;
-import com.example.ridepal.services.contracts.DeezerService;
-import com.example.ridepal.services.contracts.GenreService;
 import com.example.ridepal.services.contracts.SynchronizationConfigService;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
@@ -16,7 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/sync")
@@ -38,7 +34,7 @@ public class SynchronizationConfigMvcController {
         } catch (UnauthorizedOperationException e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("statusCode", e.getMessage());
-            return "Error";
+            return "ErrorView";
         }
     }
 }

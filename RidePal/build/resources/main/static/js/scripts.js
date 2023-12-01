@@ -225,6 +225,41 @@ window.addEventListener('DOMContentLoaded', event => {
         });
     }
 });
+
+// JavaScript functions to open and close the modal
+function openModal() {
+    document.getElementById('syncModal').style.display = 'block';
+}
+
+function closeModal() {
+    document.getElementById('syncModal').style.display = 'none';
+}
+
+// Close the modal if the user clicks outside of it
+window.onclick = function(event) {
+    var modal = document.getElementById('syncModal');
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+}
 // const form = document.getElementById('playlistForm');
 //
 // form.submit();
+
+// Function to open the modal
+function openModal2() {
+    document.getElementById("editModal").style.display = "block";
+}
+
+// Function to close the modal
+function closeModal2() {
+    document.getElementById("editModal").style.display = "none";
+}
+
+// Close the modal if the user clicks outside of it
+window.onclick = function (event) {
+    var modal = document.getElementById("editModal");
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+};

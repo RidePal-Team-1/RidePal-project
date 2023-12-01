@@ -908,7 +908,7 @@ footer .social_icon li {
 .google-a-link{
     text-decoration: none;
 }
-html, .login-page {
+.login-page {
     margin: 0;
 }
 
@@ -1129,6 +1129,7 @@ html, .login-page {
 .topPlaylists {
     font-family: 'Poppins', sans-serif;
     margin-bottom: 20px;
+    display: inline-block;
 }
 
 body.dark .topPlaylists {
@@ -1363,7 +1364,6 @@ body.dark .content .icon {
     -moz-box-shadow: 1px 2px 48px -2px rgba(0,0,0,0.67);
 }
 .playlist-info{
-    position: relative;
     color: white;
     padding-left: 20px;
 }
@@ -1460,7 +1460,6 @@ body.dark .content .icon {
 .playlist-songs table{
     border-collapse: collapse;
     width: 100%;
-    flex-direction: column;
 }
 .playlist-songs table tr td, .playlist-songs tr th {
     padding: 10px;
@@ -1490,6 +1489,25 @@ body.dark .content .icon {
     padding-left: 15px;
     width: 450px;
     letter-spacing: 0.5px;
+}
+
+.song-name-artist-user {
+    padding-left: 15px;
+    width: 450px;
+    letter-spacing: 0.5px;
+}
+
+.song-name-user {
+    color: #FFF;
+    text-decoration: none;
+}
+
+.song-name-artist a {
+    text-decoration: none;
+}
+
+.song-name-user:hover {
+    text-decoration: underline;
 }
 
 .song-artist, .song-album, .song-duration, .song-rank, tr td:first-of-type{
@@ -1644,7 +1662,6 @@ rounded-container:hover::before {
 }
 
 .hover-icon {
-    display: inline-block;
     color: white;
     font-size: 50px;
     position: absolute;
@@ -1752,6 +1769,25 @@ body.dark .form-box {
     text-decoration: underline;
 }
 
+
+
+/*.song-name-artist-user a:hover {*/
+/*    text-decoration: underline;*/
+/*}*/
+
+#duration-icon-playlists,
+#rank-icon-playlists {
+    font-size: 14px;
+    margin-top: 6px;
+    display: table-cell;
+}
+
+.song-title-playlists {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
 /*Pagination START*/
 /* pagination position styling */
 .pagination_section {
@@ -1791,9 +1827,216 @@ body.dark .form-box {
     background: linear-gradient(rgba(95,95,96,1) 0%, rgba(10,10,10,1) 25%,
     rgba(10,10,10,1) 100%);
     padding: 20px;
+    flex-direction: column;
 }
 
 /*SINGLE PLAYLIST VIEW END*/
+
+/*Genre Sync Modal START */
+.container-genres .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+
+.container-genres .modal-content {
+    background-color: #fefefe;
+    color: black;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* Style for the close button */
+.container-genres .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.container-genres .close:hover,
+.container-genres .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#interval {
+    width: 30%;
+    padding: 8px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    color: #333; /* Set the text color */
+    border: 1px solid #ccc; /* Add a border for visibility */
+}
+
+    /* CSS */
+.button-85 {
+    padding: 0.6em 2em;
+    border: none;
+    outline: none;
+    color: rgb(255, 255, 255);
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    user-select: none;
+    -webkit-user-select: none;
+    margin-left: auto;
+    touch-action: manipulation;
+}
+
+    .button-85:before {
+        content: "";
+        background: linear-gradient(
+                45deg,
+                #ff0000,
+                #ff7300,
+                #fffb00,
+                #48ff00,
+                #00ffd5,
+                #002bff,
+                #7a00ff,
+                #ff00c8,
+                #ff0000
+        );
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        background-size: 400%;
+        z-index: -1;
+        filter: blur(5px);
+        -webkit-filter: blur(5px);
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        animation: glowing-button-85 20s linear infinite;
+        transition: opacity 0.3s ease-in-out;
+        border-radius: 10px;
+    }
+
+    @keyframes glowing-button-85 {
+        0% {
+            background-position: 0 0;
+        }
+        50% {
+            background-position: 400% 0;
+        }
+        100% {
+            background-position: 0 0;
+        }
+    }
+
+    .button-85:after {
+        z-index: -1;
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #222;
+        left: 0;
+        top: 0;
+        border-radius: 10px;
+    }
+
+
+.container-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+/*Genre Sync Modal END */
+
+/* User Page */
+
+.user-info-fields {
+    color: white;
+    padding-left: 20px;
+}
+.user-fullname {
+    font-size: 86px;
+    font-weight: 1080;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    margin-top: 10px;
+}
+
+.edit-button {
+    /*margin:auto;*/
+    position: relative;
+    right: 0;
+    margin: 10px;
+    width: 30px;
+}
+
+.edit-button i::before {
+    font-size: 30px;
+}
+
+.edit-button .icon{
+    position: absolute;
+    z-index: 1;
+    color: white;
+    display: inline-block;
+    /*margin-left: px;*/
+    margin-left: 1600px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    top: 100%;
+}
+
+.edit-button .icon:hover {
+    background-color: rgba(243, 237, 237, 0.38);
+}
+
+.edit-button-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.edit-button-modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.edit-button-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.edit-button-close:hover,
+.edit-button-close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+
 
 /*ALL USERS START*/
 .all-users-container{
