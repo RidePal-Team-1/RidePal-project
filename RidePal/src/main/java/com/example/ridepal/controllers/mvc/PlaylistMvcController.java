@@ -7,10 +7,12 @@ import com.example.ridepal.exceptions.EntityNotFoundException;
 import com.example.ridepal.mappers.PlaylistMapper;
 import com.example.ridepal.models.Playlist;
 import com.example.ridepal.models.User;
+import com.example.ridepal.models.dtos.PlaylistDto;
 import com.example.ridepal.models.dtos.PlaylistFiltersDto;
 import com.example.ridepal.models.dtos.PlaylistUpdateDto;
 import com.example.ridepal.services.contracts.PlaylistService;
 import jakarta.validation.Valid;
+import org.springframework.boot.Banner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +24,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -127,6 +130,15 @@ public class PlaylistMvcController {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             return "ErrorView";
         }
+    }
+
+    @PostMapping("/new")
+    public String generatePlaylist(@ModelAttribute("generatePlaylist")PlaylistDto playlistDto, Principal principal,
+                                   Model model, Authentication authentication){
+//        model.addAttribute("generatePlaylist", playlistDto);
+        User user = AuthenticationHelper.extractUserFromProvider(authentication);
+        Playlist playlist = playlistService.createPlaylist(playlistDto, user);
+        return  "redirect:/playlists/"+playlist.getId();
     }
 
     @DeleteMapping("/{id}/delete")

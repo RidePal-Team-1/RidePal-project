@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 
@@ -71,8 +72,9 @@ public class PlaylistServiceImpl implements PlaylistService {
             return playlistRepository.findById(id);
     }
     @Override
-    public Playlist createPlaylist(PlaylistDto dto, Principal principal) {
-        Playlist playlist = playlistMapper.fromDto(dto, principal);
+    public Playlist createPlaylist(PlaylistDto dto, User user) {
+
+        Playlist playlist = playlistMapper.fromDto(dto, user);
 
         double[] distanceAndDuration = bingMapService.getLocations(dto.getFrom(), dto.getTo());
         Map<String, Double> genresDurations = populatePlaytimeForEachGenre(dto, distanceAndDuration);

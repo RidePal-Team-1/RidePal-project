@@ -20,6 +20,6 @@ public interface PlaylistService {
 
     void deletePlaylist(int id, User user);
 
-    Playlist createPlaylist(PlaylistDto dto, Principal principal);
+    Playlist createPlaylist(PlaylistDto dto, User user);
 
 }

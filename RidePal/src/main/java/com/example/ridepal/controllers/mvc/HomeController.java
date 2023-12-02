@@ -5,22 +5,22 @@ import com.example.ridepal.models.Genre;
 import com.example.ridepal.models.Playlist;
 import com.example.ridepal.models.SynchronizationLog;
 import com.example.ridepal.models.User;
+import com.example.ridepal.models.dtos.PlaylistDto;
 import com.example.ridepal.models.dtos.SynchronizationConfigDto;
+import com.example.ridepal.models.dtos.UserDto;
+import com.example.ridepal.repositories.GenreRepository;
+import com.example.ridepal.repositories.PlaylistRepository;
+import com.example.ridepal.repositories.SynchronizationConfigRepository;
+import com.example.ridepal.repositories.UserRepository;
+import com.example.ridepal.services.contracts.PlaylistService;
+import jakarta.validation.Valid;
 import com.example.ridepal.repositories.*;
 import com.example.ridepal.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.HashMap;
@@ -41,15 +41,19 @@ public class HomeController {
 
     private final SynchronizationLogRepository synchronizationLogRepository;
 
+    private final PlaylistService playlistService;
+
+
     @Autowired
     public HomeController(PlaylistRepository playlistRepository, GenreRepository genreRepository,
                           UserRepository userRepository, SynchronizationConfigRepository synchronizationConfigRepository,
-                          SynchronizationLogRepository synchronizationLogRepository) {
+                          SynchronizationLogRepository synchronizationLogRepository, PlaylistService playlistService) {
         this.playlistRepository = playlistRepository;
         this.synchronizationLogRepository = synchronizationLogRepository;
         this.genreRepository = genreRepository;
         this.userRepository = userRepository;
         this.synchronizationConfigRepository = synchronizationConfigRepository;
+        this.playlistService = playlistService;
     }
 
     @GetMapping
@@ -61,6 +65,7 @@ public class HomeController {
     public String home(Model model, Authentication authentication) {
         User user = AuthenticationHelper.extractUserFromProvider(authentication);
         model.addAttribute("user", user);
+        model.addAttribute("generatePlaylist", new PlaylistDto());
         model.addAttribute("genreSync", new SynchronizationConfigDto());
         return "home";
     }
@@ -104,6 +109,13 @@ public class HomeController {
         return genreRepository.findAll();
     }
 
+    @PostMapping
+    private void generatePlaylist(Principal principal,
+                                  @Valid @ModelAttribute("generatePlaylist") PlaylistDto playlistDto,
+                                  Model model, Authentication authentication) {
+        User user = AuthenticationHelper.extractUserFromProvider(authentication);
+        playlistService.createPlaylist(playlistDto, user);
+    }
     @ModelAttribute("getPlaylistsPerGenre")
     private Map<Long, Integer> getPlaylistsPerGenre() {
         Map<Long, Integer> genres = new HashMap<>();

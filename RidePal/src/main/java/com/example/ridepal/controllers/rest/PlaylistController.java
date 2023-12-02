@@ -94,8 +94,9 @@ public class PlaylistController {
                             schema = @Schema(implementation = Playlist.class))}),
             @ApiResponse(responseCode = "401", description = "Unauthorized",
                     content = @Content)})
-    public Playlist create(@Valid @RequestBody PlaylistDto dto, Principal principal) {
-           return playlistService.createPlaylist(dto, principal);
+    public Playlist create(@Valid @RequestBody PlaylistDto dto, Authentication authentication) {
+        User user = AuthenticationHelper.extractUserFromProvider(authentication);
+           return playlistService.createPlaylist(dto, user);
     }
 
     @PutMapping("/{id}")

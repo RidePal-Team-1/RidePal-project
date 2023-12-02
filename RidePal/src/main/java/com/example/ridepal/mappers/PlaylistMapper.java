@@ -2,6 +2,7 @@ package com.example.ridepal.mappers;
 
 import com.example.ridepal.models.Genre;
 import com.example.ridepal.models.Playlist;
+import com.example.ridepal.models.User;
 import com.example.ridepal.models.dtos.PlaylistDto;
 import com.example.ridepal.models.dtos.PlaylistUpdateDto;
 import com.example.ridepal.repositories.GenreRepository;
@@ -40,7 +41,7 @@ public class PlaylistMapper {
     }
 
 
-    public Playlist fromDto(PlaylistDto dto, Principal principal) {
+    public Playlist fromDto(PlaylistDto dto, User user) {
         Playlist playlist = new Playlist();
         playlist.setTitle(dto.getTitle());
         Set<Genre> genres = new HashSet<>();
@@ -48,7 +49,7 @@ public class PlaylistMapper {
             genres.add(genreRepository.findByName(genre));
         }
         playlist.setGenres(genres);
-        playlist.setCreator(userRepository.findByEmail(principal.getName()));
+        playlist.setCreator(userRepository.findByEmail(user.getEmail()));
         return playlist;
     }
 
