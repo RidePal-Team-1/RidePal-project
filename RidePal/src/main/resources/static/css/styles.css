@@ -400,6 +400,7 @@ section nav {
 
 .user-pic {
     width: 40px;
+    height: 40px;
     border-radius: 50%;
     cursor: pointer;
     margin-left: 30px;
@@ -437,6 +438,7 @@ section nav {
 
 .user-info img {
     width: 60px;
+    height: 60px;
     border-radius: 50%;
     margin-right: 15px;
     border: 1px solid black;
@@ -599,7 +601,9 @@ body.dark .button-1 .text {
 }
 /*===== Top Navigation Bar End=====*/
 
-
+.updated-info {
+    color: var(--text-color);
+}
 
 /*!*LANDING PAGE START*!*/
 .landing-page {
@@ -1211,6 +1215,8 @@ body.dark .content .icon {
 .image-list .playlist-icon i {
     color: white; /* Set the color of your icon */
     text-decoration: none;
+    margin-top: 10px;
+    margin-left: 2px;
 }
 
 .image-list .icon:hover::before {
@@ -1621,6 +1627,20 @@ rounded-container:hover::before {
     -moz-box-shadow: 1px 2px 48px -2px rgba(0,0,0,0.67);
     border-radius: 20px;
 }
+
+.modal-content-user {
+    backdrop-filter: blur(20px);
+    background-color: transparent;
+    padding: 20px;
+    width: 23%;
+    margin-left: 800px;
+    border: none;
+    box-shadow: 1px 2px 48px -2px rgba(0,0,0,0.67);
+    -webkit-box-shadow: 1px 2px 48px -2px rgba(0,0,0,0.67);
+    -moz-box-shadow: 1px 2px 48px -2px rgba(0,0,0,0.67);
+    border-radius: 20px;
+    height: 500px;
+}
 .modal-content input{
     border-radius: 10px;
     padding: 10px;
@@ -1957,7 +1977,7 @@ body.dark .form-box {
 }
 /*Genre Sync Modal END */
 
-/* User Page */
+/* User Page START*/
 
 .user-info-fields {
     color: white;
@@ -1979,6 +1999,38 @@ body.dark .form-box {
     width: 30px;
 }
 
+.delete-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    font-size: inherit;
+    color: red;
+    position: relative;
+    right: 0;
+    width: 30px;
+    margin-bottom: 20px;
+    transition: color 0.3s ease; /* Adding a slight color transition on hover */
+    margin-left: 1600px;
+}
+
+.delete-button:hover {
+    background-color: rgba(243, 237, 237, 0.38);
+}
+
+.delete-button .icon {
+    z-index: 1;
+    display: inline-block;
+    /*margin-left: px;*/
+    cursor: pointer;
+    top: 100%;
+}
+
+.delete-button i::before {
+    font-size: 30px;
+}
+
 .edit-button i::before {
     font-size: 30px;
 }
@@ -1989,11 +2041,15 @@ body.dark .form-box {
     color: white;
     display: inline-block;
     /*margin-left: px;*/
-    margin-left: 1600px;
+    margin-left: 1550px;
     width: 30px;
     height: 30px;
     cursor: pointer;
     top: 100%;
+}
+
+.user-card i {
+    /*padding-bottom: 20px;*/
 }
 
 .edit-button .icon:hover {
@@ -2034,7 +2090,12 @@ body.dark .form-box {
     cursor: pointer;
 }
 
+.edit-form-user {
+    margin-bottom: 20px;
+    margin-left: 90px;
+}
 
+/*User Page END */
 
 
 
@@ -2105,6 +2166,39 @@ body.dark .form-box {
 .user-card i{
     font-size: 30px;
     color: black;
+}
+
+.user-card .icon:hover {
+    background-color: rgba(243, 237, 237, 0.38);
+}
+
+.user-card .icon {
+}
+
+.options-dropdown {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    right: 0;
+    z-index: 100;
+}
+
+.options-dropdown a {
+    display: block;
+    padding: 5px;
+    text-decoration: none;
+    color: black;
+}
+
+.options-dropdown a:hover {
+    background-color: #f0f0f0;
+}
+
+.three-dots {
+    padding-top: 5px;
+    padding-bottom: 25px;
 }
 .dark .user-card i{
     font-size: 30px;

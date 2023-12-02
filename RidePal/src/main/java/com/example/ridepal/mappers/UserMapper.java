@@ -45,8 +45,8 @@ public class UserMapper {
         user.setUsername(dto.getUsername());
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user.setEmail(dto.getEmail());
-        user.setFirst_name(dto.getFirstName());
-        user.setLast_name(dto.getLastName());
+        user.setFirstName(dto.getFirstName());
+        user.setLastName(dto.getLastName());
         user.setProfile_picture(dto.getProfilePicture());
         Set<Role> roles = new HashSet<>();
         roles.add(roleRepository.findByName("USER"));
@@ -61,8 +61,8 @@ public class UserMapper {
         userDto.setPassword(user.getPassword());
         userDto.setPasswordConfirm("");
         userDto.setEmail(user.getEmail());
-        userDto.setFirstName(user.getFirst_name());
-        userDto.setLastName(user.getLast_name());
+        userDto.setFirstName(user.getFirstName());
+        userDto.setLastName(user.getLastName());
         return userDto;
     }
 }

@@ -28,6 +28,8 @@ import static com.example.ridepal.filters.specifications.UserSpecifications.*;
 public class UserServiceImpl implements UserService {
 
     public static final String UNAUTHORIZED_MSG = "You are not authorized to perform this operation!";
+    public static final int DELETED_USER_ID = 13;
+    public static final String ADMIN_ROLE = "ADMIN";
     private final UserRepository userRepository;
 
     private final RoleRepository roleRepository;
@@ -101,11 +103,14 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new EntityNotFoundException("User", id);
         }
-        if (user.getId() != authenticatedUser.getId() ||
-                !authenticatedUser.getRoles().contains(roleRepository.findByName("ADMIN"))) {
+        if (id != authenticatedUser.getId() &&
+                !authenticatedUser.getRoles().contains(roleRepository.findByName(ADMIN_ROLE))) {
             throw new UnauthorizedOperationException(UNAUTHORIZED_MSG);
         }
-            userRepository.delete(user);
+
+        User deletedUser = userRepository.findById(DELETED_USER_ID);
+        playlistRepository.transferPlaylistsToDeletedUser(deletedUser, user);
+        userRepository.delete(user);
     }
 
     private void checkUsernameUniqueness(User user) {

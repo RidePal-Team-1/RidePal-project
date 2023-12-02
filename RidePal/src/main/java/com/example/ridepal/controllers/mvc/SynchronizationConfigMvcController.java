@@ -1,5 +1,7 @@
 package com.example.ridepal.controllers.mvc;
 
+import com.example.ridepal.exceptions.GenreSynchronizationFailureException;
+import com.example.ridepal.exceptions.InvalidGenreSynchronizationInputException;
 import com.example.ridepal.exceptions.UnauthorizedOperationException;
 import com.example.ridepal.helpers.AuthenticationHelper;
 import com.example.ridepal.models.User;
@@ -22,8 +24,16 @@ public class SynchronizationConfigMvcController {
     public SynchronizationConfigMvcController(SynchronizationConfigService synchronizationConfigService) {
         this.synchronizationConfigService = synchronizationConfigService;
     }
+
     @GetMapping()
-    public String syncGenres(@Valid @ModelAttribute SynchronizationConfigDto dto, BindingResult bindingResult, Authentication authentication, Model model) {
+    public String getGenres() {
+            synchronizationConfigService.syncJob();
+            return "redirect:/home";
+    }
+
+
+    @GetMapping("/update")
+    public String updateInterval(@Valid @ModelAttribute SynchronizationConfigDto dto, BindingResult bindingResult, Authentication authentication, Model model) {
         if (bindingResult.hasErrors()) {
             return "home";
         }
@@ -31,7 +41,7 @@ public class SynchronizationConfigMvcController {
         try {
             synchronizationConfigService.updateInterval(dto.getInterval(), user);
             return "redirect:/home";
-        } catch (UnauthorizedOperationException e) {
+        } catch (InvalidGenreSynchronizationInputException | UnauthorizedOperationException e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("statusCode", e.getMessage());
             return "ErrorView";

@@ -8,6 +8,7 @@ import com.example.ridepal.mappers.PlaylistMapper;
 import com.example.ridepal.models.Playlist;
 import com.example.ridepal.models.User;
 import com.example.ridepal.models.dtos.PlaylistDto;
+import com.example.ridepal.models.dtos.PlaylistFiltersDto;
 import com.example.ridepal.models.dtos.PlaylistUpdateDto;
 import com.example.ridepal.services.contracts.PlaylistService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -55,17 +56,14 @@ public class PlaylistController {
                             array = @ArraySchema(schema = @Schema(implementation = Playlist.class)))}),
             @ApiResponse(responseCode = "401", description = "Unauthorized",
                     content = @Content)})
-    public Page<Playlist> findAll(@RequestParam(required = false) String title,
-                                          @RequestParam(required = false) String genre,
-                                          @RequestParam(required = false) String minDuration,
-                                          @RequestParam(required = false) String maxDuration,
-                                          @RequestParam(defaultValue = "0") int page,
-                                          @RequestParam(defaultValue = "10") int sizePerPage,
-                                          @RequestParam(defaultValue = "ID") PlaylistSortField sortField,
-                                          @RequestParam(defaultValue = "DESC") Sort.Direction sortDirection) {
+    public Page<Playlist> findAll(@RequestBody(required = false) PlaylistFiltersDto filterOptions,
+                                  @RequestParam(defaultValue = "0") int page,
+                                  @RequestParam(defaultValue = "10") int sizePerPage,
+                                  @RequestParam(defaultValue = "ID") PlaylistSortField sortField,
+                                  @RequestParam(defaultValue = "DESC") Sort.Direction sortDirection) {
         Pageable pageable = PageRequest.of(page, sizePerPage, sortDirection, sortField.getDatabaseFieldName());
-
-        return playlistService.findAll(title, genre, minDuration, maxDuration, pageable);
+        return playlistService.findAll(filterOptions.getTitle(), filterOptions.getGenre(),
+                filterOptions.getMinDuration(), filterOptions.getMaxDuration(), pageable);
     }
 
     @GetMapping("/{id}")

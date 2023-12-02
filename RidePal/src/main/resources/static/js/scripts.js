@@ -263,3 +263,10 @@ window.onclick = function (event) {
         modal.style.display = "none";
     }
 };
+
+function confirmDelete() {
+    // Display a confirmation dialog
+    return confirm('Are you sure you want to delete this user?');
+}
+
+

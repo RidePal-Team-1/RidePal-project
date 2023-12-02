@@ -47,15 +47,41 @@ public class UserMvcController {
         try {
             User userRepository = userService.findById(id);
             UserDto user = userMapper.toDto(userRepository);
-            model.addAttribute("user", user);
+            model.addAttribute("userDto", user);
             model.addAttribute("userRepository", userRepository);
             model.addAttribute("authenticatedUser",authenticatedUser);
             return "UserView";
         } catch (EntityNotFoundException e) {
+            model.addAttribute("user", authenticatedUser);
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             return "ErrorView";
         }
+    }
+
+    @GetMapping
+    public String allUsersView(@ModelAttribute("filterOptions") UsersFiltersDto usersFiltersDto,
+                               Model model, Authentication authentication,
+                               @RequestParam(defaultValue = "0") int page,
+                               @RequestParam(defaultValue = "10") int sizePerPage,
+                               @RequestParam(defaultValue = "ID") UserSortField sortField,
+                               @RequestParam(defaultValue = "DESC") Sort.Direction sortDirection){
+        User user = AuthenticationHelper.extractUserFromProvider(authentication);
+        Pageable pageable = PageRequest.of(page, sizePerPage, sortDirection, sortField.getDatabaseFieldName());
+        Page<User> users = userService.findAll(usersFiltersDto.getUsername(), usersFiltersDto.getFirstName(),
+                usersFiltersDto.getLastName(), usersFiltersDto.getEmail(), pageable);
+
+        int totalPages = users.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("userPages", pageNumbers);
+        }
+        model.addAttribute("user", user);
+        model.addAttribute("users", users);
+        model.addAttribute("filterOptions", usersFiltersDto);
+        return "UsersView";
     }
 
 
@@ -95,12 +121,41 @@ public class UserMvcController {
         }
     }
 
-    @DeleteMapping("/{id}/delete")
+    @PostMapping("/{id}/picture")
+    public String updatePlaylistPicture(@PathVariable int id,
+                                        @RequestParam(value = "photoUrl", required = false) String photoUrl,
+                                        Authentication authentication, Model model){
+        User user = AuthenticationHelper.extractUserFromProvider(authentication);
+        try {
+            User userToUpdate = userService.findById(id);
+            if (photoUrl != null && !photoUrl.isEmpty()) {
+                // Update the photo URL in the UserDto object
+                userToUpdate.setProfile_picture(photoUrl);
+            }
+            model.addAttribute("user", user);
+            userService.update(userToUpdate, user);
+            return "redirect:/users/" + id;
+        } catch (UnauthorizedOperationException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            model.addAttribute("statusCode", HttpStatus.UNAUTHORIZED.getReasonPhrase());
+            return "ErrorView";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
+            return "ErrorView";
+        }
+    }
+
+    @GetMapping("/{id}/delete")
     public String deleteUser(@PathVariable int id, Model model, Authentication authentication) {
         User user = AuthenticationHelper.extractUserFromProvider(authentication);
         try {
             userService.delete(id, user);
-            return "redirect:/users";
+            if (id == user.getId()) {
+                return "redirect:/auth/logout";
+            } else {
+                return "redirect:/users";
+            }
         } catch (EntityNotFoundException e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
@@ -112,29 +167,7 @@ public class UserMvcController {
         }
     }
 
-    @GetMapping
-    public String allUsersView(@ModelAttribute("filterOptions") UsersFiltersDto usersFiltersDto,
-                               Model model, Authentication authentication,
-                               @RequestParam(defaultValue = "0") int page,
-                               @RequestParam(defaultValue = "10") int sizePerPage,
-                               @RequestParam(defaultValue = "ID") UserSortField sortField,
-                               @RequestParam(defaultValue = "DESC") Sort.Direction sortDirection){
-        User user = AuthenticationHelper.extractUserFromProvider(authentication);
-        Pageable pageable = PageRequest.of(page, sizePerPage, sortDirection, sortField.getDatabaseFieldName());
-        Page<User> users = userService.findAll(usersFiltersDto.getUsername(), usersFiltersDto.getFirstName(),
-        usersFiltersDto.getLastName(), usersFiltersDto.getEmail(), pageable);
 
-        int totalPages = users.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
-                    .boxed()
-                    .collect(Collectors.toList());
-            model.addAttribute("userPages", pageNumbers);
-        }
-        model.addAttribute("user", user);
-        model.addAttribute("users", users);
-        model.addAttribute("filterOptions", usersFiltersDto);
-        return "UsersView";
-    }
+
 
 }

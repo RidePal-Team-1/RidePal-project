@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title th:text="'Trip Tunes | ' + ${userRepository.getUsername()}"></title>
@@ -112,11 +111,11 @@
                 <img sec:authorize="isAuthenticated()"
                      th:src="${userRepository.profile_picture  != null ? userRepository.profile_picture : '/assets/img/logo.png'}"
                      alt="user">
-                <h3 sec:authorize="isAuthenticated()" th:text="${user.email.substring(0, user.email.indexOf('@'))}">
+                <h3 sec:authorize="isAuthenticated()" th:text="${userDto.email.substring(0, userDto.email.indexOf('@'))}">
                     First Last</h3>
             </div>
             <hr>
-            <a sec:authorize="isAuthenticated()" th:href="@{'/users/' + ${userRepository.id}}" class="sub-menu-link">
+            <a sec:authorize="isAuthenticated()" th:href="@{'/users/' + ${authenticatedUser.id}}" class="sub-menu-link">
                 <img th:src="@{/assets/img/profile.png}">
                 <p>My Profile</p>
                 <span>></span>
@@ -147,32 +146,18 @@
                 && !userRepository.provider.toString().equals('GOOGLE')}" class="edit-button">
                 <i onclick="openModal2()" class='bx bx-edit icon'></i>
             </div>
+<!--            <form  sec:authorize="hasRole('ADMIN')" th:action="@{'/users/' + ${userRepository.id} + '/delete'}" method="post">-->
+<!--                <div  >-->
+<!--                    <button  class="edit-button" type="submit"><i class='bx bxs-trash'></i></button>-->
+<!--                </div>-->
+<!--            </form>-->
 
-<!--            <div class="playlist-top">-->
-<!--                <a href="#" th:href="@{'users/'+${playlist.creator.id}}">-->
-<!--                    <div class="playlist-top-email">-->
-<!--                        <div class="arrow-container">-->
-<!--                            <img src="../static/assets/img/logo.png" th:src="@{/assets/img/logo.png}">-->
-<!--                        </div>-->
-<!--                        <span th:text="${playlist.getCreator().email}">email of the owner</span>-->
-<!--                    </div>-->
-<!--                </a>-->
-<!--            </div>-->
-            <!--            -->
-            <!--            <div sec:authorize="!isAuthenticated()">-->
-            <!--                <div th:if="${user.id} != ${playlist.creator.getId()}" class="playlist-cover">-->
-            <!--                    <img th:src="${playlist.getPhotoUrl() != null ? playlist.getPhotoUrl() : '/assets/img/logo.png'}"-->
-            <!--                         alt="Profile Picture"/>-->
-            <!--                </div>-->
-            <!--            </div>-->
-
+            <form onsubmit="return confirmDelete()" style="display:inline-block;" th:if="${authenticatedUser.getId() == userRepository.getId() or #authorization.expression('hasRole(''ADMIN'')')}"  th:action="@{'/users/' + ${userRepository.id} + '/delete'}" method="get">
+            <div style="display: inline-block">
+               <button  class="delete-button"  type="submit"><i class='bx bxs-trash icon'></i></button>
+            </div>
+            </form>
             <div class="playlist-content">
-                <!--                <div class="playlist-cover" id="profilePictureContainer">-->
-                <!--                <img th:src="${playlist.getPhotoUrl() != null ? playlist.getPhotoUrl() : '/assets/img/logo.png'}"-->
-                <!--                     alt="Profile Picture" id="profilePicture">-->
-                <!--                <form id="playlistForm" th:object="${playlist}" action="#" th:action="@{'/playlists/'+ ${playlist.getId()}+'/picture'}" method="post">-->
-                <!--                    <input type="hidden" id="hiddenPhotoInput" name="photoUrl" th:value="${playlist.photoUrl}">-->
-                <!--                </form>-->
                 <div class="hover-icon">
                     <!-- Your icon content goes here -->
                     <i class="bx bx-image"></i>
@@ -188,13 +173,14 @@
                     <form id="playlistForm" th:object="${user}" action="#" th:action="@{'/users/'+ ${userRepository.getId()}+'/picture'}" method="post">
                         <input type="hidden" id="hiddenPhotoInput" name="photoUrl" th:value="${userRepository.profile_picture}">
                     </form>
+                    <div class="hover-icon">
+                        <i class="bx bx-image"></i>
+                    </div>
                 </div>
 
                 <div class="user-info-fields">
-                    <!--                    <div class="playlist-public">Public playlist</div>-->
                     <div class="user-fullname" th:if="${userRepository.provider.toString().equalsIgnoreCase('GOOGLE')}" th:text="${userRepository.email.substring(0, userRepository.email.indexOf('@'))}"></div>
-                    <div class="user-fullname" th:if="${userRepository.provider.toString().equalsIgnoreCase('LOCAL')}" th:text="${userRepository.username}">
-<!--                    <div class="user"-->
+                    <div class="user-fullname" th:if="${userRepository.provider.toString().equalsIgnoreCase('LOCAL')}" th:text="${userRepository.username}"></div>
 
                     <!--                    <div class="playlist-description">description</div>-->
 <!--                    <div id="editTitleModal" class="modal">-->
@@ -219,44 +205,69 @@
                 </div>
 
 
-                <!-- Modal HTML structure -->
-                <div id="editModal" class="modal">
-                    <div class="modal-content">
-                        <span class="close" onclick="closeModal2()">&times;</span>
-                        <!-- Your modal content goes here -->
-                        <form th:action="@{'/users/' + ${userRepository.id} + '/update'}" th:object="${user}" method="post">
-<!--                            <label for="email">Email</label>-->
-                            <input type="email" id="email" placeholder="Email" th:field="*{email}"/>
-                            <div><label class="error" style="color: white"   th:errors="*{email}">Email error placeholder</label> </div>
+                    <!-- Modal HTML structure -->
+                    <div id="editModal" class="modal">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeModal2()">&times;</span>
+                            <!-- Your modal content goes here -->
+                            <form th:action="@{'/users/' + ${userRepository.id} + '/update'}" th:object="${userDto}" method="post">
+                                <!--                            <label for="email">Email</label>-->
+                                <input type="email" id="email" placeholder="Email" class="edit-form-user" th:field="*{email}"/>
+                                <div><label class="error" style="color: white" th:errors="*{email}">Email error placeholder</label></div>
 
-<!--                            <label for="username">Username</label>-->
-                            <input type="text" id="username" placeholder="Username" th:field="*{username}"/>
-                            <div><label class="error" style="color: white" th:errors="*{username}">Username error placeholder</label></div>
+                                <!--                            <label for="username">Username</label>-->
+                                <input type="text" id="username" placeholder="Username" class="edit-form-user" th:field="*{username}"/>
+                                <div><label class="error" style="color: white" th:errors="*{username}">Username error placeholder</label></div>
 
-<!--                            <label for="password">Password</label>-->
-                            <input type="password" id="password" placeholder="Password" th:field="*{password}"/>
-                            <div><label class="error" style="color: white" th:errors="*{password}">Password error placeholder</label> </div>
+                                <!--                            <label for="password">Password</label>-->
+                                <input type="password" id="password" placeholder="Password" class="edit-form-user" th:field="*{password}"/>
+                                <div><label class="error" style="color: white" th:errors="*{password}">Password error placeholder</label></div>
 
-<!--                            <label for="passwordConfirm">Confirm Password</label>-->
-                            <input type="password" id="passwordConfirm" placeholder="Password Confirm" th:field="*{passwordConfirm}"/>
-                            <div><label class="error"  style="color: white" th:errors="*{passwordConfirm}">Password Confirm error placeholder</label> </div>
+                                <!--                            <label for="passwordConfirm">Confirm Password</label>-->
+                                <input type="password" id="passwordConfirm" placeholder="Password Confirm" class="edit-form-user" th:field="*{passwordConfirm}"/>
+                                <div><label class="error" style="color: white" th:errors="*{passwordConfirm}">Password Confirm error placeholder</label></div>
 
-                            <input type="text" id="firstName" placeholder="First Name" th:field="*{firstName}"/>
-                            <div><label class="error" style="color: white" th:errors="*{email}">First Name error placeholder</label></div>
+                                <input type="text" id="firstName" placeholder="First Name" class="edit-form-user" th:field="*{firstName}"/>
+                                <div><label class="error" style="color: white" th:errors="*{firstName}">First Name error placeholder</label></div>
 
-                            <input type="text" id="lastName" placeholder="Last Name" th:field="*{lastName}"/>
-                            <div><label class="error" style="color: white" th:errors="*{lastName}">Last Name error placeholder</label></div>
+                                <input type="text" id="lastName" placeholder="Last Name" class="edit-form-user" th:field="*{lastName}"/>
+                                <div><label class="error" style="color: white" th:errors="*{lastName}">Last Name error placeholder</label></div>
 
 
-                            <button type="submit">Save</button>
-                        </form>
+                                <button style="margin-left: 160px" type="submit">Save</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
             </div>
 
 
         </div>
+            </div>
 
+            <div class="playlist-songs-container">
+              <div class="playlist-songs">
+                    <table>
+                        <tr th:each="playlist, stat : ${userRepository.getPlaylists()}">
+                            <td th:text="${stat.index + 1}">1</td>
+                            <td class="song-title">
+                                <div class="song-image">
+                                    <a th:href="@{'/playlists/' + ${playlist.id}}"> <img th:src="${playlist.getPhotoUrl()}" alt=""></a>
+                                </div>
+                                <div class="song-name-artist">
+                                    <a th:href="@{'/playlists/' + ${playlist.id}}">
+                                        <div class="song-name-user" th:text="${playlist.title}">
+                                            Song name ex
+                                        </div></a>
+                                </div>
+                            </td>
+                            <td class="bx bx-timer" id="duration-icon-playlists"></td>
+                            <td class="song-duration" th:text="${playlist.playtime}"></i>Duration</td>
+                            <td class='bx bx-bar-chart-alt icon' id="rank-icon-playlists"></td>
+                            <td class="song-rank" th:text="${playlist.rank}">Rank</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         <div class="playlist-songs-container">
 <!--                       <div class="playlist-buttons">-->
 <!--                           <div class="playlist-buttons-left">-->
@@ -314,35 +325,33 @@
 
     </div>
 
-
-
-<!--Footer START-->
-<footer>
-    <ul class="social_icon">
-        <li><a href="#">
-            <ion-icon name="logo-facebook"></ion-icon>
-        </a></li>
-        <li><a href="#">
-            <ion-icon name="logo-twitter"></ion-icon>
-        </a></li>
-        <li><a href="#">
-            <ion-icon name="logo-linkedin"></ion-icon>
-        </a></li>
-        <li><a href="#">
-            <ion-icon name="logo-instagram"></ion-icon>
-        </a></li>
-    </ul>
-    <!--     <img src="../static/assets/img/fullLogo.png">-->
-    <ul class="menu">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Services</a></li>
-        <li><a href="#">Team</a></li>
-        <li><a href="#">Contact</a></li>
-    </ul>
-    <p>©2023 Trip Tunes | All Rights Reserved</p>
-</footer>
-<!--Footer END-->
+    <!--Footer START-->
+    <footer>
+        <ul class="social_icon">
+            <li><a href="#">
+                <ion-icon name="logo-facebook"></ion-icon>
+            </a></li>
+            <li><a href="#">
+                <ion-icon name="logo-twitter"></ion-icon>
+            </a></li>
+            <li><a href="#">
+                <ion-icon name="logo-linkedin"></ion-icon>
+            </a></li>
+            <li><a href="#">
+                <ion-icon name="logo-instagram"></ion-icon>
+            </a></li>
+        </ul>
+        <!--     <img src="../static/assets/img/fullLogo.png">-->
+        <ul class="menu">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Team</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <p>©2023 Trip Tunes | All Rights Reserved</p>
+    </footer>
+    <!--Footer END-->
 </section>
 
 <script th:inline="none">

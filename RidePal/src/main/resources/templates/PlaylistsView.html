@@ -123,7 +123,7 @@
                         First Last</h3>
                 </div>
                 <hr>
-                <a href="#" class="sub-menu-link">
+                <a th:href="@{'/users/' + ${user.id}}" class="sub-menu-link">
                     <img th:src="@{/assets/img/profile.png}">
                     <p>My Profile</p>
                     <span>></span>
@@ -138,7 +138,7 @@
                     <p>Help & Support</p>
                     <span>></span>
                 </a>
-                <a href="#" class="sub-menu-link">
+                <a th:href="@{/auth/logout}" class="sub-menu-link">
                     <img th:src="@{/assets/img/logout.png}">
                     <p>Logout</p>
                     <span>></span>

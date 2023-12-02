@@ -7,9 +7,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -32,5 +34,9 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Integer>, Jp
     @Query(value = "select count(*) from playlists_genres p where p.genre_id = :genre", nativeQuery = true)
     int getPlaylistsCountByGenre(@Param("genre") long id);
 
+    @Transactional
+    @Modifying
+    @Query(value = "update Playlist l set l.creator = :deletedUser where l.creator = :userToDelete")
+    public void transferPlaylistsToDeletedUser(@Param("deletedUser") User deletedUser,@Param("userToDelete") User userToDelete);
 
 }

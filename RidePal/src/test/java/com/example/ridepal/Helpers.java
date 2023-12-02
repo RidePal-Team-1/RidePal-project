@@ -38,8 +38,8 @@ public class Helpers {
     mockUser.setProvider(Provider.LOCAL);
     mockUser.setId(1);
     mockUser.setPassword("mockPassowrd");
-    mockUser.setFirst_name("mockFirstName");
-    mockUser.setLast_name("mockLastName");
+    mockUser.setFirstName("mockFirstName");
+    mockUser.setLastName("mockLastName");
     mockUser.setUsername("mockUsername");
     mockUser.setProfile_picture(null);
     return mockUser;

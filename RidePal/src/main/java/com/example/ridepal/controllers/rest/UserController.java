@@ -9,6 +9,7 @@ import com.example.ridepal.mappers.UserMapper;
 import com.example.ridepal.models.Playlist;
 import com.example.ridepal.models.User;
 import com.example.ridepal.models.dtos.UserDto;
+import com.example.ridepal.models.dtos.UsersFiltersDto;
 import com.example.ridepal.services.contracts.UserService;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
@@ -48,16 +49,13 @@ public class UserController {
 
     @GetMapping
     @Hidden
-    public Page<User> findAll(@RequestParam(required = false) String username,
-                              @RequestParam(required = false) String firstName,
-                              @RequestParam(required = false) String lastName,
-                              @RequestParam(required = false) String email,
+    public Page<User> findAll(@RequestBody(required = false)UsersFiltersDto filterOptions,
                               @RequestParam(defaultValue = "0") int page,
                               @RequestParam(defaultValue = "10") int sizePerPage,
                               @RequestParam(defaultValue = "ID") UserSortField sortField,
                               @RequestParam(defaultValue = "DESC") Sort.Direction sortDirection) {
         Pageable pageable = PageRequest.of(page, sizePerPage, sortDirection, sortField.getDatabaseFieldName());
-        return userService.findAll(username, firstName, lastName, email, pageable);
+        return userService.findAll(filterOptions.getUsername(), filterOptions.getFirstName(), filterOptions.getLastName(), filterOptions.getEmail(), pageable);
     }
 
     @GetMapping("/{id}")

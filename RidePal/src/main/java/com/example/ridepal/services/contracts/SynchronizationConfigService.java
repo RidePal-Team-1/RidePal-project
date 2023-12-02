@@ -7,4 +7,6 @@ public interface SynchronizationConfigService {
 
     void updateInterval(long interval, User user);
 
+    void syncJob();
+
 }

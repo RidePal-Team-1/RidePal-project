@@ -15,6 +15,7 @@ import java.util.Date;
 public class SynchronizationLog {
 
     @Id
+    @Column(name = "log_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

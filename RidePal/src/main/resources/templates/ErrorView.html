@@ -114,7 +114,7 @@
                     <h3 sec:authorize="isAuthenticated()" th:text="${user.email.substring(0, user.email.indexOf('@'))}">First Last</h3>
                 </div>
                 <hr>
-                <a href="#" class="sub-menu-link">
+                <a th:href="@{'/users/' + ${user.id}}" class="sub-menu-link">
                     <img th:src="@{/assets/img/profile.png}">
                     <p>Edit Profile</p>
                     <span>></span>
@@ -129,7 +129,7 @@
                     <p>Help & Support</p>
                     <span>></span>
                 </a>
-                <a href="#" class="sub-menu-link">
+                <a th:href="@{/auth/logout}" class="sub-menu-link">
                     <img th:src="@{/assets/img/logout.png}">
                     <p>Logout</p>
                     <span>></span>

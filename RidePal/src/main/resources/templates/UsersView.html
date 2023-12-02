@@ -114,9 +114,9 @@
                     <h3 sec:authorize="isAuthenticated()" th:text="${user.email.substring(0, user.email.indexOf('@'))}">First Last</h3>
                 </div>
                 <hr>
-                <a href="#" class="sub-menu-link">
+                <a th:href="@{'/users/' + ${user.id}}" class="sub-menu-link">
                     <img th:src="@{/assets/img/profile.png}">
-                    <p>Edit Profile</p>
+                    <p>My profile</p>
                     <span>></span>
                 </a>
                 <a href="#" class="sub-menu-link">
@@ -129,7 +129,7 @@
                     <p>Help & Support</p>
                     <span>></span>
                 </a>
-                <a href="#" class="sub-menu-link">
+                <a th:href="@{/auth/logout}" class="sub-menu-link">
                     <img th:src="@{/assets/img/logout.png}">
                     <p>Logout</p>
                     <span>></span>
@@ -157,8 +157,21 @@
     <div class="user-container">
         <h1 th:if="${users.isEmpty()}">NO RESULTS FOUND</h1>
         <div class="user-card" th:each="user : ${users}">
+
+<!--            <div class="three-dots">-->
+<!--                <a th:href="@{'/users/' + ${user.id} + '/delete'}"><i class='bx bxs-trash icon'></i></a>-->
+<!--            </div>-->
+
+<!--            <form onsubmit="return confirmDelete()" style="display:inline-block;" th:action="@{'/users/' + ${user.id} + '/delete'}" method="post">-->
+                <div class="three-dots">
+                  <a onclick="confirmDelete()" th:href="@{'/users/' + ${user.id} + '/delete'}"><i class='bx bxs-trash icon'></i></a>
+                </div>
+<!--            </form>-->
+
+
             <a href="#" th:href="${'/users/' + user.id}">
-            <img class="user-avatar" src="../static/assets/img/user.png" th:src="@{/assets/img/user.png}" alt="User 1">
+            <img class="user-avatar" src="../static/assets/img/user.png" th:src="${user.profile_picture  != null ? user.profile_picture : '/assets/img/user.png'}"
+                 alt="User 1">
             <i class="bx bx-headphone"></i><h2 class="all-users-username" th:text="${user.username}">User 1</h2>
             </a>
         </div>

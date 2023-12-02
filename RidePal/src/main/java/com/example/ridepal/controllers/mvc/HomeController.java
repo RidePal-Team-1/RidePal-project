@@ -3,12 +3,10 @@ package com.example.ridepal.controllers.mvc;
 import com.example.ridepal.helpers.AuthenticationHelper;
 import com.example.ridepal.models.Genre;
 import com.example.ridepal.models.Playlist;
+import com.example.ridepal.models.SynchronizationLog;
 import com.example.ridepal.models.User;
 import com.example.ridepal.models.dtos.SynchronizationConfigDto;
-import com.example.ridepal.repositories.GenreRepository;
-import com.example.ridepal.repositories.PlaylistRepository;
-import com.example.ridepal.repositories.SynchronizationConfigRepository;
-import com.example.ridepal.repositories.UserRepository;
+import com.example.ridepal.repositories.*;
 import com.example.ridepal.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -41,10 +39,14 @@ public class HomeController {
 
     private final SynchronizationConfigRepository synchronizationConfigRepository;
 
+    private final SynchronizationLogRepository synchronizationLogRepository;
+
     @Autowired
     public HomeController(PlaylistRepository playlistRepository, GenreRepository genreRepository,
-                          UserRepository userRepository, SynchronizationConfigRepository synchronizationConfigRepository) {
+                          UserRepository userRepository, SynchronizationConfigRepository synchronizationConfigRepository,
+                          SynchronizationLogRepository synchronizationLogRepository) {
         this.playlistRepository = playlistRepository;
+        this.synchronizationLogRepository = synchronizationLogRepository;
         this.genreRepository = genreRepository;
         this.userRepository = userRepository;
         this.synchronizationConfigRepository = synchronizationConfigRepository;
@@ -66,6 +68,11 @@ public class HomeController {
     @GetMapping("/about")
     public String about() {
     return "about";
+    }
+
+    @ModelAttribute("lastLog")
+    private SynchronizationLog getLastLog() {
+        return synchronizationLogRepository.findLastLog();
     }
 
     @ModelAttribute("currentInterval")
