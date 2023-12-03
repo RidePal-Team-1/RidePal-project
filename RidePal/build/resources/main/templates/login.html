@@ -14,73 +14,7 @@
 </head>
 <body class="login-page">
 <div></div>
-<nav class="sidebar close">
-    <header>
-        <div class="image-text">
-            <span class="image">
-                <img th:src="@{/assets/img/logo.png}" alt="logo">
-            </span>
-
-            <div class="text header-text">
-                <span class="name">TripTunes</span>
-                <span class="profession">Playlist Generator</span>
-            </div>
-        </div>
-
-        <i class='bx bx-chevron-right toggle' ></i>
-    </header>
-
-    <div class="menu-bar">
-        <div class="menu">
-            <ul class="menu-links">
-                <li class="nav-link">
-                    <a th:href="@{/home}">
-                        <i class='bx bx-home-alt icon' ></i>
-                        <span class="text nav-text">Home</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a th:href="@{/admin-portal}">
-                        <i class='bx bx-bar-chart-alt-2 icon' ></i>
-                        <span class="text nav-text">Admin Portal</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="#">
-                        <i class='bx bx-bell icon' ></i>
-                        <span class="text nav-text">Notifications</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="#">
-                        <i class='bx bx-heart icon' ></i>
-                        <span class="text nav-text">Top Tracks</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="bottom-content">
-
-
-            <li class="mode">
-                <div class="moon-sun">
-                    <i class='bx bx-moon icon moon' ></i>
-                    <i class='bx bx-sun icon sun' ></i>
-                </div>
-
-                <span class="mode-text text">Dark Mode</span>
-
-                <div class="toggle-switch">
-                    <span class="switch"></span>
-                </div>
-            </li>
-
-
-
-        </div>
-    </div>
-</nav>
+<nav th:replace="~{home.html :: side-bar}"></nav>
 <div class="login-wrapper">
     <form action="#" th:action="@{/auth/login}" method="post">
         <h1>Login</h1>
@@ -113,23 +47,7 @@
         </div>
     </form>
 </div>
-<footer>
-    <ul class="social_icon">
-        <li><a href="#"><ion-icon name="logo-facebook"></ion-icon></a></li>
-        <li><a href="#"><ion-icon name="logo-twitter"></ion-icon></a></li>
-        <li><a href="#"><ion-icon name="logo-linkedin"></ion-icon></a></li>
-        <li><a href="#"><ion-icon name="logo-instagram"></ion-icon></a></li>
-    </ul>
-    <!--     <img src="../static/assets/img/fullLogo.png">-->
-    <ul class="menu">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Services</a></li>
-        <li><a href="#">Team</a></li>
-        <li><a href="#">Contact</a></li>
-    </ul>
-    <p>©2023 Trip Tunes | All Rights Reserved</p>
-</footer>
+<footer th:replace="~{home.html :: footer}"></footer>
 
 
 

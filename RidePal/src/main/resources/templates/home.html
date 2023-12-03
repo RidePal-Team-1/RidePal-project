@@ -24,7 +24,7 @@
 
 <body class="home-body">
 <!--Side bar with buttons START -->
-<nav class="sidebar close">
+<nav class="sidebar close" th:fragment="side-bar">
     <header>
         <div class="image-text">
             <span class="image">
@@ -49,22 +49,28 @@
                         <span class="text nav-text">Home</span>
                     </a>
                 </li>
-                <li class="nav-link">
+                <li class="nav-link" sec:authorize="isAuthenticated() && hasRole('ADMIN')">
                     <a th:href="@{/admin-portal}">
                         <i class='bx bx-bar-chart-alt-2 icon'></i>
                         <span class="text nav-text">Admin Portal</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="#">
-                        <i class='bx bx-bell icon'></i>
-                        <span class="text nav-text">Notifications</span>
+                    <a href="#" th:href="@{/playlists}">
+                        <i class='bx bxs-playlist icon'></i>
+                        <span class="text nav-text">Browse Playlists</span>
                     </a>
                 </li>
                 <li class="nav-link">
+                    <a href="#" th:href="@{/users}">
+                        <i class='bx bx-user icon'></i>
+                        <span class="text nav-text">All Users</span>
+                    </a>
+                </li>
+                <li class="nav-link" sec:authorize="isAuthenticated()">
                     <a href="#">
-                        <i class='bx bx-heart icon'></i>
-                        <span class="text nav-text">Top Tracks</span>
+                        <i class='bx bx-play-circle icon'></i>
+                        <span class="text nav-text">Generate Playlist</span>
                     </a>
                 </li>
             </ul>
@@ -91,7 +97,7 @@
 <section class="home">
 
     <!--     Navigation bar with search button START-->
-    <nav>
+    <nav th:fragment="top-bar">
         <div class="search-container">
             <i class='bx bx-search icon' style="margin-top: 13px"></i>
             <input class="search-box" type="text" placeholder="Search...">
@@ -477,7 +483,7 @@
 </div>
 
     <!--Footer START-->
-    <footer>
+    <footer th:fragment="footer">
         <ul class="social_icon">
             <li><a href="#">
                 <ion-icon name="logo-facebook"></ion-icon>

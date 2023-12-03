@@ -50,6 +50,7 @@ public class UserMvcController {
             model.addAttribute("userDto", user);
             model.addAttribute("userRepository", userRepository);
             model.addAttribute("authenticatedUser",authenticatedUser);
+            model.addAttribute("user", authenticatedUser);
             return "UserView";
         } catch (EntityNotFoundException e) {
             model.addAttribute("user", authenticatedUser);

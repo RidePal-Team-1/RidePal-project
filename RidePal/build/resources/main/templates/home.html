@@ -24,7 +24,7 @@
 
 <body class="home-body">
 <!--Side bar with buttons START -->
-<nav class="sidebar close">
+<nav class="sidebar close" th:fragment="side-bar">
     <header>
         <div class="image-text">
             <span class="image">
@@ -49,22 +49,28 @@
                         <span class="text nav-text">Home</span>
                     </a>
                 </li>
-                <li class="nav-link">
+                <li class="nav-link" sec:authorize="isAuthenticated() && hasRole('ADMIN')">
                     <a th:href="@{/admin-portal}">
                         <i class='bx bx-bar-chart-alt-2 icon'></i>
                         <span class="text nav-text">Admin Portal</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="#">
-                        <i class='bx bx-bell icon'></i>
-                        <span class="text nav-text">Notifications</span>
+                    <a href="#" th:href="@{/playlists}">
+                        <i class='bx bxs-playlist icon'></i>
+                        <span class="text nav-text">Browse Playlists</span>
                     </a>
                 </li>
                 <li class="nav-link">
+                    <a href="#" th:href="@{/users}">
+                        <i class='bx bx-user icon'></i>
+                        <span class="text nav-text">All Users</span>
+                    </a>
+                </li>
+                <li class="nav-link" sec:authorize="isAuthenticated()">
                     <a href="#">
-                        <i class='bx bx-heart icon'></i>
-                        <span class="text nav-text">Top Tracks</span>
+                        <i class='bx bx-play-circle icon'></i>
+                        <span class="text nav-text">Generate Playlist</span>
                     </a>
                 </li>
             </ul>
@@ -91,7 +97,7 @@
 <section class="home">
 
     <!--     Navigation bar with search button START-->
-    <nav>
+    <nav th:fragment="top-bar">
         <div class="search-container">
             <i class='bx bx-search icon' style="margin-top: 13px"></i>
             <input class="search-box" type="text" placeholder="Search...">
@@ -380,7 +386,7 @@
                                     <i class='bx bx-bar-chart' title="Current Rank"></i>
                                 </div>
                                 <div class="icon">
-                                    <span th:text="${playlist.playtime}" title="Total Playtime In Minutes"></span>
+                                    <span class="playlist-duration" th:text="${playlist.playtime}" title="Total Playtime In Minutes"></span>
                                     <i class='bx bxs-time' title="Total Playtime In Minutes"></i>
                                 </div>
                             </div>
@@ -407,9 +413,12 @@
 <!--        Carousel for genres START-->
     <div class="container-genres">
         <div class="container-button">
+            <button style="margin-right: 20px" class="button-85" sec:authorize="hasRole('ADMIN')" type="button" onclick="openModal()">Configure</button>
+            <a style="text-decoration: none" th:href="@{/sync}"><button class="button-85" sec:authorize="hasRole('ADMIN')" type="button" >Synchronize</button></a>
+        </div>
+        <div class="container-button">
             <h2 class="topPlaylists">Genres</h2>
-            <button class="button-85" sec:authorize="hasRole('ADMIN')" type="button" onclick="openModal()">Synchronize</button>
-
+            <p sec:authorize="hasRole('ADMIN')" class="updated-info" th:text="'Last updated on: ' + ${lastLog.getTimestamp()}"></p>
         </div>
 
         <div id="syncModal" class="modal">
@@ -418,7 +427,7 @@
                 <span class="close" onclick="closeModal()">&times;</span>
 
                 <!-- Form inside the modal -->
-                <form th:action="@{/sync}" th:object="${genreSync}">
+                <form th:action="@{/sync/update}" th:object="${genreSync}">
                     <label for="interval">Minutes:</label>
                     <input type="number" id="interval" placeholder="Minutes" title="Please enter a valid number between 1 and 1440" min="1" max="1440" required pattern="(?:[1-9][0-9]{0,2}|1[0-3][0-9]{2}|1440)"  th:field="*{interval}" />
                     <button type="submit">Sync</button>
@@ -474,7 +483,7 @@
 </div>
 
     <!--Footer START-->
-    <footer>
+    <footer th:fragment="footer">
         <ul class="social_icon">
             <li><a href="#">
                 <ion-icon name="logo-facebook"></ion-icon>
@@ -503,7 +512,23 @@
 </section>
 
 <!--<script src="/js/scripts.js"></script>-->
+<script th:inline="none">
+    document.addEventListener("DOMContentLoaded", function () {
+        var durationElements = document.querySelectorAll(".playlist-duration");
 
+        durationElements.forEach(function (element) {
+            var minutes = parseInt(element.textContent);
+            element.textContent = formatDuration(minutes * 60); // convert minutes to seconds
+        });
+
+        function formatDuration(seconds) {
+            var hours = Math.floor(seconds / 3600);
+            var minutes = Math.floor((seconds % 3600) / 60);
+            var remainingSeconds = seconds % 60;
+            return hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":" + (remainingSeconds < 10 ? "0" : "") + remainingSeconds;
+        }
+    });
+</script>
 
 </body>
 </html>

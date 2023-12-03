@@ -27,7 +27,8 @@ public class TrackServiceImpl implements TrackService {
     public Track findById(int id) {
         if(trackRepository.findById(id)==null){
             throw new EntityNotFoundException("Track",id);
-        }else {
+        }
+        else {
             return trackRepository.findById(id);
         }
     }

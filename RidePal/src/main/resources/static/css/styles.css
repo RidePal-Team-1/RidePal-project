@@ -2273,6 +2273,22 @@ body.dark .form-box {
     width: 50%;
     max-height: 75%;
     max-width: 75vh;
+    z-index: 1; /* Set a higher z-index for the album container */
+}
+
+#album h1 {
+    z-index: 1;
+    background: transparent;
+    font-weight: 600;
+    margin-top: 10%; /* Adjust the margin-top to position the h1 within the album container */
+    margin-left: 10%; /* Adjust the margin-left to position the h1 within the album container */
+}
+.dark #album h1{
+    background: transparent;
+    font-weight: 600;
+    margin-top: 10%; /* Adjust the margin-top to position the h1 within the album container */
+    margin-left: 10%; /* Adjust the margin-left to position the h1 within the album container */
+    color: white;
 }
 
 #cover {

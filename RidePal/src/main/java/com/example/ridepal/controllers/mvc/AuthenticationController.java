@@ -44,7 +44,7 @@ public class AuthenticationController {
         session.invalidate();
         SecurityContext securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(null);
-        return "redirect:/login";
+        return "redirect:/home";
     }
 
     @GetMapping("/register")

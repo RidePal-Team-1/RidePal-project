@@ -25,127 +25,13 @@
 <body class="home-body">
 
 <!--Side bar with buttons START -->
-<nav class="sidebar close">
-    <header>
-        <div class="image-text">
-            <span class="image">
-                <img th:src="@{/assets/img/logo.png}" alt="logo">
-            </span>
-
-            <div class="text header-text">
-                <span class="name">TripTunes</span>
-                <span class="profession">Playlist Generator</span>
-            </div>
-        </div>
-
-        <i class='bx bx-chevron-right toggle'></i>
-    </header>
-
-    <div class="menu-bar">
-        <div class="menu">
-            <ul class="menu-links">
-                <li class="nav-link">
-                    <a th:href="@{/home}">
-                        <i class='bx bx-home-alt icon'></i>
-                        <span class="text nav-text">Home</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a th:href="@{/admin-portal}">
-                        <i class='bx bx-bar-chart-alt-2 icon'></i>
-                        <span class="text nav-text">Admin Portal</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="#">
-                        <i class='bx bx-bell icon'></i>
-                        <span class="text nav-text">Notifications</span>
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="#">
-                        <i class='bx bx-heart icon'></i>
-                        <span class="text nav-text">Top Tracks</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="bottom-content">
-            <li class="mode">
-                <div class="moon-sun">
-                    <i class='bx bx-moon icon moon'></i>
-                    <i class='bx bx-sun icon sun'></i>
-                </div>
-
-                <span class="mode-text text">Dark Mode</span>
-
-                <div class="toggle-switch">
-                    <span class="switch"></span>
-                </div>
-            </li>
-        </div>
-    </div>
-</nav>
+<nav th:replace="~{home.html :: side-bar}"></nav>
 <!--Side bar with buttons END -->
 
 <section class="home">
 
     <!--     Navigation bar with search button START-->
-    <nav>
-        <div class="search-container">
-            <i class='bx bx-search icon' style="margin-top: 13px"></i>
-            <input class="search-box" type="text" placeholder="Search...">
-        </div>
-        <img sec:authorize="isAuthenticated()" class="user-pic"
-             th:src="${user.profile_picture  != null ? user.profile_picture : '/assets/img/logo.png'}"
-             onclick="toggleMenu()" alt="user">
-        <div sec:authorize="!isAuthenticated()" class="button-1">
-            <a th:href="@{/auth/login}">
-                <i class='bx bx-log-in icon'></i>
-                <span class="text nav-text">Log In</span>
-            </a>
-        </div>
-        <div sec:authorize="!isAuthenticated()" class="button-1">
-            <a th:href="@{/auth/register}">
-                <i class='bx bx-registered icon'></i>
-                <span class="text nav-text">Register</span>
-            </a>
-        </div>
-
-        <div class="sub-menu-wrap" id="subMenu">
-            <div class="sub-menu">
-                <div class="user-info">
-                    <img sec:authorize="isAuthenticated()"
-                         th:src="${user.profile_picture  != null ? user.profile_picture : '/assets/img/logo.png'}"
-                         alt="user">
-                    <h3 sec:authorize="isAuthenticated()" th:text="${user.email.substring(0, user.email.indexOf('@'))}">
-                        First Last</h3>
-                </div>
-                <hr>
-                <a href="#" class="sub-menu-link">
-                    <img th:src="@{/assets/img/profile.png}">
-                    <p>My Profile</p>
-                    <span>></span>
-                </a>
-                <a href="#" class="sub-menu-link">
-                    <img th:src="@{/assets/img/setting.png}">
-                    <p>Settings & Privacy</p>
-                    <span>></span>
-                </a>
-                <a href="#" class="sub-menu-link">
-                    <img th:src="@{/assets/img/help.png}">
-                    <p>Help & Support</p>
-                    <span>></span>
-                </a>
-                <a href="#" class="sub-menu-link">
-                    <img th:src="@{/assets/img/logout.png}">
-                    <p>Logout</p>
-                    <span>></span>
-                </a>
-            </div>
-        </div>
-    </nav>
+    <nav th:replace="~{home.html :: top-bar}"></nav>
     <!--     Navigation bar with search button END-->
 
 
@@ -259,31 +145,7 @@
 
 
     <!--Footer START-->
-    <footer>
-        <ul class="social_icon">
-            <li><a href="#">
-                <ion-icon name="logo-facebook"></ion-icon>
-            </a></li>
-            <li><a href="#">
-                <ion-icon name="logo-twitter"></ion-icon>
-            </a></li>
-            <li><a href="#">
-                <ion-icon name="logo-linkedin"></ion-icon>
-            </a></li>
-            <li><a href="#">
-                <ion-icon name="logo-instagram"></ion-icon>
-            </a></li>
-        </ul>
-        <!--     <img src="../static/assets/img/fullLogo.png">-->
-        <ul class="menu">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Team</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
-        <p>©2023 Trip Tunes | All Rights Reserved</p>
-    </footer>
+    <footer th:replace="~{home.html :: footer}"></footer>
     <!--Footer END-->
 </section>
 
