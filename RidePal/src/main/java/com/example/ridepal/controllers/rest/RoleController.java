@@ -8,7 +8,6 @@ import com.example.ridepal.models.Role;
 import com.example.ridepal.models.dtos.RoleDto;
 import com.example.ridepal.services.contracts.RoleService;
 import io.swagger.v3.oas.annotations.Hidden;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -38,14 +37,14 @@ public class RoleController {
                               @RequestParam(defaultValue = "10") int sizePerPage,
                               @RequestParam(defaultValue = "ID") UserSortField sortField,
                               @RequestParam(defaultValue = "DESC") Sort.Direction sortDirection) {
-        Pageable pageable = PageRequest.of(page, sizePerPage,sortDirection,sortField.getDatabaseFieldName());
+        Pageable pageable = PageRequest.of(page, sizePerPage, sortDirection, sortField.getDatabaseFieldName());
         return roleService.findAll(pageable);
     }
 
     @PostMapping
     public void create(@Valid @RequestBody RoleDto dto) {
-            Role role = mapper.fromDto(dto);
-            roleService.create(role);
+        Role role = mapper.fromDto(dto);
+        roleService.create(role);
     }
 
     @PutMapping("/{id}")

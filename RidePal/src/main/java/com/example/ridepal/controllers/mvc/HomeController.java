@@ -108,13 +108,6 @@ public class HomeController {
         return genreRepository.findAll();
     }
 
-    @PostMapping
-    private void generatePlaylist(Principal principal,
-                                  @Valid @ModelAttribute("generatePlaylist") PlaylistDto playlistDto,
-                                  Model model, Authentication authentication) {
-        User user = AuthenticationHelper.extractUserFromProvider(authentication);
-        playlistService.createPlaylist(playlistDto, user);
-    }
     @ModelAttribute("getPlaylistsPerGenre")
     private Map<Long, Integer> getPlaylistsPerGenre() {
         Map<Long, Integer> genres = new HashMap<>();

@@ -28,6 +28,7 @@
 
 <section class="home">
     <nav th:replace="~{home.html :: top-bar}"></nav>
+    <div th:replace="~{home.html :: generate-jouney}"></div>
     <div class="search-header">
         <form action="#" th:action="@{/users}" method="get" th:object="${filterOptions}">
             <label style="margin-top: 50px; margin-bottom: 50px;  font-weight: 700;  line-height: 1.2; color: var(--dashboard-text-color)"

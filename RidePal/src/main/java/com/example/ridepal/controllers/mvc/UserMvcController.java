@@ -6,9 +6,13 @@ import com.example.ridepal.exceptions.UnauthorizedOperationException;
 import com.example.ridepal.filters.enums.UserSortField;
 import com.example.ridepal.helpers.AuthenticationHelper;
 import com.example.ridepal.mappers.UserMapper;
+import com.example.ridepal.models.Genre;
 import com.example.ridepal.models.User;
+import com.example.ridepal.models.dtos.PlaylistDto;
 import com.example.ridepal.models.dtos.UserDto;
 import com.example.ridepal.models.dtos.UsersFiltersDto;
+import com.example.ridepal.repositories.GenreRepository;
+import com.example.ridepal.repositories.PlaylistRepository;
 import com.example.ridepal.services.contracts.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +24,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -34,11 +40,17 @@ public class UserMvcController {
 
     private final UserMapper userMapper;
 
+    private final GenreRepository genreRepository;
+
+    private final PlaylistRepository playlistRepository;
+
 
     @Autowired
-    public UserMvcController(UserService userService, UserMapper userMapper) {
+    public UserMvcController(UserService userService, UserMapper userMapper, GenreRepository genreRepository, PlaylistRepository playlistRepository) {
         this.userService = userService;
         this.userMapper = userMapper;
+        this.genreRepository = genreRepository;
+        this.playlistRepository = playlistRepository;
     }
 
     @GetMapping("/{id}")
@@ -168,7 +180,26 @@ public class UserMvcController {
         }
     }
 
+    @ModelAttribute("getPlaylistsPerGenre")
+    private Map<Long, Integer> getPlaylistsPerGenre() {
+        Map<Long, Integer> genres = new HashMap<>();
+        for (Genre genre : genreRepository.findAll()) {
+            genres.put(genre.getId(), playlistRepository.getPlaylistsCountByGenre(genre.getId()));
+        }
+        return genres;
+    }
 
-
+    @ModelAttribute("playlistDto")
+    private PlaylistDto prepareGeneratePlaylistDto() {
+        PlaylistDto dto = new PlaylistDto();
+        dto.setGenres(new HashMap<>());
+        dto.getGenres().put("Rap/Hip Hop", 0.00);
+        dto.getGenres().put("Rock", 0.00);
+        dto.getGenres().put("Pop", 0.00);
+        dto.getGenres().put("Jazz", 0.00);
+        dto.getGenres().put("Electro", 0.00);
+        dto.getGenres().put("Dance", 0.00);
+        return dto;
+    }
 
 }

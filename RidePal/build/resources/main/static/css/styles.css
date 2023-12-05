@@ -60,6 +60,7 @@ body.dark {
     padding: 10px 14px;
     transition: var(--tran-05);
     z-index: 100;
+    box-shadow: inset 0 0 5px silver ;
 }
 
  .sidebar.close {
@@ -389,9 +390,12 @@ body.dark.sidebar-closed footer {
 
 /*===== Top Navigation Bar Start=====*/
 section nav {
+    -moz-box-shadow: inset 0 -10px 2px -10px silver;
+    -webkit-box-shadow: inset 0 -10px 2px -10px silver;
+    box-shadow: inset 0 -10px 2px -10px silver;
     background: #FFF;
     width: 100%;
-    padding: 10px 10%;
+    padding: 20px 5%;
     align-items: center;
     justify-content: space-between;
     display: flex;
@@ -403,7 +407,7 @@ section nav {
     height: 40px;
     border-radius: 50%;
     cursor: pointer;
-    margin-left: 30px;
+    margin-left: 500px;
     border: 1px solid var(--text-color);
 }
 
@@ -781,6 +785,7 @@ footer .social_icon li {
     background: url("../images/login_background.jpg") no-repeat center;
     background-size: cover;
 }
+
 .login-wrapper{
     margin: 100px;
     width: 420px;
@@ -987,7 +992,7 @@ footer .social_icon li {
 
 .container-playlists,
 .container-genres {
-    max-width: 1200px;
+    max-width: 1600px;
     width: 95%;
     margin: 20px auto; /* Adjust margin as needed */
     margin-top: 100px;
@@ -1058,6 +1063,9 @@ footer .social_icon li {
 
 .slider-wrapper .slide-button#next-slide-genres {
     right: -20px;
+}
+.container-playlists{
+    width: 100%;
 }
 
 .container-playlists .slider-scrollbar,
@@ -2427,54 +2435,85 @@ svg:not(:root) {
 
 /*TRIP MODAL START*/
 .select-genres{
-    display:flex;
-    flex-direction: column;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: flex-end;
 }
 .select-genres label{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
     margin: 10px;
 }
+.select-genres .block-genre{
+   text-align: left;
+}
+
+.left-aligned-input {
+    text-align: left;
+    /* Add more styling as needed */
+}
+
 .slidecontainer {
+    right: 0;
     width: 50%; /* Width of the outside container */
 }
-.slider {
-    width: 100%;
-    height: 15px;
-    border-radius: 5px;
-    background: #d3d3d3;
-    outline: none;
-    opacity: 0.7;
-    -webkit-transition: .2s;
-    transition: opacity .2s;
+
+.slidecontainer input {
+    border-radius: 20px;
+    margin-left: 50px;
+    text-align: center;
 }
 
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: #04AA6D;
-    cursor: pointer;
-}
-
-.slider::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: #04AA6D;
-    cursor: pointer;
-}
-.select-genres label {
-    display: flex;
-    align-items: center;
-}
-
-.slider {
-    margin-top: 10px;
-    margin-left: 30px;
-}
 .login-button i{
     margin-left: 10px;
     margin-right: 10px;
 }
+
+.modal-journey{
+    backdrop-filter: blur(20px);
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    padding-top: -10px;
+}
+.modal-content-journey{
+    backdrop-filter: blur(20px);
+    background-color: transparent;
+    padding: 0px;
+    width: 23%;
+    margin-left: 800px;
+    border: none;
+    border-radius: 20px;
+}
+.home-body .login-wrapper{
+    margin: 100px;
+    width: 420px;
+    background: var(--lighter-primary);
+    border: 2px solid rgba(255,255,255, .2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    color: #fff;
+    border-radius: 10px;
+    padding: 30px 40px;
+}
+
+.playlist-single-view .login-wrapper{
+    margin: 100px;
+    width: 420px;
+    background: var(--lighter-primary);
+    border: 2px solid rgba(255,255,255, .2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    color: #fff;
+    border-radius: 10px;
+    padding: 30px 40px;
+}
+
 /*TRIP MODAL END*/

@@ -68,7 +68,7 @@
                     </a>
                 </li>
                 <li class="nav-link" sec:authorize="isAuthenticated()">
-                    <a href="#">
+                    <a href="#" onclick="openModalGenerateTrip()">
                         <i class='bx bx-play-circle icon'></i>
                         <span class="text nav-text">Generate Playlist</span>
                     </a>
@@ -153,8 +153,9 @@
     </nav>
     <!--     Navigation bar with search button END-->
 <!--    testmodal-->
-    <button onclick="openModalGenerateTrip()">Open Modal</button>
-    <div class="login-wrapper" id="modal-container">
+    <div class="modal-journey" id="modal-container" th:fragment="generate-jouney">
+        <div class="modal-content-journey">
+    <div class="login-wrapper">
         <form action="#" th:action="@{/playlists/new}" th:object="${playlistDto}" method="post" id="modal">
             <span id="close-btn" onclick="closeModalGenerateTrip()">X</span>
             <h1>Start Your TripTune Journey</h1>
@@ -185,9 +186,9 @@
             <div class="select-genres" th:each="genreKey : ${playlistDto.genres.keySet()}">
                 <label>
                     <input type="checkbox" class="genre-checkbox" th:value="genreKey" onchange="toggleInput(this)">
-                    <th:block th:text="${genreKey}"></th:block>
-                    <div class="slidecontainer">
-                        <input type="number" min="0" max="100" value="0" th:value="${playlistDto.genres[genreKey] != 0.0} ? ${playlistDto.genres[genreKey]} : 0" th:field="*{genres[__${genreKey}__]}" disabled><!--                        <span class="slider-value" th:text="${playlistDto.genres[__${genreKey}__] + '%'}">0%</span>-->
+                    <th:block class="block-genre" th:text="${genreKey}"></th:block>
+                    <div class="slidecontainer" >
+                        <input class="left-aligned-input" type="number" min="0" max="100" value="0" th:value="${playlistDto.genres[genreKey] != 0.0} ? ${playlistDto.genres[genreKey]} : 0" th:field="*{genres[__${genreKey}__]}" disabled><!--                        <span class="slider-value" th:text="${playlistDto.genres[__${genreKey}__] + '%'}">0%</span>-->
                     </div>
                 </label>
             </div>
@@ -199,93 +200,8 @@
             <button type="submit" value="START JOURNEY" class="login-button"><i class="bx bx-headphone"></i>Begin Journey</button>
         </form>
     </div>
-
-    <script>
-        function openModalGenerateTrip() {
-            document.getElementById('modal-container').style.display = 'flex';
-        }
-
-        function closeModalGenerateTrip() {
-            document.getElementById('modal-container').style.display = 'none';
-        }
-
-        // Close modal if the user clicks outside the modal content
-        window.onclick = function (event) {
-            var modalContainer = document.getElementById('modal-container');
-            if (event.target == modalContainer) {
-                modalContainer.style.display = 'none';
-            }
-        }
-
-        function calculateTotal() {
-            var checkedCheckboxes = document.querySelectorAll('.genre-checkbox:checked');
-            var total = 0;
-
-            checkedCheckboxes.forEach(function (checkbox) {
-                var inputField = checkbox.closest('.select-genres').querySelector('input[type="number"]');
-                total += parseInt(inputField.value);
-            });
-
-            return total;
-        }
-
-        function validateTotal() {
-            var total = calculateTotal();
-            var errorMessage = document.getElementById('error-message');
-
-            if (total > 100) {
-                errorMessage.textContent = 'Total cannot exceed 100. Please adjust your selections.';
-                return false;
-            } else {
-                errorMessage.textContent = ''; // Clear the error message if total is within limits
-            }
-
-            return true;
-        }
-
-        function toggleInput(checkbox) {
-            var inputField = checkbox.closest('.select-genres').querySelector('input[type="number"]');
-            var genreKey = checkbox.value;
-            var mapField = document.getElementById('genres[' + genreKey + ']');
-
-            if (checkbox.checked) {
-                inputField.disabled = false;
-                if (inputField.value === '') {
-                    // If the field is blank, calculate and set the value in the map
-                    var checkedCheckboxes = document.querySelectorAll('.genre-checkbox:checked');
-                    var numberOfBlankFields = checkedCheckboxes.length - 1; // excluding the current field
-                    var valueToSet = numberOfBlankFields > 0 ? Math.floor((100 - inputField.value) / numberOfBlankFields) : 0;
-                    mapField.value = valueToSet;
-                } else {
-                    // If the field has a value, set it directly in the map
-                    mapField.value = parseInt(inputField.value);
-                }
-            } else {
-                inputField.disabled = true;
-                inputField.value = 0; // Reset the value when unchecked
-                mapField.value = 0; // Reset the value in the map when unchecked
-            }
-        }
-
-
-        // Add an event listener for the checkboxes
-        document.addEventListener('change', function (event) {
-            if (event.target.classList.contains('genre-checkbox')) {
-                toggleInput(event.target);
-            }
-        });
-
-        // Add an event listener for the form submission
-        document.getElementById('modal').addEventListener('submit', function (event) {
-            if (!validateTotal()) {
-                event.preventDefault(); // Prevent form submission if validation fails
-            }
-        });
-
-
-
-
-    </script>
+         </div>
+    </div>
 
     <!--testmodal-->
 <!--    Dashboard with information START-->

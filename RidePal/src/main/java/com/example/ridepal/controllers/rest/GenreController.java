@@ -5,7 +5,6 @@ import com.example.ridepal.filters.enums.GenreSortField;
 import com.example.ridepal.models.Genre;
 import com.example.ridepal.services.contracts.GenreService;
 import io.swagger.v3.oas.annotations.Hidden;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

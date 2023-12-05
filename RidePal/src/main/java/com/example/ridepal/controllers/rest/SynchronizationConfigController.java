@@ -25,8 +25,9 @@ import org.springframework.web.server.ResponseStatusException;
 public class SynchronizationConfigController {
 
     private final SynchronizationConfigService synchronizationConfigService;
+
     public SynchronizationConfigController(SynchronizationConfigService synchronizationConfigService) {
-        this. synchronizationConfigService = synchronizationConfigService;
+        this.synchronizationConfigService = synchronizationConfigService;
     }
 
     @PutMapping
@@ -45,5 +46,4 @@ public class SynchronizationConfigController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
-
 }

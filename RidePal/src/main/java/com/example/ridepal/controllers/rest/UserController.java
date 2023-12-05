@@ -49,7 +49,7 @@ public class UserController {
 
     @GetMapping
     @Hidden
-    public Page<User> findAll(@RequestBody(required = false)UsersFiltersDto filterOptions,
+    public Page<User> findAll(@RequestBody(required = false) UsersFiltersDto filterOptions,
                               @RequestParam(defaultValue = "0") int page,
                               @RequestParam(defaultValue = "10") int sizePerPage,
                               @RequestParam(defaultValue = "ID") UserSortField sortField,
@@ -63,12 +63,12 @@ public class UserController {
     @Operation(summary = "Retrieve user by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found user",
-    content = {@Content(mediaType = "application/json",
-            schema = @Schema(implementation = User.class))}),
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = User.class))}),
             @ApiResponse(responseCode = "401", description = "Unauthorized",
                     content = @Content),
-    @ApiResponse(responseCode = "404", description = "Invalid id supplied",
-    content = @Content) })
+            @ApiResponse(responseCode = "404", description = "Invalid id supplied",
+                    content = @Content)})
     public User findById(@PathVariable int id) {
         try {
             return userService.findById(id);
@@ -100,10 +100,10 @@ public class UserController {
             @ApiResponse(responseCode = "401", description = "Unauthorized",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Invalid id supplied",
-                    content = @Content) })
+                    content = @Content)})
     public void update(@Valid @RequestBody UserDto dto, @PathVariable int id, Authentication authentication) {
         User authenticatedUser = AuthenticationHelper.extractUserFromProvider(authentication);
-        try{
+        try {
             User user = mapper.fromDto(dto, id);
             userService.update(user, authenticatedUser);
         } catch (EntityNotFoundException e) {
@@ -123,10 +123,10 @@ public class UserController {
             @ApiResponse(responseCode = "401", description = "Unauthorized",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Invalid id supplied",
-                    content = @Content) })
+                    content = @Content)})
     public void delete(@PathVariable int id, Authentication authentication) {
         User user = AuthenticationHelper.extractUserFromProvider(authentication);
-        try{
+        try {
             userService.delete(id, user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
@@ -136,7 +136,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}/playlists")
-    public List<Playlist> getUserPlaylists(@PathVariable int id){
+    public List<Playlist> getUserPlaylists(@PathVariable int id) {
         return userService.getUserPlaylists(id);
     }
 }

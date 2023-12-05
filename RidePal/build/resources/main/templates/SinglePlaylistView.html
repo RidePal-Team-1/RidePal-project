@@ -25,10 +25,11 @@
 <nav th:replace="~{home.html :: side-bar}"></nav>
 <section class="home">
     <nav th:replace="~{home.html :: top-bar}"></nav>
+    <div th:replace="~{home.html :: generate-jouney}"></div>
     <div class="right" th:object="${playlist}">
         <div class="playlist-header">
             <div class="playlist-top">
-                <a href="#" th:href="@{'users/'+${playlist.creator.id}}">
+                <a href="#" th:href="@{'/users/'+${playlist.creator.id}}">
                 <div class="playlist-top-email">
                     <div class="arrow-container">
                         <img src="../static/assets/img/logo.png" th:src="@{/assets/img/logo.png}">

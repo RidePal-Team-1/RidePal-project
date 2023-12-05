@@ -30,8 +30,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.security.Principal;
-
 @RestController
 @RequestMapping("/api/playlists")
 @Tag(name = "Playlists")
@@ -76,12 +74,12 @@ public class PlaylistController {
             @ApiResponse(responseCode = "401", description = "Unauthorized",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Invalid id supplied",
-                    content = @Content) })
+                    content = @Content)})
     public Playlist findById(@PathVariable int id) {
         try {
             return playlistService.getPlaylistById(id);
         } catch (EntityNotFoundException e) {
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
@@ -96,7 +94,7 @@ public class PlaylistController {
                     content = @Content)})
     public Playlist create(@Valid @RequestBody PlaylistDto dto, Authentication authentication) {
         User user = AuthenticationHelper.extractUserFromProvider(authentication);
-           return playlistService.createPlaylist(dto, user);
+        return playlistService.createPlaylist(dto, user);
     }
 
     @PutMapping("/{id}")
@@ -107,7 +105,7 @@ public class PlaylistController {
             @ApiResponse(responseCode = "401", description = "Unauthorized",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Invalid id supplied",
-                    content = @Content) })
+                    content = @Content)})
     public void update(@PathVariable int id, @Valid @RequestBody PlaylistUpdateDto playlistDto, Authentication authentication) {
         User user = AuthenticationHelper.extractUserFromProvider(authentication);
         try {
@@ -128,7 +126,7 @@ public class PlaylistController {
             @ApiResponse(responseCode = "401", description = "Unauthorized",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Invalid id supplied",
-                    content = @Content) })
+                    content = @Content)})
     public void delete(@PathVariable int id, Authentication authentication) {
         User user = AuthenticationHelper.extractUserFromProvider(authentication);
         try {
@@ -139,5 +137,4 @@ public class PlaylistController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
-
 }

@@ -5,7 +5,6 @@ import com.example.ridepal.filters.enums.TrackSortField;
 import com.example.ridepal.models.Track;
 import com.example.ridepal.services.contracts.TrackService;
 import io.swagger.v3.oas.annotations.Hidden;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -21,6 +20,7 @@ import java.util.List;
 @RequestMapping("/api/tracks")
 @Hidden
 public class TrackController {
+
     private final TrackService trackService;
 
     @Autowired

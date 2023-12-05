@@ -68,7 +68,7 @@
                     </a>
                 </li>
                 <li class="nav-link" sec:authorize="isAuthenticated()">
-                    <a href="#">
+                    <a href="#" onclick="openModalGenerateTrip()">
                         <i class='bx bx-play-circle icon'></i>
                         <span class="text nav-text">Generate Playlist</span>
                     </a>
@@ -153,9 +153,10 @@
     </nav>
     <!--     Navigation bar with search button END-->
 <!--    testmodal-->
-    <button onclick="openModalGenerateTrip()">Open Modal</button>
-    <div class="login-wrapper" id="modal-container">
-        <form action="#" th:action="@{/playlists/new}" th:object="${generatePlaylist}" method="post" id="modal" onsubmit="prepareGenresData()">
+    <div class="modal-journey" id="modal-container" th:fragment="generate-jouney">
+        <div class="modal-content-journey">
+    <div class="login-wrapper">
+        <form action="#" th:action="@{/playlists/new}" th:object="${playlistDto}" method="post" id="modal">
             <span id="close-btn" onclick="closeModalGenerateTrip()">X</span>
             <h1>Start Your TripTune Journey</h1>
             <div class="login-input-box">
@@ -180,50 +181,18 @@
             <div class="or-divider">
                 <span class="line"></span>
             </div>
-            <div class="select-genres">
+
+            <div id="error-message" style="color: red;"></div>
+            <div class="select-genres" th:each="genreKey : ${playlistDto.genres.keySet()}">
                 <label>
-                    <input type="checkbox" class="genre-checkbox" data-slider-id="slider1">Hip-Hop
-                    <div class="slidecontainer">
-                        <input type="range" min="0" max="100" value="0" class="slider" id="slider1" th:field="*{genres['Rap/Hip-hop']}">
-                        <span class="slider-value">0%</span>
-                    </div>
-                </label>
-                <label>
-                    <input type="checkbox" class="genre-checkbox" data-slider-id="slider2" >Rock
-                    <div class="slidecontainer">
-                        <input type="range" min="0" max="100" value="0" class="slider" id="slider2" th:field="*{genres['Rock']}">
-                        <span class="slider-value">0%</span>
-                    </div>
-                </label>
-                <label>
-                    <input type="checkbox" class="genre-checkbox" data-slider-id="slider3">Pop
-                    <div class="slidecontainer">
-                        <input type="range" min="0" max="100" value="0" class="slider" id="slider3" th:field="*{genres['Pop']}">
-                        <span class="slider-value">0%</span>
-                    </div>
-                </label>
-                <label>
-                    <input type="checkbox" class="genre-checkbox" data-slider-id="slider4">Jazz
-                    <div class="slidecontainer">
-                        <input type="range" min="0" max="100" value="0" class="slider" id="slider4" th:field="*{genres['Jazz']}">
-                        <span class="slider-value">0%</span>
-                    </div>
-                </label>
-                <label>
-                    <input type="checkbox" class="genre-checkbox" data-slider-id="slider5">Electro
-                    <div class="slidecontainer">
-                        <input type="range" min="0" max="100" value="0" class="slider" id="slider5" th:field="*{genres['Electro']}">
-                        <span class="slider-value">0%</span>
-                    </div>
-                </label>
-                <label>
-                    <input type="checkbox" class="genre-checkbox" data-slider-id="slider6">Dance
-                    <div class="slidecontainer">
-                        <input type="range" min="0" max="100" value="0" class="slider" id="slider6" th:field="*{genres['Dance']}">
-                        <span class="slider-value">0%</span>
+                    <input type="checkbox" class="genre-checkbox" th:value="genreKey" onchange="toggleInput(this)">
+                    <th:block class="block-genre" th:text="${genreKey}"></th:block>
+                    <div class="slidecontainer" >
+                        <input class="left-aligned-input" type="number" min="0" max="100" value="0" th:value="${playlistDto.genres[genreKey] != 0.0} ? ${playlistDto.genres[genreKey]} : 0" th:field="*{genres[__${genreKey}__]}" disabled><!--                        <span class="slider-value" th:text="${playlistDto.genres[__${genreKey}__] + '%'}">0%</span>-->
                     </div>
                 </label>
             </div>
+
             <div class="or-divider">
                 <span class="line"></span>
             </div>
@@ -231,110 +200,8 @@
             <button type="submit" value="START JOURNEY" class="login-button"><i class="bx bx-headphone"></i>Begin Journey</button>
         </form>
     </div>
-
-    <script>
-        function openModalGenerateTrip() {
-            document.getElementById('modal-container').style.display = 'flex';
-        }
-
-        function closeModalGenerateTrip() {
-            document.getElementById('modal-container').style.display = 'none';
-        }
-
-        // Close modal if the user clicks outside the modal content
-        window.onclick = function (event) {
-            var modalContainer = document.getElementById('modal-container');
-            if (event.target == modalContainer) {
-                modalContainer.style.display = 'none';
-            }
-        }
-
-        // Map checkboxes and sliders by their index
-        var checkboxSliderMap = new Map();
-
-        // Add an event listener to all checkboxes with the class 'genre-checkbox'
-        var checkboxes = document.querySelectorAll('.genre-checkbox');
-        checkboxes.forEach(function (checkbox, index) {
-            checkbox.addEventListener('change', function () {
-                updateSliders(index, checkbox.checked);
-            });
-
-            // Initialize the map with checkboxes and sliders
-            var slider = document.getElementById('slider' + (index + 1));
-            checkboxSliderMap.set(index, { checkbox: checkbox, slider: slider });
-            console.log(`Checkbox at index ${index}:`, checkbox);
-            console.log(`Slider at index ${index}:`, slider);
-        });
-
-        // Add an event listener to all sliders with the class 'slider'
-        var sliders = document.querySelectorAll('.slider');
-        sliders.forEach(function (slider, index) {
-            slider.addEventListener('input', function (event) {
-                updateSlidersFromSlider(index, event);
-            });
-        });
-
-        // Function to update sliders based on selected checkboxes
-        function updateSliders(checkboxIndex, isChecked) {
-            console.log(`Updating sliders for checkbox at index ${checkboxIndex}. Checked: ${isChecked}`);
-            var totalChecked = Array.from(checkboxSliderMap.values())
-                .filter(item => item.checkbox.checked)
-                .reduce((total, item) => total + 1, 0);
-            console.log(`Total checked checkboxes: ${totalChecked}`);
-            checkboxSliderMap.forEach(function (value, index) {
-                var slider = value.slider;
-                slider.disabled = !value.checkbox.checked;
-
-                if (value.checkbox.checked) {
-                    slider.value = 100 / totalChecked;
-                    updateSliderValueSpan(slider);
-                }
-            });
-        }
-
-        // Function to update sliders when a slider is adjusted
-        function updateSlidersFromSlider(changedSliderIndex, event) {
-            console.log(`Updating sliders from slider at index ${changedSliderIndex}.`);
-            var changedSlider = event.target;
-
-            var checkedCheckboxes = Array.from(checkboxSliderMap.values())
-                .filter(item => item.checkbox.checked);
-
-            var totalValue = checkedCheckboxes
-                .reduce((total, item) => total + parseFloat(item.slider.value), 0);
-            console.log(`Total value of checked sliders: ${totalValue}`);
-
-            checkedCheckboxes.forEach(function (value, index) {
-                var slider = value.slider;
-
-                if (index === changedSliderIndex) {
-                    // Update the changed slider value span
-                    updateSliderValueSpan(slider);
-                } else {
-                    // Update the other enabled sliders based on the changed slider
-                    slider.value = (100 - parseFloat(changedSlider.value)) / (checkedCheckboxes.length - 1);
-                    updateSliderValueSpan(slider);
-                }
-            });
-        }
-
-        // Function to update the value span associated with a slider
-        function updateSliderValueSpan(slider) {
-            console.log(`Updating value span for slider: ${slider.id}. New value: ${slider.value}`);
-            var valueSpan = slider.parentElement.querySelector('.slider-value');
-            valueSpan.textContent = slider.value;
-        }
-
-        // Function to prepare genres data before form submission
-        function prepareGenresData() {
-            checkboxSliderMap.forEach(function (value, index) {
-                if (value.checkbox.checked) {
-                    // Set the genre name in the input field
-                    document.getElementById('genres[' + value.checkbox.value + ']').value = value.slider.value;
-                }
-            });
-        }
-    </script>
+         </div>
+    </div>
 
     <!--testmodal-->
 <!--    Dashboard with information START-->

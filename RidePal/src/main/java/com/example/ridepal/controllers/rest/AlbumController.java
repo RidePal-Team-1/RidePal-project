@@ -4,10 +4,12 @@ import com.example.ridepal.exceptions.EntityNotFoundException;
 import com.example.ridepal.models.Album;
 import com.example.ridepal.services.contracts.AlbumService;
 import io.swagger.v3.oas.annotations.Hidden;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -16,6 +18,7 @@ import java.util.List;
 @RequestMapping("/api/albums")
 @Hidden
 public class AlbumController {
+
     private final AlbumService albumService;
 
     @Autowired
@@ -24,16 +27,16 @@ public class AlbumController {
     }
 
     @GetMapping
-    public List<Album> findAll(){
+    public List<Album> findAll() {
         return albumService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Album findById(@PathVariable long id){
-        try{
+    public Album findById(@PathVariable long id) {
+        try {
             return albumService.findById(id);
-        }catch (EntityNotFoundException e){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (EntityNotFoundException e) {
+            throw   new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 }
