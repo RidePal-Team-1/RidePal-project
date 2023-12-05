@@ -133,7 +133,7 @@ public class PlaylistMvcController {
     }
 
     @PostMapping("/new")
-    public String generatePlaylist(@ModelAttribute("generatePlaylist")PlaylistDto playlistDto, Principal principal,
+    public String generatePlaylist(@Valid @ModelAttribute("generatePlaylist")PlaylistDto playlistDto,BindingResult bindingResult,
                                    Model model, Authentication authentication){
 //        model.addAttribute("generatePlaylist", playlistDto);
         User user = AuthenticationHelper.extractUserFromProvider(authentication);

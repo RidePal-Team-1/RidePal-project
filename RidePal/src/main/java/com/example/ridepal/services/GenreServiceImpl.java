@@ -24,7 +24,11 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public Genre findById(int id) {
-        return genreRepository.findById(id);
+        Genre genre =  genreRepository.findById(id);
+        if (genre == null) {
+            throw new EntityNotFoundException("Genre", id);
+        }
+        return genre;
     }
 
 

@@ -25,7 +25,6 @@ public class PlaylistDto {
     @NotEmpty
     private String to;
 
-    @NotNull
     private Map<String, Double> genres;
 
     private boolean useTopTracks;

@@ -65,7 +65,6 @@ public class HomeController {
     public String home(Model model, Authentication authentication) {
         User user = AuthenticationHelper.extractUserFromProvider(authentication);
         model.addAttribute("user", user);
-        model.addAttribute("generatePlaylist", new PlaylistDto());
         model.addAttribute("genreSync", new SynchronizationConfigDto());
         return "home";
     }
@@ -123,5 +122,18 @@ public class HomeController {
             genres.put(genre.getId(), playlistRepository.getPlaylistsCountByGenre(genre.getId()));
         }
         return genres;
+    }
+
+    @ModelAttribute("playlistDto")
+    private PlaylistDto prepareGeneratePlaylistDto() {
+        PlaylistDto dto = new PlaylistDto();
+        dto.setGenres(new HashMap<>());
+        dto.getGenres().put("Rap/Hip Hop", 0.00);
+        dto.getGenres().put("Rock", 0.00);
+        dto.getGenres().put("Pop", 0.00);
+        dto.getGenres().put("Jazz", 0.00);
+        dto.getGenres().put("Electro", 0.00);
+        dto.getGenres().put("Dance", 0.00);
+        return dto;
     }
 }

@@ -7,6 +7,7 @@ import com.example.ridepal.repositories.RoleRepository;
 import com.example.ridepal.services.contracts.RoleService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,14 +26,13 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void create(Role role) {
+        checkRoleUniqueness(role);
         roleRepository.save(role);
     }
 
     @Override
     public void update(Role role) {
-        if (roleRepository.findByName(role.getName()) != null) {
-            throw new DuplicateEntityException("Role", "name", role.getName());
-        }
+        checkRoleUniqueness(role);
         roleRepository.save(role);
     }
 
@@ -43,6 +43,13 @@ public class RoleServiceImpl implements RoleService {
            throw new EntityNotFoundException("Role", id);
        }
        roleRepository.delete(role);
+    }
+
+    private void checkRoleUniqueness(Role role) {
+        Role repositoryRole = roleRepository.findByName(role.getName());
+        if (repositoryRole != null) {
+            throw new DuplicateEntityException("Role", "name", role.getName());
+        }
     }
 
 }

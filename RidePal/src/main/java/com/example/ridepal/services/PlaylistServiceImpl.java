@@ -73,30 +73,67 @@ public class PlaylistServiceImpl implements PlaylistService {
     }
     @Override
     public Playlist createPlaylist(PlaylistDto dto, User user) {
-
-        Playlist playlist = playlistMapper.fromDto(dto, user);
-
-        double[] distanceAndDuration = bingMapService.getLocations(dto.getFrom(), dto.getTo());
-        Map<String, Double> genresDurations = populatePlaytimeForEachGenre(dto, distanceAndDuration);
-        Map<String, Integer> averagePlaytimeForGenre = calculatingAverageTimePerGenre(genresDurations);
-        List<Track> trackSet = new ArrayList<>();
-        fetchTracksFromDatabase(dto, genresDurations, averagePlaytimeForGenre, trackSet);
-        long avgRank = 0;
-        int totalPlaytime = 0;
-
-        for (Track track: trackSet) {
-            avgRank += track.getRank();
-            totalPlaytime += track.getPlaytime();
+        if (dto.getGenres() == null) {
+            //If there is no genre added
+            dto.setGenres(new HashMap<>());
+            dto.getGenres().put("Rap/Hip Hop", 16.66);
+            dto.getGenres().put("Rock", 16.66);
+            dto.getGenres().put("Pop", 16.66);
+            dto.getGenres().put("Jazz", 16.66);
+            dto.getGenres().put("Electro", 16.66);
+            dto.getGenres().put("Dance", 16.66);
+        } else {
+            int unPopulatedFields = 0;
+            double totalPercentages = 0;
+            for (Map.Entry<String, Double> genre : dto.getGenres().entrySet()) {
+                if (genre.getValue() == 0.0) {
+                    unPopulatedFields++;
+                } else {
+                    totalPercentages += genre.getValue();
+                }
+            }
+            // We make front end check to see if total percentages is below 100.
+            if (unPopulatedFields > 0) {
+                double percentageLeft = (100 - totalPercentages) / unPopulatedFields;
+                for (Map.Entry<String, Double> genre : dto.getGenres().entrySet()) {
+                    if (genre.getValue() == 0.00) {
+                        genre.setValue(percentageLeft);
+                    }
+                }
+            } else {
+                double percentageLeft = (100 - totalPercentages) / dto.getGenres().keySet().size();
+                for (Map.Entry<String,Double> genre: dto.getGenres().entrySet()) {
+                    genre.setValue(genre.getValue() + percentageLeft);
+                }
+            }
         }
-        totalPlaytime /= 60;
 
-        totalPlaytime = removeTracksTillPlaytimeInRange(totalPlaytime, distanceAndDuration, trackSet);
 
-        playlist.setPlaytime(totalPlaytime);
-        playlist.setRank(avgRank / trackSet.size());
-        playlist.setTrackSet(trackSet);
-        playlist.setPhotoUrl(pixabayService.getPlaylistCoverUrl());
-        return playlistRepository.save(playlist);
+
+
+        // If there is at least one genre added by the user
+            Playlist playlist = playlistMapper.fromDto(dto, user);
+            double[] distanceAndDuration = bingMapService.getLocations(dto.getFrom(), dto.getTo());
+            Map<String, Double> genresDurations = populatePlaytimeForEachGenre(dto, distanceAndDuration);
+            Map<String, Integer> averagePlaytimeForGenre = calculatingAverageTimePerGenre(genresDurations);
+            List<Track> trackSet = new ArrayList<>();
+            fetchTracksFromDatabase(dto, genresDurations, averagePlaytimeForGenre, trackSet);
+            long avgRank = 0;
+            int totalPlaytime = 0;
+
+            for (Track track: trackSet) {
+                avgRank += track.getRank();
+                totalPlaytime += track.getPlaytime();
+            }
+            totalPlaytime /= 60;
+
+            totalPlaytime = removeTracksTillPlaytimeInRange(totalPlaytime, distanceAndDuration, trackSet);
+
+            playlist.setPlaytime(totalPlaytime);
+            playlist.setRank(avgRank / trackSet.size());
+            playlist.setTrackSet(trackSet);
+            playlist.setPhotoUrl(pixabayService.getPlaylistCoverUrl());
+            return playlistRepository.save(playlist);
     }
 
 
@@ -108,7 +145,6 @@ public class PlaylistServiceImpl implements PlaylistService {
         return totalPlaytime;
     }
 
-    @NotNull
     private Map<String, Integer> calculatingAverageTimePerGenre(Map<String, Double> genresDurations) {
         Map<String, Integer> averagePlaytimeForGenre = new HashMap<>();
         for (String genre : genresDurations.keySet()) {
@@ -117,13 +153,16 @@ public class PlaylistServiceImpl implements PlaylistService {
         return averagePlaytimeForGenre;
     }
 
-    @NotNull
-    private static Map<String, Double> populatePlaytimeForEachGenre(PlaylistDto dto, double[] distanceAndDuration) {
+
+    private Map<String, Double> populatePlaytimeForEachGenre(PlaylistDto dto, double[] distanceAndDuration) {
         int totalTravelTimeInSeconds = (int) distanceAndDuration[1] * 60;
 
         Map<String, Double> genresDurations = new HashMap<>();
 
         for (Map.Entry<String, Double> genre: dto.getGenres().entrySet()) {
+//            if (genre.getValue() == 0.00) {
+//                continue;
+//            }
             genresDurations.put(genre.getKey(), genre.getValue() * totalTravelTimeInSeconds / 100);
         }
         return genresDurations;
