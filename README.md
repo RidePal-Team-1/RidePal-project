@@ -11,7 +11,7 @@
         <li><a href="#rest-api">REST API</a></li>
         <li><a href="#external-services">External Services</a></li>
         <li><a href="#technologies">Technologies and Principles</a></li>
-        <li><a href="database">Database</a></li>
+        <li><a href="#database">Database</a></li>
     </ul>
 <br>
   <h2 id="#main-requirements">Main Functionalities</h2>
@@ -120,7 +120,7 @@
   <br>
   <br>
 
-  <h2 id="database">Database</h2>
+  <h2 id="#database">Database</h2>
   <br>
 
 ![image](https://github.com/RidePal-Team-1/RidePal-project/assets/133578156/3c6dc1ea-0e15-4663-9b68-1997da9f535d)
