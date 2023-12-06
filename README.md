@@ -10,7 +10,7 @@
         <li><a href="#administration-part">Administration Part</a></li>
         <li><a href="#rest-api">REST API</a></li>
         <li><a href="#external-services">External Services</a></li>
-        <li><a href="#techologies">Technologies and Principles</a></li>
+        <li><a href="#technologies">Technologies and Principles</a></li>
     </ul>
 <br>
   <h2 id="#main-requirements">Main Functionalities</h2>
@@ -109,7 +109,7 @@
   <br>
 
 
-  <h2 id="#techologies">Technologies and Principles</h2>
+  <h2 id="#technologies">Technologies and Principles</h2>
   <ul>
     <li>Java, Spring Boot, Spring MVC, Spring Security, Lombok, Thymeleaf, JUnit, Mockito, HTML, CSS, JavaScript, Hibernate, MariaDB</li>
     <li>DRY, KISS, YAGNI, SOLID, OOP, REST API design</li>
