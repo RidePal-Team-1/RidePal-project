@@ -141,6 +141,7 @@
 <br>
 <ol>
   <li>Clone the project -> https://github.com/RidePal-Team-1/RidePal-project.git</li>
+  <br>
   <li>Configure the database connection in application.properties:</li>
 <br>
 spring.datasource.url=jdbc:mariadb://localhost:3306/your_database<br>
