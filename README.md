@@ -1,5 +1,5 @@
 <h1>RidePal Web Application</h1>
-<p>RidePal is a web application that allows users to generate playlists tailored to their musical preferences for specific travel durations. The application utilizes external services such as Microsoft Bing Maps and Deezer to calculate travel durations and fetch music data. Pixabay's API is used to attach an image to a newly created playlist in the system.</p>
+<p>RidePal is a web application that allows users to generate playlists tailored to their musical preferences for specific travel durations. The application utilizes external services such as Microsoft Bing Maps, Deezer and Pixabay to calculate travel durations, fetch music data and attach an image to a newly created playlist in the system.</p>
 
 <br>
   <h2>Table of Contents</h2>
