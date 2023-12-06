@@ -117,6 +117,8 @@
     <li>Service layer tests have over 80% code coverage</li>
     <li>Multilayered architecture</li>
   </ul>
+  <br>
+  <br>
 
   <h2 id="database">Database</h2>
   <br>
