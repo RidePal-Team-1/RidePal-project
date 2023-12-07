@@ -24,25 +24,39 @@
 <section class="home">
 <!--     Navigation bar with search button START-->
     <nav th:replace="~{home.html :: top-bar}"></nav>
+    <div th:replace="~{home.html :: generate-jouney}"></div>
 <!--     Navigation bar with search button END-->
 
     <div class="right" th:object="${userRepository}">
         <div class="playlist-header">
-            <div sec:authorize="isAuthenticated()" th:if="${authenticatedUser.getId() == userRepository.getId()
-                && !userRepository.provider.toString().equals('GOOGLE')}" class="edit-button">
-                <i onclick="openModal2()" class='bx bx-edit icon'></i>
+            <div  sec:authorize="isAuthenticated()" th:if="${#authorization.expression('hasRole(''ADMIN'')')|| user.id == id}" class="playlist-top-edit">
+                <!--                    <i onclick="openModal()" class='bx bx-edit icon'></i>-->
+                <div class="dropdown" >
+                    <i id="dropbtn" class="bx bx-menu"></i>
+                    <div class="dropdown-content" style="left:0;">
+                        <a href="#" th:if="${!userRepository.provider.toString().equals('GOOGLE')}" id="editableTitle" onclick="openModal2()">Edit Profile</a>
+                        <a href="#" id="profilePictureContainer">Upload Cover</a>
+                        <a href="#" id="delete" th:href="@{'/users/' + ${userRepository.id} + '/delete'}"  onclick="confirmDelete()">Delete Profile</a>
+                        <!--                            <a href="#" id="profilePictureContainer">Upload Cover</a>-->
+                        <!--                            <a href="#" th:href="@{'/playlists/'+${playlist.id}+'/delete'}" th:method="get">Delete Playlist</a>-->
+                    </div>
+                </div>
             </div>
+<!--            <div sec:authorize="isAuthenticated()" th:if="${authenticatedUser.getId() == userRepository.getId()-->
+<!--                && !userRepository.provider.toString().equals('GOOGLE')}" class="edit-button">-->
+<!--                <i onclick="openModal2()" class='bx bx-edit icon'></i>-->
+<!--            </div>-->
 <!--            <form  sec:authorize="hasRole('ADMIN')" th:action="@{'/users/' + ${userRepository.id} + '/delete'}" method="post">-->
 <!--                <div  >-->
 <!--                    <button  class="edit-button" type="submit"><i class='bx bxs-trash'></i></button>-->
 <!--                </div>-->
 <!--            </form>-->
 
-            <form onsubmit="return confirmDelete()" style="display:inline-block;" th:if="${authenticatedUser.getId() == userRepository.getId() or #authorization.expression('hasRole(''ADMIN'')')}"  th:action="@{'/users/' + ${userRepository.id} + '/delete'}" method="get">
-            <div style="display: inline-block">
-               <button  class="delete-button"  type="submit"><i class='bx bxs-trash icon'></i></button>
-            </div>
-            </form>
+<!--            <form onsubmit="return confirmDelete()" style="display:inline-block;" th:if="${authenticatedUser.getId() == userRepository.getId() or #authorization.expression('hasRole(''ADMIN'')')}"  th:action="@{'/users/' + ${userRepository.id} + '/delete'}" method="get">-->
+<!--            <div style="display: inline-block">-->
+<!--               <button  class="delete-button"  type="submit"><i class='bx bxs-trash icon'></i></button>-->
+<!--            </div>-->
+<!--            </form>-->
             <div class="playlist-content">
                 <div class="hover-icon">
                     <!-- Your icon content goes here -->
@@ -59,9 +73,9 @@
                     <form id="playlistForm" th:object="${user}" action="#" th:action="@{'/users/'+ ${userRepository.getId()}+'/picture'}" method="post">
                         <input type="hidden" id="hiddenPhotoInput" name="photoUrl" th:value="${userRepository.profile_picture}">
                     </form>
-                    <div class="hover-icon">
-                        <i class="bx bx-image"></i>
-                    </div>
+<!--                    <div class="hover-icon">-->
+<!--                        <i class="bx bx-image"></i>-->
+<!--                    </div>-->
                 </div>
 
                 <div class="user-info-fields">
@@ -102,8 +116,8 @@
                                 <div><label class="error" style="color: white" th:errors="*{email}">Email error placeholder</label></div>
 
                                 <!--                            <label for="username">Username</label>-->
-                                <input type="text" id="username" placeholder="Username" class="edit-form-user" th:field="*{username}"/>
-                                <div><label class="error" style="color: white" th:errors="*{username}">Username error placeholder</label></div>
+<!--                                <input type="text" id="username" placeholder="Username" class="edit-form-user" th:field="*{username}"/>-->
+<!--                                <div><label class="error" style="color: white" th:errors="*{username}">Username error placeholder</label></div>-->
 
                                 <!--                            <label for="password">Password</label>-->
                                 <input type="password" id="password" placeholder="Password" class="edit-form-user" th:field="*{password}"/>

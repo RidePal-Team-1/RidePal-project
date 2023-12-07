@@ -53,8 +53,8 @@ public class SecurityConfig {
                                 "/playlists/{id}/picture",
                                 "/playlists/{id}/delete",
                                 "/users/{id}",
-                                "/users/{id}/update").authenticated()
-                        .requestMatchers("/users","/users/{id}/delete").hasRole("ADMIN")
+                                "/users/{id}/update","/users","/users/{id}/delete").authenticated()
+                        .requestMatchers("/users/{id}/delete").hasRole("ADMIN")
                         .anyRequest().permitAll())
 
                 //TODO see if you are authenticated and try to login again if it works

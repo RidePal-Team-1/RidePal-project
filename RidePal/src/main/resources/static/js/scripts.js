@@ -65,9 +65,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
 // });
 
 let subMenu = document.getElementById("subMenu");
+let subMenuEdit = document.getElementById("subMenu-edit");
 
 function toggleMenu() {
     subMenu.classList.toggle("open-menu");
+}
+function toggleMenuEdit() {
+    subMenuEdit.classList.toggle("open-menu");
 }
 const initSlider = () => {
     const imageList = document.querySelector(".container-playlists .slider-wrapper .image-list");

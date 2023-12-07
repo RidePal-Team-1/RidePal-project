@@ -115,6 +115,9 @@ public class UserServiceImpl implements UserService {
 
     private void checkUsernameUniqueness(User user) {
         List<User> repositoryUsers = userRepository.findListByUsername(user.getUsername());
+        if(user.getProvider().toString().equals("GOOGLE")){
+            return;
+        }
         if (repositoryUsers.size() > 1) {
             throw new DuplicateEntityException("User", "username", user.getUsername());
         }

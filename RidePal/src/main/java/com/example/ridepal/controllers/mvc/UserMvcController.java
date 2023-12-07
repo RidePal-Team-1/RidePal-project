@@ -61,8 +61,9 @@ public class UserMvcController {
             UserDto user = userMapper.toDto(userRepository);
             model.addAttribute("userDto", user);
             model.addAttribute("userRepository", userRepository);
-            model.addAttribute("authenticatedUser",authenticatedUser);
+            model.addAttribute("authenticatedUser", authenticatedUser);
             model.addAttribute("user", authenticatedUser);
+            model.addAttribute("id", id);
             return "UserView";
         } catch (EntityNotFoundException e) {
             model.addAttribute("user", authenticatedUser);
@@ -106,7 +107,7 @@ public class UserMvcController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("userRepository",userService.findById(id));
             model.addAttribute("authenticatedUser", user);
-            return "UserView";
+            return "redirect:/users/"+id;
         }
 
         if (!dto.getPassword().equals(dto.getPasswordConfirm())) {

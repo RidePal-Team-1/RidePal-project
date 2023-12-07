@@ -73,6 +73,12 @@
                         <span class="text nav-text">Generate Playlist</span>
                     </a>
                 </li>
+                <li class="nav-link" sec:authorize="!isAuthenticated()">
+                    <a href="#" th:href="@{/auth/login}">
+                        <i class='bx bx-play-circle icon'></i>
+                        <span class="text nav-text">Generate Playlist</span>
+                    </a>
+                </li>
             </ul>
         </div>
 
@@ -133,16 +139,6 @@
                     <p>My Profile</p>
                     <span>></span>
                 </a>
-                <a href="#" class="sub-menu-link">
-                    <img th:src="@{/assets/img/setting.png}">
-                    <p>Settings & Privacy</p>
-                    <span>></span>
-                </a>
-                <a href="#" class="sub-menu-link">
-                    <img th:src="@{/assets/img/help.png}">
-                    <p>Help & Support</p>
-                    <span>></span>
-                </a>
                 <a th:href="@{/auth/logout}" class="sub-menu-link">
                     <img th:src="@{/assets/img/logout.png}">
                     <p>Logout</p>
@@ -159,12 +155,12 @@
         <form action="#" th:action="@{/playlists/new}" th:object="${playlistDto}" method="post" id="modal">
             <span id="close-btn" onclick="closeModalGenerateTrip()">X</span>
             <h1>Start Your TripTune Journey</h1>
-            <div class="login-input-box">
-                <input type="text" id="from" name="from" autofocus="autofocus" th:field="*{from}" th:placeholder="#{starting.destination}"  required>
+            <div class="login-input-box" id='searchBoxContainer'>
+                <input type="text" id='searchBox'  name="from" autofocus="autofocus" th:field="*{from}" th:placeholder="#{starting.destination}"  required>
                 <i class='bx bx-current-location'></i>
             </div>
             <div class="login-input-box">
-                <input type="text" id="to" name="to" autofocus="autofocus" th:field="*{to}" th:placeholder="#{end.destination}" required>
+                <input type="text" name="to" autofocus="autofocus" th:field="*{to}" th:placeholder="#{end.destination}" required>
                 <i class='bx bx-navigation'></i>
             </div>
             <div class="or-divider">
@@ -204,6 +200,33 @@
     </div>
 
     <!--testmodal-->
+
+
+<!--        <script type='text/javascript'>-->
+<!--            var map;-->
+
+<!--            function GetMap() {-->
+<!--                map = new Microsoft.Maps.Map('#myMap', {});-->
+
+<!--                Microsoft.Maps.loadModule('Microsoft.Maps.AutoSuggest', function () {-->
+<!--                    var manager = new Microsoft.Maps.AutosuggestManager({ map: map });-->
+<!--                    manager.attachAutosuggest('#searchBox', '#searchBoxContainer', selectedSuggestion);-->
+<!--                });-->
+<!--            }-->
+
+<!--            function selectedSuggestion(result) {-->
+<!--                //Remove previously selected suggestions from the map.-->
+<!--                map.entities.clear();-->
+
+<!--                //Show the suggestion as a pushpin and center map over it.-->
+<!--                var pin = new Microsoft.Maps.Pushpin(result.location);-->
+<!--                map.entities.push(pin);-->
+<!--                map.setView({ bounds: result.bestView });-->
+<!--            }-->
+<!--        </script>-->
+<!--        <script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=Akc6vAGnz7kLWGmxNkNjtVsCmbvi5NaJqavdmX4Ku1T7JT3-BUPFVDgf5vOYdc8S' async defer></script>-->
+<!--    testmodal-->
+
 <!--    Dashboard with information START-->
     <div class="overview-boxes">
         <div class="box">

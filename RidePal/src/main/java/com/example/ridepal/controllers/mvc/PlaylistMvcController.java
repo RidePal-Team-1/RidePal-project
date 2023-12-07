@@ -83,7 +83,6 @@ public class PlaylistMvcController {
             model.addAttribute("playlist", playlist);
             model.addAttribute("user", user);
             return "SinglePlaylistView";
-
         } catch (EntityNotFoundException e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
@@ -91,7 +90,7 @@ public class PlaylistMvcController {
         }
     }
 
-    @PutMapping("/{id}/update")
+    @PostMapping("/{id}/update")
     public String updatePlaylist(@PathVariable int id,
                                  @Valid PlaylistUpdateDto playlistDto,
                                  BindingResult bindingResult,Model model, Authentication authentication){
@@ -150,7 +149,7 @@ public class PlaylistMvcController {
         return  "redirect:/playlists/"+playlist.getId();
     }
 
-    @DeleteMapping("/{id}/delete")
+    @GetMapping("/{id}/delete")
     public String deletePlaylist(@PathVariable int id, Authentication authentication, Model model) {
         User user = AuthenticationHelper.extractUserFromProvider(authentication);
         try {

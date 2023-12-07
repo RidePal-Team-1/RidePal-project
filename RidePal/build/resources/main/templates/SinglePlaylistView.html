@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,9 +13,10 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     <!----===== Google Fonts Link For Icons ===== -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
 
-    <title th:text="${playlist.creator.username} + 's playlist'"> </title>
+    <title th:text="${playlist.creator.username} + 's playlist'"></title>
     <script src="/js/scripts.js" defer></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -28,64 +30,60 @@
     <div th:replace="~{home.html :: generate-jouney}"></div>
     <div class="right" th:object="${playlist}">
         <div class="playlist-header">
+
             <div class="playlist-top">
                 <a href="#" th:href="@{'/users/'+${playlist.creator.id}}">
-                <div class="playlist-top-email">
-                    <div class="arrow-container">
-                        <img src="../static/assets/img/logo.png" th:src="@{/assets/img/logo.png}">
+                    <div class="playlist-top-email">
+                        <div class="arrow-container">
+                            <img src="../static/assets/img/logo.png" th:src="@{/assets/img/logo.png}">
+                        </div>
+                        <span th:text="${playlist.getCreator().email}">email of the owner</span>
                     </div>
-                    <span th:text="${playlist.getCreator().email}">email of the owner</span>
-                </div>
                 </a>
+                <div  sec:authorize="isAuthenticated()" th:if="${#authorization.expression('hasRole(''ADMIN'')')|| user.id == playlist.creator.id || user.email==playlist.creator.email}" class="playlist-top-edit">
+                    <!--                    <i onclick="openModal()" class='bx bx-edit icon'></i>-->
+                    <div class="dropdown" style="float:right;">
+                        <i id="dropbtn" class="bx bx-menu"></i>
+                        <div class="dropdown-content">
+                            <a href="#" id="editableTitle" onclick="openModal()">Edit Title</a>
+                            <a href="#" id="profilePictureContainer">Upload Cover</a>
+                            <a href="#" th:href="@{'/playlists/'+${playlist.id}+'/delete'}" th:method="get">Delete Playlist</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-<!--            -->
-<!--            <div sec:authorize="!isAuthenticated()">-->
-<!--                <div th:if="${user.id} != ${playlist.creator.getId()}" class="playlist-cover">-->
-<!--                    <img th:src="${playlist.getPhotoUrl() != null ? playlist.getPhotoUrl() : '/assets/img/logo.png'}"-->
-<!--                         alt="Profile Picture"/>-->
-<!--                </div>-->
-<!--            </div>-->
 
             <div class="playlist-content">
-<!--                <div class="playlist-cover" id="profilePictureContainer">-->
-<!--                <img th:src="${playlist.getPhotoUrl() != null ? playlist.getPhotoUrl() : '/assets/img/logo.png'}"-->
-<!--                     alt="Profile Picture" id="profilePicture">-->
-<!--                <form id="playlistForm" th:object="${playlist}" action="#" th:action="@{'/playlists/'+ ${playlist.getId()}+'/picture'}" method="post">-->
-<!--                    <input type="hidden" id="hiddenPhotoInput" name="photoUrl" th:value="${playlist.photoUrl}">-->
-<!--                </form>-->
-
-                <div th:class="playlist-cover" th:if="${user == null  || user.id != playlist.creator.getId()}" class="playlist-cover">
+                <div th:class="playlist-cover" th:if="${user == null  || user.id != playlist.creator.getId()}"
+                     class="playlist-cover">
                     <img th:src="${playlist.getPhotoUrl() != null ? playlist.getPhotoUrl() : '/assets/img/logo.png'}"
                          alt="Profile Picture"/>
                 </div>
-                <div sec:authorize="isAuthenticated()" th:if="${playlist.creator.id} == ${user.id}" class="playlist-cover" id="profilePictureContainer">
+                <div sec:authorize="isAuthenticated()" th:if="${playlist.creator.id} == ${user.id}"
+                     class="playlist-cover">
                     <img th:src="${playlist.getPhotoUrl() != null ? playlist.getPhotoUrl() : '/assets/img/logo.png'}"
-                            alt="Profile Picture" id="profilePicture"/>
-                    <form id="playlistForm" th:object="${playlist}" action="#" th:action="@{'/playlists/'+ ${playlist.getId()}+'/picture'}" method="post">
+                         alt="Profile Picture" id="profilePicture"/>
+                    <form id="playlistForm" th:object="${playlist}" action="#"
+                          th:action="@{'/playlists/'+ ${playlist.getId()}+'/picture'}" method="post">
                         <input type="hidden" id="hiddenPhotoInput" name="photoUrl" th:value="${playlist.photoUrl}">
                     </form>
-                    <div class="hover-icon">
-                        <i class="bx bx-image"></i>
-                    </div>
+<!--                    <div class="hover-icon">-->
+<!--                        <i class="bx bx-image"></i>-->
+<!--                    </div>-->
                 </div>
-
-
                 <div class="playlist-info">
-<!--                    <div class="playlist-public">Public playlist</div>-->
-                    <div class="playlist-title" id="editableTitle" onclick="openModal()" th:text="${playlist.title}">
-                       Classic road trip</div>
-
-<!--                    <div class="playlist-description">description</div>-->
-                <div id="editTitleModal" class="modal">
-                    <div class="modal-content">
-                        <span class="close" onclick="closeModal()">&times;</span>
-                        <form id="editTitleForm" th:object="${playlist}" th:action="@{'/playlists/' + ${id} + '/update'}">
-                            <label for="newTitle">Enter New Title: </label>
-                            <input type="text" id="newTitle" name="title" th:value="${playlist.title}" required>
-                            <button type="submit">SAVE</button>
-                        </form>
+                    <div class="playlist-title" th:text="${playlist.title}">Classic road trip</div>
+                    <div id="editTitleModal" class="modal">
+                        <div class="modal-content">
+                            <span class="close" id="close-edit-modal">&times;</span>
+                            <form id="editTitleForm" th:object="${playlist}"
+                                  th:action="@{'/playlists/' + ${id} + '/update'}" method="post">
+                                <label for="newTitle">Enter New Title: </label>
+                                <input type="text" id="newTitle" name="title" th:value="${playlist.title}" required>
+                                <button type="submit" th:onclick="submitFormAndCloseModal()">SAVE</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
                     <div class="playlist-stats">
                         <i class='bx bx-bar-chart-alt icon'></i>
                         <span th:text="${playlist.rank}">rating</span>
@@ -97,74 +95,60 @@
                 </div>
             </div>
         </div>
-       <div class="playlist-songs-container">
-<!--           <div class="playlist-buttons">-->
-<!--               <div class="playlist-buttons-left">-->
-<!--                   <div class="playlist-buttons-resume-pause">-->
-<!--                       sds-->
-<!--&lt;!&ndash;                       play-pause button or icon&ndash;&gt;-->
-<!--                   </div>-->
-<!--                   <div class="playlist-buttons-next">-->
-<!--                       sds&lt;!&ndash;                       play-pause button or icon&ndash;&gt;-->
-<!--                   </div>-->
-<!--                   <div class="playlist-buttons-previous">-->
-<!--                       sds&lt;!&ndash;                       play-pause button or icon&ndash;&gt;-->
-<!--                   </div>-->
-<!--               </div>-->
-<!--               <div class="playlist-buttons-right">-->
-<!--                   <div class="playlist-buttons-order">-->
-<!--                       dsds-->
-<!--&lt;!&ndash;                       //icon arrow here&ndash;&gt;-->
-<!--                   </div>-->
-<!--               </div>-->
-<!--           </div>-->
-           <div class="playlist-songs">
-                   <table>
-                   <tr th:each="track, stat : ${playlist.trackSet}">
-                       <td th:text="${stat.index + 1}">1</td>
-                       <td class="song-title">
-                           <div class="song-image">
-                               <img th:src="${track.album.photoUrl}" alt="">
-                           </div>
-                           <div class="song-name-artist">
-                               <div class="song-name" th:text="${track.title}">
-                                   Song name ex
-                               </div>
-                               <div class="song-artist" th:text="${track.artist.name}">
-                                   Artist example
-                               </div>
-                           </div>
-                           <div class="audio-preview">
-                               <audio controls>
-                                   <source th:src="${track.getUrl()}" type="audio/mp3">
-                                   Your browser does not support the audio element.
-                               </audio>
-                           </div>
-                       </td>
-                       <td class="song-album" th:text="${track.album.name}">Album div</td>
-                       <td class="bx bx-timer" id="duration-icon"></td>
-                       <td class="song-duration" th:text="${track.playtime}"></i>Duration</td>
-                       <td class='bx bx-bar-chart-alt icon' id="rank-icon"></td>
-                       <td class="song-rank" th:text="${track.rank}">Rank</td>
-                   </tr>
-                   </table>
-               </table>
-           </div>
-       </div>
 
+        <div class="playlist-songs-container">
+            <div class="playlist-songs">
+                <table>
+                    <tr th:each="track, stat : ${playlist.trackSet}">
+                        <td th:text="${stat.index + 1}">1</td>
+                        <td class="song-title">
+                            <div class="song-image">
+                                <img th:src="${track.album.photoUrl}" alt="">
+                            </div>
+                            <div class="song-name-artist">
+                                <div class="song-name" th:text="${track.title}">
+                                    Song name ex
+                                </div>
+                                <div class="song-artist" th:text="${track.artist.name}">
+                                    Artist example
+                                </div>
+                            </div>
+                            <div class="audio-preview">
+                                <audio controls>
+                                    <source th:src="${track.getUrl()}" type="audio/mp3">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td class="song-album" th:text="${track.album.name}">Album div</td>
+                        <td class="bx bx-timer" id="duration-icon"></td>
+                        <td class="song-duration" th:text="${track.playtime}"></i>Duration</td>
+                        <td class='bx bx-bar-chart-alt icon' id="rank-icon"></td>
+                        <td class="song-rank" th:text="${track.rank}">Rank</td>
+                    </tr>
+                </table>
+                </table>
+            </div>
+        </div>
     </div>
 
     <footer th:replace="~{home.html :: footer}"></footer>
 
 </section>
 
-<script th:inline="none">
+<script>
+    // JavaScript code for formatting durations
     document.addEventListener("DOMContentLoaded", function () {
         var durationElementsSongs = document.querySelectorAll(".song-duration");
-
         durationElementsSongs.forEach(function (element) {
             var seconds = parseInt(element.textContent);
             element.textContent = formatDuration(seconds);
+        });
+
+        var durationElements = document.querySelectorAll(".playlist-duration");
+        durationElements.forEach(function (element) {
+            var minutes = parseInt(element.textContent);
+            element.textContent = formatDuration(minutes * 60); // convert minutes to seconds
         });
 
         function formatDuration(seconds) {
@@ -172,42 +156,64 @@
             var remainingSeconds = seconds % 60;
             return minutes + ":" + (remainingSeconds < 10 ? "0" : "") + remainingSeconds;
         }
+
     });
 </script>
-<script th:inline="none">
+<script>
+    // JavaScript code for opening/closing modal
     document.addEventListener("DOMContentLoaded", function () {
-        var durationElements = document.querySelectorAll(".playlist-duration");
-
-        durationElements.forEach(function (element) {
-            var minutes = parseInt(element.textContent);
-            element.textContent = formatDuration(minutes * 60); // convert minutes to seconds
+        // Add an event listener to the playlist title
+        document.getElementById('editableTitle').addEventListener('click', function () {
+            // Open the modal when the title is clicked
+            openModal();
         });
 
-        function formatDuration(seconds) {
-            var hours = Math.floor(seconds / 3600);
-            var minutes = Math.floor((seconds % 3600) / 60);
-            var remainingSeconds = seconds % 60;
-            return hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":" + (remainingSeconds < 10 ? "0" : "") + remainingSeconds;
+        document.getElementById('close-edit-modal').addEventListener('click', function () {
+            // Open the modal when the title is clicked
+            closeModalEdit();
+        });
+        // Function to open the modal
+        function openModal() {
+            document.getElementById('editTitleModal').style.display = 'block';
+        }
+
+        // Function to close the modal
+        function closeModalEdit() {
+            document.getElementById('editTitleModal').style.display = 'none';
+        }
+
+        // Close the modal if the user clicks outside of it
+        window.onclick = function (event) {
+            var modal = document.getElementById('editTitleModal');
+            if (event.target == modal) {
+                closeModalEdit();
+            }
+        }
+
+        function submitFormAndCloseModal() {
+            // Submit the form
+            document.getElementById('editTitleForm').submit();
+
+            // Close the modal
+            closeModal();
         }
     });
 </script>
-
 <script>
-    function openModal() {
-        document.getElementById('editTitleModal').style.display = 'block';
+    function toggleDropdown() {
+        var dropdown = document.getElementById('dropdown');
+        dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
     }
 
-    function closeModal() {
-        document.getElementById('editTitleModal').style.display = 'none';
-    }
-
-    // Close the modal if the user clicks outside of it
-    window.onclick = function(event) {
-        var modal = document.getElementById('editTitleModal');
-        if (event.target == modal) {
-            closeModal();
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function (event) {
+        if (!event.target.matches('.icon-dropdown')) {
+            var dropdown = document.getElementById('dropdown');
+            if (dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';
+            }
         }
-    }
+    };
 </script>
 <script src="/js/scripts.js"></script>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

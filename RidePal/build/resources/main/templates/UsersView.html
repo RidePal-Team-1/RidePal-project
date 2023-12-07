@@ -28,6 +28,7 @@
 
 <section class="home">
     <nav th:replace="~{home.html :: top-bar}"></nav>
+    <div th:replace="~{home.html :: generate-jouney}"></div>
     <div class="search-header">
         <form action="#" th:action="@{/users}" method="get" th:object="${filterOptions}">
             <label style="margin-top: 50px; margin-bottom: 50px;  font-weight: 700;  line-height: 1.2; color: var(--dashboard-text-color)"
@@ -47,23 +48,24 @@
     </div>
     <div class="user-container">
         <h1 th:if="${users.isEmpty()}">NO RESULTS FOUND</h1>
-        <div class="user-card" th:each="user : ${users}">
+        <div class="user-card" th:each="listedUser : ${users}">
 
 <!--            <div class="three-dots">-->
 <!--                <a th:href="@{'/users/' + ${user.id} + '/delete'}"><i class='bx bxs-trash icon'></i></a>-->
 <!--            </div>-->
 
 <!--            <form onsubmit="return confirmDelete()" style="display:inline-block;" th:action="@{'/users/' + ${user.id} + '/delete'}" method="post">-->
-                <div class="three-dots">
-                  <a onclick="confirmDelete()" th:href="@{'/users/' + ${user.id} + '/delete'}"><i class='bx bxs-trash icon'></i></a>
+                <div class="three-dots" th:if="${#authorization.expression('hasRole(''ADMIN'')') || user.getId()==listedUser.getId()}">
+                  <a onclick="confirmDelete()" th:href="@{'/users/' + ${listedUser.id} + '/delete'}"><i class='bx bxs-trash icon'></i></a>
                 </div>
 <!--            </form>-->
 
 
-            <a href="#" th:href="${'/users/' + user.id}">
-            <img class="user-avatar" src="../static/assets/img/user.png" th:src="${user.profile_picture  != null ? user.profile_picture : '/assets/img/user.png'}"
+            <a href="#" th:href="${'/users/' + listedUser.id}">
+            <img class="user-avatar" src="../static/assets/img/user.png" th:src="${listedUser.profile_picture  != null ? listedUser.profile_picture : '/assets/img/user.png'}"
                  alt="User 1">
-            <i class="bx bx-headphone"></i><h2 class="all-users-username" th:text="${user.username}">User 1</h2>
+            <i class="bx bx-headphone"></i><h2 class="all-users-username" th:if="${listedUser.provider.toString().equals('LOCAL')}" th:text="${listedUser.username}">User 1</h2>
+                <h2 class="all-users-username" th:if="${listedUser.provider.toString().equals('GOOGLE')}" th:text="${listedUser.email.substring(0, listedUser.email.indexOf('@'))}">User 1</h2>
             </a>
         </div>
     </div>
