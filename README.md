@@ -70,7 +70,7 @@
     <ul>
       <li>Administrators are able to edit/delete users and other administrators</li>
       <li>Administrators are able to edit/delete over the playlists</li>
-      <li>Administrators are able to manually trigger Genre synchronization and configure its the time period</li>
+      <li>Administrators are able to manually trigger Genre synchronization and configure its time period</li>
   </ul>
 
 <br>
