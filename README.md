@@ -94,7 +94,7 @@
 <br>
   <h3>Microsoft Bing Maps's Distance Matrix API (https://www.microsoft.com/en-us/maps/bing-maps/distance-matrix)</h3>
   <ul>
-  <li>Used to calculate distance and duration between two wayponints. Each waypoint is represented as a combination of longitude and latitude</li>
+  <li>Used to calculate distance and duration between two waypoints. Each waypoint is represented as a combination of longitude and latitude</li>
   </ul>
 
   <br>
