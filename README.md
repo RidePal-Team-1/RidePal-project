@@ -33,7 +33,7 @@
    <ul>
      <li>Users can configure playlist generation algorithm options, including genre preferences and track preview</li>
      <li>There is an option to select 'Use Top Tracks', which will generate a playlist using the highest ranked tracks from the database</li>
-     <li>There is an option to select 'Allow tracks from same artists', which </li>
+     <li>There is an option to select 'Allow tracks from same artists', which includes more than 1 track per artist in the playlist</li>
    </ul>
 <br>
    <h3>Genre Synchronization</h3>
