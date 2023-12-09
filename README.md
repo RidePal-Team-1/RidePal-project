@@ -18,7 +18,7 @@
   <h2 id="#main-requirements">Main Functionalities</h2>
   <h3>Playlist Generation</h3>
    <ul>
-     <li>Users can enter starting and destination addresses, select musical genres and adjust the each genre's percentage in a playlist, and click "Begin Journey" to create a playlist</li>
+     <li>Users can enter starting and destination addresses, select musical genres,adjust the each genre's percentage in a playlist, and click "Begin Journey" to create a playlist</li>
      <li>RidePal calculates travel duration and generates playlists with tracks from specified genres to match the travel time</li>
      <li>Playlists are saved under the user's profile for future listening</li>
    </ul>
