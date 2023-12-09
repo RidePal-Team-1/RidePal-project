@@ -4,17 +4,28 @@
 <br>
   <h2>Table of Contents</h2>
     <ul>
+        <li><a href="#technologies">Technologies and Principles</a></li>
         <li><a href="#main-requirements">Main Functionalities</a></li>
         <li><a href="#public-part">Public Part</a></li>
         <li><a href="#private-part">Private Part</a></li>
         <li><a href="#administration-part">Administration Part</a></li>
         <li><a href="#rest-api">REST API</a></li>
         <li><a href="#external-services">External Services</a></li>
-        <li><a href="#technologies">Technologies and Principles</a></li>
         <li><a href="#database">Database</a></li>
         <li><a href="#instructions">Installation</a></li>
     </ul>
 <br>
+
+<h2 id="#technologies">Technologies and Principles</h2>
+  <ul>
+    <li>Java, Spring Boot, Spring MVC, Spring Security, Lombok, Thymeleaf, JUnit, Mockito, HTML, CSS, JavaScript, Hibernate, MariaDB</li>
+    <li>DRY, KISS, YAGNI, SOLID, OOP, REST API design</li>
+    <li>Service layer tests have over 80% code coverage</li>
+    <li>Multilayered architecture</li>
+  </ul>
+  <br>
+  <br>
+
   <h2 id="#main-requirements">Main Functionalities</h2>
   <h3>Playlist Generation</h3>
    <ul>
@@ -108,17 +119,6 @@
   <ul>
       <li>Used to fetch an image every time a new playlist is created</li>
   </ul>
-  <br>
-
-
-  <h2 id="#technologies">Technologies and Principles</h2>
-  <ul>
-    <li>Java, Spring Boot, Spring MVC, Spring Security, Lombok, Thymeleaf, JUnit, Mockito, HTML, CSS, JavaScript, Hibernate, MariaDB</li>
-    <li>DRY, KISS, YAGNI, SOLID, OOP, REST API design</li>
-    <li>Service layer tests have over 80% code coverage</li>
-    <li>Multilayered architecture</li>
-  </ul>
-  <br>
   <br>
 
   <h2 id="#database">Database</h2>
