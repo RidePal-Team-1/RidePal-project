@@ -33,7 +33,7 @@
      <li>RidePal calculates travel duration and generates playlists with tracks from specified genres to match the travel time</li>
      <li>Playlists are saved under the user's profile for future listening</li>
    </ul>
-   ![image](https://github.com/RidePal-Team-1/RidePal-project/assets/138816918/2901fd71-80e1-476b-b63b-ff516ebbd4ee)
+   <img src="https://github.com/RidePal-Team-1/RidePal-project/assets/138816918/2901fd71-80e1-476b-b63b-ff516ebbd4ee" alt="")>
 <br>
    <h3>Playlist Browsing</h3>
    <ul>
