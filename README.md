@@ -40,6 +40,7 @@
      <li>Users can browse playlists created by other users, filter by total duration and genre tags</li>
      <li>Playlists are sorted by average rank in descending order by default</li>
    </ul>
+    <img src="https://github.com/RidePal-Team-1/RidePal-project/assets/138816918/a2b43e8e-3308-4086-9c3d-dd9201c53746" alt="")>
 <br>
    <h3>Configuration Options</h3>
    <ul>
@@ -65,7 +66,7 @@
       <li>Unauthenticated users also have access to the home page, where they can see statistics about the website, top 10 playlists by rank and all genres.</li>
       <li>Lastly, the playlists page is also open for unauthenitcated users, where playlists can be filtered by genre, minimum/maximum duration in minutes</li>
     </ul>
-    
+    <img src="https://github.com/RidePal-Team-1/RidePal-project/assets/138816918/e7fcd9a6-3bbc-4bb0-8d28-682a5cc37852" alt="">
 <br>
    <br>
    <h2 id="#private-part">Private Part</h2>
