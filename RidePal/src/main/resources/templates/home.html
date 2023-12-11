@@ -105,8 +105,6 @@
     <!--     Navigation bar with search button START-->
     <nav th:fragment="top-bar">
         <div class="search-container">
-            <i class='bx bx-search icon' style="margin-top: 13px"></i>
-            <input class="search-box" type="text" placeholder="Search...">
         </div>
         <img sec:authorize="isAuthenticated()" class="user-pic"
              th:src="${user.profile_picture  != null ? user.profile_picture : '/assets/img/logo.png'}"

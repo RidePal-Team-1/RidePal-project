@@ -1,4 +1,4 @@
-package com.example.ridepal.services;
+package com.example.ridepal.external.services;
 
 import com.example.ridepal.deezer.*;
 import com.example.ridepal.exceptions.GenreSynchronizationFailureException;

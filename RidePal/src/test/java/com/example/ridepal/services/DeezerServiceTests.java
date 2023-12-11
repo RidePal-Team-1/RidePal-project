@@ -1,12 +1,8 @@
 package com.example.ridepal.services;
 
-import com.example.ridepal.Helpers;
-import com.example.ridepal.deezer.DeezerGenresResponse;
-import com.example.ridepal.deezer.DeezerPlaylistResponse;
-import org.junit.jupiter.api.Test;
+import com.example.ridepal.external.services.DeezerServiceImpl;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.web.client.RestTemplate;
 
 public class DeezerServiceTests {

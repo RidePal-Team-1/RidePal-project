@@ -1,4 +1,4 @@
-package com.example.ridepal.services;
+package com.example.ridepal.external.services;
 
 import com.example.ridepal.maps.BingConfig;
 import com.example.ridepal.maps.BingLocation;
