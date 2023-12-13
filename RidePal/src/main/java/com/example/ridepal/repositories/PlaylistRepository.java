@@ -37,6 +37,7 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Integer>, Jp
     @Transactional
     @Modifying
     @Query(value = "update Playlist l set l.creator = :deletedUser where l.creator = :userToDelete")
-    public void transferPlaylistsToDeletedUser(@Param("deletedUser") User deletedUser,@Param("userToDelete") User userToDelete);
+    void transferPlaylistsToDeletedUser(@Param("deletedUser") User deletedUser,@Param("userToDelete") User userToDelete);
+
 
 }

@@ -27,20 +27,16 @@ public class DeezerServiceImpl implements DeezerService {
 
     private final AlbumRepository albumRepository;
 
-    private final RoleRepository roleRepository;
-
     @Autowired
     public DeezerServiceImpl(RestTemplate restTemplate, @Value("${deezer.api.base-url}") String baseUrl,
                              GenreRepository genreRepository, TrackRepository trackRepository,
-                             ArtistRepository artistRepository, AlbumRepository albumRepository,
-                             RoleRepository roleRepository) {
+                             ArtistRepository artistRepository, AlbumRepository albumRepository) {
         this.restTemplate = restTemplate;
         this.baseUrl = baseUrl;
         this.genreRepository = genreRepository;
         this.trackRepository = trackRepository;
         this.artistRepository = artistRepository;
         this.albumRepository = albumRepository;
-        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -63,11 +59,6 @@ public class DeezerServiceImpl implements DeezerService {
             List<DeezerPlaylist> playlists = response.getData();
             savePlaylistsToDataBase(playlists, genre);
         }
-    }
-
-    @Override
-    public void getTracks() {
-
     }
 
     private void saveGenresToDatabase(List<DeezerGenre> genres) {

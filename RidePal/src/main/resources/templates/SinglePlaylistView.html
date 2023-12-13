@@ -47,7 +47,7 @@
                         <div class="dropdown-content">
                             <a href="#" id="editableTitle" onclick="openModal()">Edit Title</a>
                             <a href="#" id="profilePictureContainer">Upload Cover</a>
-                            <a href="#" th:href="@{'/playlists/'+${playlist.id}+'/delete'}" th:method="get">Delete Playlist</a>
+                            <a href="#" th:href="@{'/playlists/'+${playlist.id}+'/delete'}" onclick="return confirmDelete2()" method="post">Delete Playlist</a>
                         </div>
                     </div>
                 </div>
@@ -94,6 +94,14 @@
                     </div>
                 </div>
             </div>
+
+<!--            <div sec:authorize="isAuthenticated()">-->
+<!--            <form onsubmit="return confirmDelete2()" style="display:inline-block;" th:if="${user.getId() == playlist.creator.getId() or #authorization.expression('hasRole(''ADMIN'')')}"  th:action="@{'/playlists/' + ${playlist.id} + '/delete'}" method="post">-->
+<!--                <div style="display: inline-block">-->
+<!--                    <button  class="delete-button-playlists"  type="submit"><i class='bx bxs-trash icon'></i></button>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--            </div>-->
         </div>
 
         <div class="playlist-songs-container">

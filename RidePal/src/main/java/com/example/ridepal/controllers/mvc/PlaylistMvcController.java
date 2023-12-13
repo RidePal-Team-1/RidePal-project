@@ -83,6 +83,7 @@ public class PlaylistMvcController {
             model.addAttribute("playlist", playlist);
             model.addAttribute("user", user);
             return "SinglePlaylistView";
+
         } catch (EntityNotFoundException e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
@@ -141,11 +142,15 @@ public class PlaylistMvcController {
     }
 
     @PostMapping("/new")
-    public String generatePlaylist(@Valid @ModelAttribute("generatePlaylist")PlaylistDto playlistDto,BindingResult bindingResult,
+    public String generatePlaylist(@Valid @ModelAttribute("generatePlaylist")PlaylistDto playlistDto, BindingResult bindingResult,
                                    Model model, Authentication authentication){
 //        model.addAttribute("generatePlaylist", playlistDto);
+        if (bindingResult.hasErrors()) {
+            return "home";
+        }
         User user = AuthenticationHelper.extractUserFromProvider(authentication);
         Playlist playlist = playlistService.createPlaylist(playlistDto, user);
+        model.addAttribute("user", user);
         return  "redirect:/playlists/"+playlist.getId();
     }
 

@@ -36,7 +36,7 @@
                     <div class="dropdown-content" style="left:0;">
                         <a href="#" th:if="${!userRepository.provider.toString().equals('GOOGLE')}" id="editableTitle" onclick="openModal2()">Edit Profile</a>
                         <a href="#" id="profilePictureContainer">Upload Cover</a>
-                        <a href="#" id="delete" th:href="@{'/users/' + ${userRepository.id} + '/delete'}"  onclick="confirmDelete()">Delete Profile</a>
+                        <a href="#" id="delete" th:href="@{'/users/' + ${userRepository.id} + '/delete'}"  onclick="return confirmDelete()">Delete Profile</a>
                         <!--                            <a href="#" id="profilePictureContainer">Upload Cover</a>-->
                         <!--                            <a href="#" th:href="@{'/playlists/'+${playlist.id}+'/delete'}" th:method="get">Delete Playlist</a>-->
                     </div>

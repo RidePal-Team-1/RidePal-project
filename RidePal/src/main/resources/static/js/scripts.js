@@ -273,6 +273,11 @@ function confirmDelete() {
     return confirm('Are you sure you want to delete this user?');
 }
 
+function confirmDelete2() {
+    // Display a confirmation dialog
+    return confirm('Are you sure you want to delete this playlist?');
+}
+
 
     function openModalGenerateTrip() {
     document.getElementById('modal-container').style.display = 'flex';

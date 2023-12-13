@@ -55,9 +55,11 @@
 <!--            </div>-->
 
 <!--            <form onsubmit="return confirmDelete()" style="display:inline-block;" th:action="@{'/users/' + ${user.id} + '/delete'}" method="post">-->
-                <div class="three-dots" th:if="${#authorization.expression('hasRole(''ADMIN'')') || user.getId()==listedUser.getId()}">
-                  <a onclick="confirmDelete()" th:href="@{'/users/' + ${listedUser.id} + '/delete'}"><i class='bx bxs-trash icon'></i></a>
-                </div>
+            <div class="three-dots" th:if="${#authorization.expression('hasRole(''ADMIN'')') || user.getId()==listedUser.getId()}">
+                <a th:href="@{'/users/' + ${listedUser.id} + '/delete'}" onclick="return confirmDelete();">
+                    <i class='bx bxs-trash icon'></i>
+                </a>
+            </div>
 <!--            </form>-->
 
 

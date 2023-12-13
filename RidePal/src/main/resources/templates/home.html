@@ -175,8 +175,10 @@
                     <input type="checkbox" class="genre-checkbox" th:value="genreKey" onchange="toggleInput(this)">
                     <th:block class="block-genre" th:text="${genreKey}"></th:block>
                     <div class="slidecontainer" >
-                        <input class="left-aligned-input" type="number" min="0" max="100" value="0" th:value="${playlistDto.genres[genreKey] != 0.0} ? ${playlistDto.genres[genreKey]} : 0" th:field="*{genres[__${genreKey}__]}" disabled><!--                        <span class="slider-value" th:text="${playlistDto.genres[__${genreKey}__] + '%'}">0%</span>-->
+                        <input class="left-aligned-input" type="number" min="0" max="100" value="0" th:value="${playlistDto.genres[genreKey] != 0.0} ? ${playlistDto.genres[genreKey]} : 0" th:field="*{genres[__${genreKey}__]}" disabled>
+                        <p style="display: inline-block">%</p>
                     </div>
+
                 </label>
             </div>
 

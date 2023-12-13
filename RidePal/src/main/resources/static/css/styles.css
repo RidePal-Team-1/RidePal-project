@@ -2084,9 +2084,58 @@ body.dark .form-box {
     margin-left: 1600px;
 }
 
+.delete-button-playlists {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    font-size: inherit;
+    color: red;
+    position: relative;
+    right: 0;
+    width: 30px;
+    margin-top: 20px;
+    transition: color 0.3s ease; /* Adding a slight color transition on hover */
+    margin-left: 1600px;
+}
+
+.delete-button-playlists-all {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    font-size: inherit;
+    color: red;
+    position: relative;
+    right: 0;
+    width: 30px;
+    transition: color 0.3s ease; /* Adding a slight color transition on hover */
+}
+
+.delete-button-playlists-all:hover,
+.delete-button-playlists:hover,
 .delete-button:hover {
     background-color: rgba(243, 237, 237, 0.38);
 }
+
+.delete-button-playlists-all .icon {
+    z-index: 1;
+    display: inline-block;
+    /*margin-left: px;*/
+    cursor: pointer;
+    top: 0;
+}
+
+.delete-button-playlists .icon {
+    z-index: 1;
+    display: inline-block;
+    /*margin-left: px;*/
+    cursor: pointer;
+    top: 0;
+}
+
 
 .delete-button .icon {
     z-index: 1;
@@ -2096,6 +2145,8 @@ body.dark .form-box {
     top: 100%;
 }
 
+.delete-button-playlists i::before,
+.delete-button-playlists i::before,
 .delete-button i::before {
     font-size: 30px;
 }

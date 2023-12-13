@@ -88,6 +88,12 @@
                         <td class="song-duration" th:text="${playlist.playtime}">Duration</td>
                         <td class='bx bx-bar-chart-alt icon' id="rank-icon-playlists"></td>
                         <td class="song-rank" th:text="${playlist.rank}">Rank</td>
+                        <td sec:authorize="isAuthenticated()">
+                            <form onsubmit="return confirmDelete2()" style="display:inline-block;" th:if="${user.getId() == playlist.creator.getId() or #authorization.expression('hasRole(''ADMIN'')')}"  th:action="@{'/playlists/' + ${playlist.id} + '/delete'}" method="get">
+                            <div style="display: inline-block">
+                                <button  class="delete-button-playlists-all"  type="submit"><i class='bx bxs-trash icon'></i></button>
+                            </div>
+                        </form> </td>
                     </tr>
                 </table>
             </div>

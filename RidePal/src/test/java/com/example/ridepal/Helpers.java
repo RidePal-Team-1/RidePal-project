@@ -1,9 +1,6 @@
 package com.example.ridepal;
 
-import com.example.ridepal.deezer.DeezerGenre;
-import com.example.ridepal.deezer.DeezerGenresResponse;
-import com.example.ridepal.deezer.DeezerPlaylist;
-import com.example.ridepal.deezer.DeezerPlaylistResponse;
+import com.example.ridepal.deezer.*;
 import com.example.ridepal.filters.enums.Provider;
 import com.example.ridepal.models.*;
 import com.example.ridepal.models.dtos.PlaylistDto;
@@ -134,7 +131,51 @@ public class Helpers {
     dto.setTitle("mockTitle");
     dto.setUseTopTracks(true);
     dto.setTracksFromSameArtist(true);
-    dto.setGenres(Map.of("mockGenre", 2.00));
+    dto.setGenres(Map.of("mockGenre", 100.00));
     return dto;
     }
+
+    public static SynchronizationConfig createMockSynchronizationConfig() {
+     SynchronizationConfig config = new SynchronizationConfig();
+     config.setSynchronizationInterval(100);
+     config.setId(1L);
+     return config;
+    }
+
+    public static DeezerTrackResponse createMockTrackResponse() {
+    DeezerTrackResponse response = new DeezerTrackResponse();
+    response.setData(List.of(Helpers.createMockDeezerTrack()));
+    return response;
+    }
+
+    public static DeezerTrack createMockDeezerTrack() {
+    DeezerTrack track = new DeezerTrack();
+    track.setId(1);
+    track.setAlbum(Helpers.createMockDeezerAlbum());
+    track.setRank(2);
+    track.setArtist(Helpers.createMockDeezerArtist());
+    track.setTitle("mockTitle");
+    track.setDuration(2);
+    track.setPreview("preview");
+    return track;
+    }
+
+   private static DeezerArtist createMockDeezerArtist() {
+    DeezerArtist artist = new DeezerArtist();
+    artist.setId(1);
+    artist.setName("mockName");
+    artist.setPhotoUrl("url");
+    artist.setTrackList("mockTracklist");
+    return artist;
+   }
+
+   private static DeezerAlbum createMockDeezerAlbum() {
+    DeezerAlbum album = new DeezerAlbum();
+    album.setId(1);
+    album.setPhotoUrl("url");
+    album.setTrackList("url");
+    album.setTitle("mockTitle");
+    return album;
+   }
+
 }

@@ -8,6 +8,7 @@ import com.example.ridepal.models.Track;
 import com.example.ridepal.models.User;
 import com.example.ridepal.models.dtos.PlaylistDto;
 import com.example.ridepal.repositories.PlaylistRepository;
+import com.example.ridepal.repositories.RoleRepository;
 import com.example.ridepal.repositories.TrackRepository;
 import com.example.ridepal.services.contracts.BingMapService;
 import com.example.ridepal.services.contracts.PixabayService;
@@ -32,6 +33,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     public static final int BUFFER_TRACKS = 12;
     public static final String UNAUTHORIZED_MSG = "You are not authorized to perform this operation!";
+    public static final String ADMIN_ROLE = "ADMIN";
     private final PlaylistRepository playlistRepository;
 
     private final BingMapService bingMapService;
@@ -42,16 +44,21 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     private final PixabayService pixabayService;
 
+    private final RoleRepository roleRepository;
+
     @Autowired
     public PlaylistServiceImpl(PlaylistRepository playlistRepository,
                                BingMapService bingMapService,
                                PlaylistMapper playlistMapper,
-                               TrackRepository trackRepository, PixabayService pixabayService) {
+                               TrackRepository trackRepository,
+                               PixabayService pixabayService,
+                               RoleRepository roleRepository) {
         this.playlistRepository = playlistRepository;
         this.bingMapService = bingMapService;
         this.playlistMapper = playlistMapper;
         this.trackRepository = trackRepository;
         this.pixabayService = pixabayService;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -132,7 +139,7 @@ public class PlaylistServiceImpl implements PlaylistService {
             playlist.setPlaytime(totalPlaytime);
             playlist.setRank(avgRank / trackSet.size());
             playlist.setTrackSet(trackSet);
-            playlist.setPhotoUrl(pixabayService.getPlaylistCoverUrl());
+        playlist.setPhotoUrl(pixabayService.getPlaylistCoverUrl());
             return playlistRepository.save(playlist);
     }
 
@@ -203,7 +210,7 @@ public class PlaylistServiceImpl implements PlaylistService {
         if(playlist==null){
             throw new EntityNotFoundException("Playlist", id);
         }
-        if (user.getId() != playlist.getCreator().getId()) {
+        if (user.getId() != playlist.getCreator().getId() && !user.getRoles().contains(roleRepository.findByName(ADMIN_ROLE))) {
             throw new UnauthorizedOperationException(UNAUTHORIZED_MSG);
         }
         playlistRepository.delete(playlist);
