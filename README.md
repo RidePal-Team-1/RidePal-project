@@ -23,6 +23,9 @@
     <li>Service layer tests have over 80% code coverage</li>
     <li>Multilayered architecture</li>
   </ul>
+
+  ![image](https://github.com/RidePal-Team-1/RidePal-project/assets/133578156/86613d93-a0a9-46f5-868c-10393ad7960c)
+
   <br>
   <br>
 
