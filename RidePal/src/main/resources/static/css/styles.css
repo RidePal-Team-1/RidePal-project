@@ -405,6 +405,7 @@ section nav {
 }
 
 .user-pic {
+    object-fit: cover;
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -444,6 +445,7 @@ section nav {
 }
 
 .user-info img {
+    object-fit: cover;
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -1418,6 +1420,8 @@ body.dark .content .icon {
     -webkit-box-shadow: 1px 2px 48px -2px rgba(0,0,0,0.67);
     -moz-box-shadow: 1px 2px 48px -2px rgba(0,0,0,0.67);
 }
+
+
 .playlist-content{
     border-radius: 10px;
     display: flex;
