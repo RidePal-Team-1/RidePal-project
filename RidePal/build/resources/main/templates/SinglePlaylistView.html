@@ -145,11 +145,11 @@
             element.textContent = formatDuration(seconds);
         });
 
-        var durationElements = document.querySelectorAll(".playlist-duration");
-        durationElements.forEach(function (element) {
-            var minutes = parseInt(element.textContent);
-            element.textContent = formatDuration(minutes * 60); // convert minutes to seconds
-        });
+        // var durationElements = document.querySelectorAll(".playlist-duration");
+        // durationElements.forEach(function (element) {
+        //     var minutes = parseInt(element.textContent);
+        //     element.textContent = formatDuration(minutes * 60); // convert minutes to seconds
+        // });
 
         function formatDuration(seconds) {
             var minutes = Math.floor(seconds / 60);
@@ -157,6 +157,20 @@
             return minutes + ":" + (remainingSeconds < 10 ? "0" : "") + remainingSeconds;
         }
 
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+        var playlistDurationElement = document.querySelector(".playlist-duration");
+        var minutes = parseInt(playlistDurationElement.textContent);
+        playlistDurationElement.textContent = formatDuration(minutes);
+
+        function formatDuration(minutes) {
+            var hours = Math.floor(minutes / 60);
+            var remainingMinutes = minutes % 60;
+            var seconds = 0;
+
+            return hours + ":" + (remainingMinutes < 10 ? "0" : "") + remainingMinutes +
+                ":" + (seconds < 10 ? "0" : "") + seconds;
+        }
     });
 </script>
 <script>

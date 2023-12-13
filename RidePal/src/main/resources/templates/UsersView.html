@@ -83,13 +83,13 @@
             <!-- || filterOptions.getTitle().isBlank() && filterOptions.getGenre().isBlank() && filterOptions.getMinDuration().isBlank() && filterOptions.getMaxDuration().isBlank()}"-->
             <!--                    th:href="@{'/playlists?page=' + ${pageNumber}}" th:text="${pageNumber}"></a>-->
     <a th:href="@{'/users' +
-        '?page=' + ${users} +
+        '?page=' + ${pageNumber} +
         '&size=' + ${users.getSize()} +
         ${filterOptions.username != null ? '&username=' + filterOptions.username : ''} +
         ${filterOptions.firstName != null ? '&firstName=' + filterOptions.firstName : ''} +
         ${filterOptions.lastName != null ? '&lastName=' + filterOptions.lastName : ''} +
         ${filterOptions.email != null ? '&email=' + filterOptions.email : ''}}"
-       th:text="${pageNumber + 1}" th:class="${pageNumber == users.number? 'active' : ''}"></a>
+       th:text="${pageNumber + 1}" th:class="${pageNumber == users.getNumber()? 'active' : ''}"></a>
 </span>
         <a th:if="${users.hasNext()}" th:href="@{'/users?page=' + ${users.nextPageable().pageNumber} +
         '&size=' + ${users.getSize()} +

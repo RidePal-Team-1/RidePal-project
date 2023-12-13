@@ -115,9 +115,9 @@
                                 <input type="email" id="email" placeholder="Email" class="edit-form-user" th:field="*{email}"/>
                                 <div><label class="error" style="color: white" th:errors="*{email}">Email error placeholder</label></div>
 
-                                <!--                            <label for="username">Username</label>-->
-<!--                                <input type="text" id="username" placeholder="Username" class="edit-form-user" th:field="*{username}"/>-->
-<!--                                <div><label class="error" style="color: white" th:errors="*{username}">Username error placeholder</label></div>-->
+<!--                                                            <label for="username">Username</label>-->
+                                <input type="text" id="username" placeholder="Username" class="edit-form-user" th:field="*{username}" readonly/>
+                                <div><label class="error" style="color: white" th:errors="*{username}">Username error placeholder</label></div>
 
                                 <!--                            <label for="password">Password</label>-->
                                 <input type="password" id="password" placeholder="Password" class="edit-form-user" th:field="*{password}"/>

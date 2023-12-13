@@ -4,28 +4,25 @@
     <title></title>
     <meta charset="utf-8" />
     <script type='text/javascript'>
-        var map;
+        var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+            /* No need to set credentials if already passed in URL */
+            center: new Microsoft.Maps.Location(47.606209, -122.332071),
+            zoom: 12
+        });
+        Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
+            var directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
+            // Set Route Mode to driving
+            directionsManager.setRequestOptions({ routeMode: Microsoft.Maps.Directions.RouteMode.driving });
+            var waypoint1 = new Microsoft.Maps.Directions.Waypoint({ address: 'Redmond', location: new Microsoft.Maps.Location(47.67683029174805, -122.1099624633789) });
+            var waypoint2 = new Microsoft.Maps.Directions.Waypoint({ address: 'Seattle', location: new Microsoft.Maps.Location(47.59977722167969, -122.33458709716797) });
+            directionsManager.addWaypoint(waypoint1);
+            directionsManager.addWaypoint(waypoint2);
+            // Set the element in which the itinerary will be rendered
+            directionsManager.setRenderOptions({ itineraryContainer: document.getElementById('printoutPanel') });
+            directionsManager.calculateDirections();
+        });
 
-        function GetMap() {
-            map = new Microsoft.Maps.Map('#myMap', {});
-
-            Microsoft.Maps.loadModule('Microsoft.Maps.AutoSuggest', function () {
-                var manager = new Microsoft.Maps.AutosuggestManager({ map: map });
-                manager.attachAutosuggest('#searchBox', '#searchBoxContainer', selectedSuggestion);
-            });
-        }
-
-        function selectedSuggestion(result) {
-            //Remove previously selected suggestions from the map.
-            map.entities.clear();
-
-            //Show the suggestion as a pushpin and center map over it.
-            var pin = new Microsoft.Maps.Pushpin(result.location);
-            map.entities.push(pin);
-            map.setView({ bounds: result.bestView });
-        }
-    </script>
-    <script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=Akc6vAGnz7kLWGmxNkNjtVsCmbvi5NaJqavdmX4Ku1T7JT3-BUPFVDgf5vOYdc8S' async defer></script>
+        <script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=Akc6vAGnz7kLWGmxNkNjtVsCmbvi5NaJqavdmX4Ku1T7JT3-BUPFVDgf5vOYdc8S' async defer></script>
 </head>
 <body>
 <div id='searchBoxContainer'>
